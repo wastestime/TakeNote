@@ -1,30 +1,24 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-        <br />
-        <h:link outcome="/activity/List" value="Show All Activity Items"/>
-        <br />
-        <h:link outcome="/notes/List" value="Show All Notes Items"/>
-        <br />
-        <h:link outcome="/user/List" value="Show All User Items"/>
-        <br />
-        <h:link outcome="/userFile/List" value="Show All UserFile Items"/>
-        <br />
-        <h:link outcome="/userPhoto/List" value="Show All UserPhoto Items"/>
-    </h:body>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2016.11.30 
+Copyright © 2016 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="/template/siteTemplate.xhtml">
 
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
 
+            <br /><br />
 
-</html>
+        </ui:define>
 
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
