@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NotesViewDlg" widgetVar="NotesViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewNotesTitle}">
+            <h:form id="NotesViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{notesController.selected != null}">
+                        <h:outputText value="#{bundle.ViewNotesLabel_id}"/>
+                        <h:outputText value="#{notesController.selected.id}" title="#{bundle.ViewNotesTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewNotesLabel_title}"/>
+                        <h:outputText value="#{notesController.selected.title}" title="#{bundle.ViewNotesTitle_title}"/>
+                        <h:outputText value="#{bundle.ViewNotesLabel_createdTime}"/>
+                        <h:outputText value="#{notesController.selected.createdTime}" title="#{bundle.ViewNotesTitle_createdTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewNotesLabel_modifiedTime}"/>
+                        <h:outputText value="#{notesController.selected.modifiedTime}" title="#{bundle.ViewNotesTitle_modifiedTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewNotesLabel_content}"/>
+                        <h:outputText value="#{notesController.selected.content}" title="#{bundle.ViewNotesTitle_content}"/>
+                        <h:outputText value="#{bundle.ViewNotesLabel_userId}"/>
+                        <h:outputText value="#{notesController.selected.userId}" title="#{bundle.ViewNotesTitle_userId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="NotesViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

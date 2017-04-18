@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2016.12.07 
+Copyright © 2016 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <!--
+    **********************************************************************
+    This template page defines the page layout design for the entire site.
+    Any page created based on this template will have this layout design.
+    **********************************************************************
+    -->
+    <h:head>
+        <!-- 
+        The <title> element (a) defines a title in the browser's toolbar,
+        (b) provides a title for the page when it is added to favorites, and
+        (c) displays a title for the page in search-engine results.
+        [http://www.w3schools.com/tags/tag_title.asp]
+
+        If you want to change it for a page, use:
+            <ui:define name="title">
+                <h:outputText value="enter page title here"></h:outputText>
+            </ui:define>
+        -->
+        <title><ui:insert name="title">Videos</ui:insert></title>
+
+        <!-- 
+        Instruct the web browser on how to control the page's dimensions
+        and scaling on mobile devices. 
+        -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- 
+        The siteStyles CSS file is linked for use by the entire site. 
+        -->
+        <h:outputStylesheet library="css" name="siteStyles.css" />
+        
+        <!-- 
+        The following CSS and JavaScript files are required for the
+        Image Slider, created by http://www.menucool.com, to work.
+        -->
+        <h:outputStylesheet library="css" name="js-image-slider.css" />
+        <script src="resources/js/js-image-slider.js" type="text/javascript"></script>
+        
+        <!--
+        The icons and the font-awesome.min.css styles provided by http://fontawesome.io/
+        are linked for use by the entire site.
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        As a result of this link, a folder named Remote Files is automatically
+        created in the NetBeans Projects pane containing the font-awesome.min.css file.
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" />
+
+        <!-- 
+        If you need to link an additional CSS file for a particular page, 
+        you can redefine "css" in that page by using <ui:define name="css"> 
+        -->
+        <ui:insert name="css"/>
+        
+        <!-- 
+        A favicon (short for favorite icon), also known as a shortcut icon, website icon, tab icon, 
+        URL icon or bookmark icon, is a file named favicon.ico [https://en.wikipedia.org/wiki/Favicon]
+        The icon is displayed to the left of the page title on a tab in the Chrome web browser.
+        The link below in this template enables all pages in your site to display the favorite icon.
+        
+        Use absolute path for the image file since it will be referenced by all pages in the site.
+        -->
+        <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon" />
+        
+    </h:head>
+
+    <h:body>  
+        <div id="page">  
+            <!-- 
+            The Site Template page layout design consists of three components:
+                1. Header Component (Typically is the same for the entire site)
+                2. Editable Content Component (each page creates its own content)
+                3. Footer Component (Typically is the same for the entire site)
+
+            =====================================
+            * Header Component of this Template *
+            =====================================
+            The header component is displayed on the top of each page created based on this siteTemplate.
+            Changes made in the header component will show up automatically with all pages created 
+            based on this siteTemplate for the entire site, achieving great maintainability.
+            -->
+            <div id="header">
+                <ui:insert name="header" >
+                    <ui:include src="headerTemplate.xhtml" />
+                </ui:insert>
+            </div>
+
+            <!--
+            The ui:insert tag is a templating tag that declares a named content element
+            to be defined by another Facelet. It can be used effectively with the
+            ui:define tag to pass values between Facelets. [jsftoolbox.com]
+            
+            The ui:include tag is a server-side include tag for Facelets. It simply includes
+            the document pointed to by the "src" attribute as part of the current JSF page.
+            The included document should use a component or composition tag to trim unnecessary
+            markup, or it may simply contain a fragment of XHTML or XML to be included. [jsftoolbox.com]
+
+            ===============================================
+            * Editable Content Component of this Template *
+            ===============================================
+            Any page created based on this template is expected to provide its own content
+            by using <ui:define name="editableContent">. If the page content is not defined,
+            contentTemplate's content will be used as default. 
+            -->
+            <div id="editableContent">
+                <ui:insert name="editableContent" >
+                    <ui:include src="contentTemplate.xhtml" />
+                </ui:insert>
+            </div>
+
+            <!--
+            =====================================
+            * Footer Component of this Template *
+            =====================================
+            The footer component is displayed on the bottom of each page created based on this siteTemplate.
+            Changes made in the footer component will show up automatically with all pages created 
+            based on this siteTemplate for the entire site, achieving great maintainability.
+            -->
+            <div id="footer">
+                <ui:insert name="footer" >
+                    <ui:include src="footerTemplate.xhtml" />
+                </ui:insert>
+            </div>
+            
+        </div>
+    </h:body>
+</html>

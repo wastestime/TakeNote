@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2017.01.28
+Copyright © 2017 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!--
+    *********************************************
+    * Header Component of Template siteTemplate *
+    *********************************************
+    This page's content is displayed on the top of each page created based on the siteTemplate.
+    Changes made in this file will show up automatically with all pages created based on the
+    siteTemplate for the entire site, achieving great maintainability.
+    -->
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+    <ui:composition>
+        <p:growl id="growl" life="4000" autoUpdate="true" />
+        <h:form>
+
+            <table border="0" cellspacing="0" cellpadding="10" width="100%">
+                <tr>
+                    <td align="left" valign="middle">
+
+                        <!-- Use absolute path for the image file since it will be accessed from all pages -->
+                        <h:link outcome="index"><img src="resources/images/VideosLogo.png"
+                                                     style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
+                                                     alt="Company Logo" />
+                        </h:link>
+
+                    </td>
+                    <td align="center" valign="middle">
+
+                        <!-- Welcome the user if signed in -->
+                        <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <h1>Hello, #{accountManager.selected.firstName}</h1>
+                        </c:if>
+                        <c:if test="#{accountManager.isLoggedIn() == false}">
+                            <h1>Hello, Guest</h1>
+                        </c:if>
+
+                    </td>
+                    <td align="right" valign="middle">
+
+                        <!-- 
+                        With the i tag, you can access an icon given at http://fontawesome.io/icons/ by using
+                        its class name. For this to work, the following must be specified in the siteTemplate file:
+                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" />
+                        -->
+
+                        <!-- Clicking "Home" displays the index.xhtml file -->
+                        <h:link outcome="index" styleClass="arialTen">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                        </h:link>&nbsp;&nbsp;
+
+                        <!-- "Sign Out" and "My Account" if a user is signed in -->
+                        <c:if test="#{accountManager.isLoggedIn() == true}">
+
+                            <h:link outcome="Notes" styleClass="arialTen">
+                                <i class="fa fa-heart">&nbsp;</i>Notes
+                            </h:link>&nbsp;&nbsp;
+
+                            <h:link outcome="Contacts" styleClass="arialTen">
+                                <i class="fa fa-heart">&nbsp;</i>Contacts
+                            </h:link>&nbsp;&nbsp;
+
+                            <h:link outcome="Upload" styleClass="arialTen">
+                                <i class="fa fa-heart">&nbsp;</i>Upload
+                            </h:link>&nbsp;&nbsp;
+
+                            <h:link outcome="Profile" styleClass="arialTen">
+                                <i class="fa fa-user">&nbsp;</i>My Account
+                            </h:link>&nbsp;&nbsp;
+
+                            <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
+                                <i class="fa fa-sign-out">&nbsp;</i>Sign Out
+                            </h:commandLink>&nbsp;&nbsp;
+                        </c:if>
+
+                        <!-- "Sign In" and "Create an Account" if no user is signed in -->
+                        <c:if test="#{accountManager.isLoggedIn() == false}">
+                            <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
+                            <h:link outcome="SignIn" styleClass="arialTen">
+                                <i class="fa fa-sign-in">&nbsp;</i>Sign In
+                            </h:link>&nbsp;&nbsp;
+
+                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
+                            <h:link outcome="CreateAccount" styleClass="arialTen">
+                                <i class="fa fa-user-plus">&nbsp;</i>Create an Account
+                            </h:link>&nbsp;&nbsp;
+                        </c:if>
+
+                    </td>
+                </tr>
+            </table>
+
+        </h:form>
+
+    </ui:composition>
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+</html>

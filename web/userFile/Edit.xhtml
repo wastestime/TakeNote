@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserFileEditDlg" widgetVar="UserFileEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditUserFileTitle}">
+            <h:form id="UserFileEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{userFileController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditUserFileLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{userFileController.selected.id}" title="#{bundle.EditUserFileTitle_id}" required="true" requiredMessage="#{bundle.EditUserFileRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditUserFileLabel_filename}" for="filename" />
+                        <p:inputText id="filename" value="#{userFileController.selected.filename}" title="#{bundle.EditUserFileTitle_filename}" required="true" requiredMessage="#{bundle.EditUserFileRequiredMessage_filename}"/>
+                        <p:outputLabel value="#{bundle.EditUserFileLabel_noteId}" for="noteId" />
+                        <p:selectOneMenu id="noteId" value="#{userFileController.selected.noteId}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{notesController.itemsAvailableSelectOne}"
+                                           var="noteIdItem"
+                                           itemValue="#{noteIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userFileController.update}" value="#{bundle.Save}" update="display,:UserFileListForm:datalist,:growl" oncomplete="handleSubmit(args, 'UserFileEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UserFileEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

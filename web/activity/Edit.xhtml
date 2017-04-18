@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ActivityEditDlg" widgetVar="ActivityEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditActivityTitle}">
+            <h:form id="ActivityEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{activityController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditActivityLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{activityController.selected.id}" title="#{bundle.EditActivityTitle_id}" required="true" requiredMessage="#{bundle.EditActivityRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditActivityLabel_action}" for="action" />
+                        <p:inputText id="action" value="#{activityController.selected.action}" title="#{bundle.EditActivityTitle_action}" required="true" requiredMessage="#{bundle.EditActivityRequiredMessage_action}"/>
+                        <p:outputLabel value="#{bundle.EditActivityLabel_noteId}" for="noteId" />
+                        <p:selectOneMenu id="noteId" value="#{activityController.selected.noteId}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{notesController.itemsAvailableSelectOne}"
+                                           var="noteIdItem"
+                                           itemValue="#{noteIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{activityController.update}" value="#{bundle.Save}" update="display,:ActivityListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ActivityEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ActivityEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
