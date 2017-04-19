@@ -1,15 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
-Created by Luke Mazzu on 2017.04.16 
-Copyright © 2017 Luke Mazzu. All rights reserved.
+Created by Osman Balci on 2017.01.28
+Copyright © 2017 Osman Balci. All rights reserved.
 -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Upload File(s)"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <!-- 
+            The enctype attribute sets the content type of the data to be submitted to the server.  
+            enctype="multipart/form-data" is required when the form used has a file upload control.
+            -->
+            <h:form enctype="multipart/form-data">
+
+                <div align="center">
+
+                    <h2>Upload File</h2>
+
+                    <div class="arialTen">
+                        Click Choose to select one or more files or drag one or more files and drop on the white area.
+                    </div>
+                    <br/>
+
+                    <p:fileUpload fileUploadListener="#{noteUploadManager.handleFileUpload}" multiple="false" 
+                                  mode="advanced" sizeLimit="10000000" fileLimit="1"
+                                  dragDropSupport="true" update="messages" />
+                    <br/>
+                    <!-- Allow maximum 10MB file size and no more than 5 files to upload at the same time -->
+                    <br/><br/>
+
+                    <p:growl id="messages" showDetail="true" />
+                    <br/>
+                </div>
+            </h:form>
+
+        </ui:define>
+
+    </ui:composition>
 </html>
