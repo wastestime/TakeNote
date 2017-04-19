@@ -62,21 +62,24 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                         <!-- "Sign Out" and "My Account" if a user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <h:link outcome="index" styleClass="arialTen">
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h:link>&nbsp;&nbsp;
 
                             <h:link outcome="Notes" styleClass="arialTen">
                                 <i class="fa fa-heart">&nbsp;</i>Notes
-                            </h:link>&nbsp;&nbsp;
-
-                            <h:link outcome="Contacts" styleClass="arialTen">
-                                <i class="fa fa-heart">&nbsp;</i>Contacts
                             </h:link>&nbsp;&nbsp;
 
                             <h:link outcome="Upload" styleClass="arialTen">
                                 <i class="fa fa-heart">&nbsp;</i>Upload
                             </h:link>&nbsp;&nbsp;
 
+                            <h:link outcome="Contacts" styleClass="arialTen">
+                                <i class="fa fa-heart">&nbsp;</i>Contacts
+                            </h:link>&nbsp;&nbsp;
+
                             <h:link outcome="Profile" styleClass="arialTen">
-                                <i class="fa fa-user">&nbsp;</i>My Account
+                                <i class="fa fa-user">&nbsp;</i>Profile
                             </h:link>&nbsp;&nbsp;
 
                             <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
@@ -87,13 +90,17 @@ Copyright © 2017 Osman Balci. All rights reserved.
                         <!-- "Sign In" and "Create an Account" if no user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == false}">
                             <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
+                            <h:link outcome="index" styleClass="arialTen">
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h:link>&nbsp;&nbsp;
+                            
                             <h:link outcome="SignIn" styleClass="arialTen">
-                                <i class="fa fa-sign-in">&nbsp;</i>Sign In
+                                <i class="fa fa-sign-in">&nbsp;</i>Log In
                             </h:link>&nbsp;&nbsp;
 
                             <!-- Clicking "My Account" displays the Profile.xhtml file -->
                             <h:link outcome="CreateAccount" styleClass="arialTen">
-                                <i class="fa fa-user-plus">&nbsp;</i>Create an Account
+                                <i class="fa fa-user-plus">&nbsp;</i>Sign-Up
                             </h:link>&nbsp;&nbsp;
                         </c:if>
 

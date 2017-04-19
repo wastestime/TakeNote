@@ -27,5 +27,15 @@ public class NotesFacade extends AbstractFacade<Notes> {
     public NotesFacade() {
         super(Notes.class);
     }
-    
+        public Notes findById(int id) {
+        if (em.createQuery("SELECT c FROM Notes c WHERE c.id = :id")
+                .setParameter("note_id", id)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Notes) (em.createQuery("SELECT c FROM Notes c WHERE c.username = :username")
+                    .setParameter("note_id", id)
+                    .getSingleResult());
+        }
+    }
 }

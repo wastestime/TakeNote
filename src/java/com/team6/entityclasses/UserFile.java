@@ -4,6 +4,7 @@
  */
 package com.team6.entityclasses;
 
+import com.team6.managers.Constants;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -22,17 +23,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Thomas
+ * @author Balci
  */
 @Entity
 @Table(name = "UserFile")
 @XmlRootElement
+
 @NamedQueries({
     @NamedQuery(name = "UserFile.findAll", query = "SELECT u FROM UserFile u")
     , @NamedQuery(name = "UserFile.findById", query = "SELECT u FROM UserFile u WHERE u.id = :id")
-    , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")})
+    , @NamedQuery(name = "UserFile.findUserFilesByNoteId", query = "SELECT u FROM UserFile u WHERE u.noteId.id = :noteId")
+    , @NamedQuery(name = "UserFile.findByFilename", query = "SELECT u FROM UserFile u WHERE u.filename = :filename")
+})
+
 public class UserFile implements Serializable {
 
+    /*
+    ========================================================
+    Instance variables representing the attributes (columns)
+    of the UserFile table in the CloudDriveDB database.
+    ========================================================
+     */
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +59,12 @@ public class UserFile implements Serializable {
     @ManyToOne
     private Notes noteId;
 
+    /*
+    ===================================================================
+    Class constructors for instantiating a UserFile entity object to
+    represent a row in the UserFile table in the CloudDriveDB database.
+    ===================================================================
+     */
     public UserFile() {
     }
 
@@ -60,6 +77,12 @@ public class UserFile implements Serializable {
         this.filename = filename;
     }
 
+    /*
+    ======================================================
+    Getter and Setter methods for the attributes (columns)
+    of the UserFile table in the CloudDriveDB database.
+    ======================================================
+     */
     public Integer getId() {
         return id;
     }
@@ -84,6 +107,14 @@ public class UserFile implements Serializable {
         this.noteId = noteId;
     }
 
+    /*
+    ================
+    Instance Methods
+    ================
+     */
+    /**
+     * @return Generates and returns a hash code value for the object with id
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -91,6 +122,12 @@ public class UserFile implements Serializable {
         return hash;
     }
 
+    /**
+     * Checks if the UserFile object identified by 'object' is the same as the UserFile object identified by 'id'
+     *
+     * @param object The UserFile object identified by 'object'
+     * @return True if the UserFile 'object' and 'id' are the same; otherwise, return False
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -104,9 +141,21 @@ public class UserFile implements Serializable {
         return true;
     }
 
+    /**
+     * @return the String representation of a UserFile id
+     */
     @Override
     public String toString() {
         return "com.team6.entityclasses.UserFile[ id=" + id + " ]";
     }
-    
+
+    /*
+    ===================================================
+    The following method is added to the generated code
+    ===================================================
+     */
+    public String getFilePath() {
+        return Constants.FILES_ABSOLUTE_PATH + getFilename();
+    }
+
 }
