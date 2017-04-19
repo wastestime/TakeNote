@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Osman Balci on 2016.11.30 
-Copyright © 2016 Osman Balci. All rights reserved.
+Created by Osman Balci on 2017.01.28
+Copyright © 2017 Osman Balci. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -16,9 +16,44 @@ Copyright © 2016 Osman Balci. All rights reserved.
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
 
+            <!-- 
+            =================================================================================
+            This Image Slider is adapted from http://www.menucool.com/javascript-image-slider 
+            It uses the following files:
+                - js-image-slider.css
+                - js-image-slider.js
+                - bullet.png
+
+            The following references are included in the siteTemplate.xhtml file:
+                <h:outputStylesheet library="css" name="js-image-slider.css" />
+                <script src="resources/js/js-image-slider.js" type="text/javascript"></script>
+            =================================================================================
+            -->
+            <!-- TODO change images for image slider-->
+            <div id="sliderFrame">
+                <div id="slider">
+                    <!--
+                    Image captions are provided by the "alt" values and are displayed on gray background.
+                    -->
+                    <img src="resources/images/imageSliderPhotos/photo1.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo2.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo3.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo4.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo5.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo6.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo7.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo8.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo9.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo10.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo11.png" alt="" />
+                    <img src="resources/images/imageSliderPhotos/photo12.png" alt="" />
+                </div>
+            </div>
             <br /><br />
 
         </ui:define>
 
     </ui:composition>
     <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
+</html>
