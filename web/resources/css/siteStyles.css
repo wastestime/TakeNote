@@ -583,3 +583,7 @@ if content overflows an element's box.
     width: 40px;
     text-align: center;
 }
+
+.noBorders tr, .noBorders td {
+    border: none !important;
+}

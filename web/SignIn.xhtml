@@ -1,15 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Luke Mazzu on 2017.04.16 
-Copyright © 2017 Luke Mazzu. All rights reserved.
+Created by Osman Balci on 2016.04.23 
+Copyright © 2016 Osman Balci. All rights reserved.
 -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Sign In"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:70%; margin:0 auto;">
+
+                <h2>Sign In</h2>
+
+                <!-- Error messages will be shown here if any -->
+                <div align="center">
+                    <p:messages showIcon="false"/>
+                    <h:outputLabel id="form-error-message" class="errorMessages" 
+                                   value="#{loginManager.errorMessage}"/>
+                </div>
+                <br />
+                <h:form>
+                    <p:panelGrid columns="2" columnClasses="accountColumn1, accountColumn2">
+
+                        <h:outputLabel value="Username:" for="username" />
+                        <p:inputText id="username" value="#{loginManager.username}" required="true" 
+                                     requiredMessage="#{bundle.CreateUserRequiredMessage_username}" label="Username">
+                        </p:inputText>
+
+                        <h:outputLabel value="Password:" for="password" />
+                        <p:password id="password" value="#{loginManager.password}" feedback="false">
+                        </p:password>
+
+                    </p:panelGrid>
+                    <br/>
+                     <div>
+                        &nbsp;
+                    </div>
+                    <p:commandButton class="commandButton" id="login" value="Sign In" action="#{loginManager.loginUser()}" ajax="false" icon="ui-icon-arrowthick-1-e" />
+                    &nbsp;
+                    
+                    <p:button class="commandButton" id="create" value="Create an Account" outcome="/CreateAccount" icon="ui-icon-plus" />
+                    &nbsp;
+                    <p:commandButton class="commandButton"  id="retrieve" value="Forgot Password" action="#{loginManager.resetPassword()}" ajax="false" icon="ui-icon-refresh" />
+                    &nbsp;
+                    <p:button class="commandButton" outcome="index" value="Cancel" icon="ui-icon-cancel"></p:button>
+                    <div>
+                    &nbsp;
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+                </h:form>
+               
+                
+            </div>
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
 </html>

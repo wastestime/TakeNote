@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2016.04.23 
+Copyright © 2016 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Security Question"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <div align="center" style="width:50%; margin:0 auto;">
+
+                <!-- Error messages will be shown here if any -->
+                <p:messages id="msgs" showIcon="false"/>
+                <h:outputLabel id="form-error-message" class="errorMessages" value="#{passwordResetManager.message}"/>
+
+                <h:form>
+                    <h2>Please Answer Your Security Question</h2>
+                    <fieldset>
+                        <div>&nbsp;</div>
+                        <div style="margin-bottom:20px">
+                            <h:outputLabel for="question" value="#{passwordResetManager.getSecurityQuestion()}" />
+                        </div>
+                        <div style="margin-bottom:10px">
+                            <p:inputText id="answer" value="#{passwordResetManager.answer}" required="true"
+                                         requiredMessage="Please enter your answer!" />
+                        </div>
+                        <br/>
+                        <p:commandButton class="commandButton" id="submit" value="Submit" update="msgs" icon="ui-icon-extlink"
+                                         action="#{passwordResetManager.securityAnswerSubmit()}"  />
+                        <p:spacer width="10" />
+                        <p:button class="commandButton" outcome="index" value="Cancel" icon="ui-icon-cancel" />
+                    </fieldset>
+                    <br/>                
+                </h:form>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>
