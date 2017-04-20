@@ -115,8 +115,8 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                                 <li class="verticalMenuItem">
                                     <!-- MY FILES -->
-                                    <h:link outcome="/userVideo/List">
-                                        <i class="fa fa-files-o">&nbsp;</i>My Videos
+                                    <h:link outcome="/notes/List">
+                                        <i class="fa fa-files-o">&nbsp;</i>My Notes
                                     </h:link>
                                 </li>
 
@@ -136,34 +136,21 @@ Copyright © 2017 Osman Balci. All rights reserved.
                             <h2> #{accountManager.selected.firstName} #{accountManager.selected.lastName}'s Account Profile </h2>
 
                             <!-- USER'S PROFILE PHOTO -->
-                            <h:graphicImage class="profilePhoto" value="#{accountManager.photoStorageDirectoryName()}#{accountManager.userPhoto()}" />
+                            <h:graphicImage class="profilePhoto" value="#{accountManager.userPhoto()}" />
                             <br />
                             <br />
                             <p:panelGrid columns="2" columnClasses="profileColumn1, profileColumn2" >
 
                                 <h:outputText value="#{bundle.ViewUserLabel_firstName}"/>
                                 <h:outputText value="#{accountManager.selected.firstName}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_middleName}"/>
-                                <h:outputText value="#{accountManager.selected.middleName}" />
-
+                                
                                 <h:outputText value="#{bundle.ViewUserLabel_lastName}"/>
                                 <h:outputText value="#{accountManager.selected.lastName}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_address1}"/>
-                                <h:outputText value="#{accountManager.selected.address1}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_address2}"/>
-                                <h:outputText value="#{accountManager.selected.address2}" />
-
-                                <h:outputText value="#{bundle.ViewUserLabel_city}"/>
-                                <h:outputText value="#{accountManager.selected.city}" />
 
                                 <h:outputText value="#{bundle.ViewUserLabel_state}"/>
                                 <h:outputText value="#{accountManager.selected.state}" />
 
-                                <h:outputText value="#{bundle.ViewUserLabel_zipcode}"/>
-                                <h:outputText value="#{accountManager.selected.zipcode}" />
+ 
 
                                 <h:outputText value="#{bundle.ViewUserLabel_email}"/>
                                 <h:outputText value="#{accountManager.selected.email}" />

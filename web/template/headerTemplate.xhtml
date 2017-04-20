@@ -52,7 +52,6 @@ Copyright © 2017 Guoxin Sun. All rights reserved.
                             <i class="fa fa-home">&nbsp;</i>Home
                         </h:link>&nbsp;&nbsp;
                         
-                      
                         <!-- "Sign Out" and "My Account" if a user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
                             <!-- Clicking "Sign Out" invokes accountManager's logout() method -->
@@ -65,10 +64,10 @@ Copyright © 2017 Guoxin Sun. All rights reserved.
                                 <i class="fa fa-user">&nbsp;</i>My Account
                             </h:link>&nbsp;&nbsp;
 
-                            <!-- Clicking "My Notes" displays the UserNotes.xhtml file
+                            <!-- Clicking "My Notes" displays the List.xhtml file  -->
                             <h:link outcome="/notes/List" styleClass="arialTen">
-                                <i class="fa fa-files-o">&nbsp;</i>My Videos
-                            </h:link>&nbsp;&nbsp; -->
+                                <i class="fa fa-files-o">&nbsp;</i>My Notes
+                            </h:link>&nbsp;&nbsp;
                         </c:if>
 
                         <!-- "Sign In" and "Create an Account" if no user is signed in -->

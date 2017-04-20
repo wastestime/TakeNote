@@ -40,34 +40,13 @@ Copyright © 2016 Osman Balci. All rights reserved.
                         <p:inputText id="firstName" value="#{accountManager.selected.firstName}" required="true" styleClass="accountInputTextField"
                                      requiredMessage="#{bundle.EditUserRequiredMessage_firstName}" label="First Name">
                             <f:validateLength minimum="2" />
-                        </p:inputText>   
-
-                        <p:outputLabel value="#{bundle.EditUserLabel_middleName}" for="middleName" />
-                        <p:inputText id="middleName" value="#{accountManager.selected.middleName}"
-                                     required="false" styleClass="accountInputTextField" label="Middle Name">
                         </p:inputText>
-
+                        
                         <p:outputLabel value="#{bundle.EditUserLabel_lastName}" for="lastName" />
                         <p:inputText id="lastName" value="#{accountManager.selected.lastName}" required="true" styleClass="accountInputTextField"
                                      requiredMessage="#{bundle.EditUserRequiredMessage_lastName}" label="Last Name">
                             <f:validateLength minimum="2" />
-                        </p:inputText>
-
-                        <p:outputLabel value="#{bundle.EditUserLabel_address1}" for="address1" />
-                        <p:inputText id="address1" value="#{accountManager.selected.address1}" required="true" styleClass="accountInputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_address1}" label="Address Line 1">
-                            <f:validateLength minimum="2" />
-                        </p:inputText>
-
-                        <p:outputLabel value="#{bundle.EditUserLabel_address2}" for="address2" />
-                        <p:inputText id="address2" value="#{accountManager.selected.address2}" styleClass="accountInputTextField" label="Address Line 2">
-                        </p:inputText>
-
-                        <p:outputLabel value="#{bundle.EditUserLabel_city}" for="city" />
-                        <p:inputText id="city" value="#{accountManager.selected.city}" required="true" styleClass="accountInputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_city}" label="City">
-                            <f:validateLength minimum="2" />
-                        </p:inputText>
+                        </p:inputText> 
 
                         <p:outputLabel value="#{bundle.EditUserLabel_state}" for="state" />
                         <h:selectOneMenu id="state" value="#{accountManager.selected.state}" required="true" >
@@ -75,12 +54,6 @@ Copyright © 2016 Osman Balci. All rights reserved.
                                            itemLabel="#{state}" itemValue="#{state}" />
                         </h:selectOneMenu>
 
-                        <p:outputLabel value="#{bundle.EditUserLabel_zipcode}" for="zipcode" />
-                        <p:inputText id="zipcode" value="#{accountManager.selected.zipcode}" required="true" styleClass="accountInputTextField"
-                                     requiredMessage="#{bundle.EditUserRequiredMessage_zipcode}" label="Zip Code" >
-                            <f:validateLength minimum="5" />
-                            <f:validator validatorId="zipCodeValidator"/> 
-                        </p:inputText>
 
                         <p:outputLabel value="#{bundle.EditUserLabel_email}" for="email" />
                         <p:inputText id="email" value="#{accountManager.selected.email}" required="true" styleClass="accountInputTextField"
