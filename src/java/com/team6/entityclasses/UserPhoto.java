@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     /* The following query is added. The others are auto generated */
-    @NamedQuery(name = "UserPhoto.findPhotosByUserID", query = "SELECT p FROM UserPhoto p WHERE p.userId.id = :userId")
+    @NamedQuery(name = "UserPhoto.findUserPhotosByUserID", query = "SELECT p FROM UserPhoto p WHERE p.userId.id = :userId")
     , @NamedQuery(name = "UserPhoto.findAll", query = "SELECT u FROM UserPhoto u")
     , @NamedQuery(name = "UserPhoto.findById", query = "SELECT u FROM UserPhoto u WHERE u.id = :id")
     , @NamedQuery(name = "UserPhoto.findByExtension", query = "SELECT u FROM UserPhoto u WHERE u.extension = :extension")
@@ -199,6 +199,15 @@ public class UserPhoto implements Serializable {
     
     public String getTemporaryFilePath() {
         return Constants.PHOTOS_ABSOLUTE_PATH + "tmp_file";
+    }
+    
+    /*
+    Customer's photo thumbnail image file is named as 
+    the primary key (id) of the customer's photo_thumbnail.file extension name.
+    Example: 38_thumbnail.jpeg
+     */
+    public String getThumbnailName() {
+        return getId() + "_thumbnail." + getExtension();
     }
 
 }

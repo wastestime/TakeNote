@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
     , @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName")
+    , @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName")
     , @NamedQuery(name = "User.findByState", query = "SELECT u FROM User u WHERE u.state = :state")
     , @NamedQuery(name = "User.findBySecurityQuestion", query = "SELECT u FROM User u WHERE u.securityQuestion = :securityQuestion")
     , @NamedQuery(name = "User.findBySecurityAnswer", query = "SELECT u FROM User u WHERE u.securityAnswer = :securityAnswer")})
@@ -72,6 +73,11 @@ public class User implements Serializable {
     private String firstName;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 32)
+    @Column(name = "last_name")
+    private String lastName;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 2)
     @Column(name = "state")
     private String state;
@@ -103,12 +109,13 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String username, String password, String email, String firstName, String state, int securityQuestion, String securityAnswer) {
+    public User(Integer id, String username, String password, String email, String firstName, String lastName, String state, int securityQuestion, String securityAnswer) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.state = state;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
@@ -152,6 +159,14 @@ public class User implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+    
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getState() {

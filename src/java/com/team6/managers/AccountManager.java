@@ -82,12 +82,8 @@ public class AccountManager implements Serializable {
     private String newPassword;
 
     private String firstName;
-    private String middleName;
     private String lastName;
 
-    private String address1;
-    private String address2;
-    private String city;
     private String state;
     private String zipcode;
 
@@ -171,44 +167,12 @@ public class AccountManager implements Serializable {
         this.firstName = firstName;
     }
 
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
     public String getLastName() {
         return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getAddress1() {
-        return address1;
-    }
-
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getState() {
@@ -364,6 +328,7 @@ public class AccountManager implements Serializable {
                 entered by the user in the AccountCreationForm in CreateAccount.xhtml
                 */
                 newUser.setFirstName(firstName);
+                newUser.setLastName(lastName);
                 newUser.setState(state);
                 newUser.setSecurityQuestion(securityQuestion);
                 newUser.setSecurityAnswer(securityAnswer);
@@ -411,7 +376,7 @@ public class AccountManager implements Serializable {
                 the user in the EditAccountProfileForm in EditAccount.xhtml.
                 */
                 editUser.setFirstName(this.selected.getFirstName());
-
+                editUser.setLastName(this.selected.getLastName());
                 editUser.setState(this.selected.getState());
                 editUser.setEmail(this.selected.getEmail());
 
@@ -711,8 +676,8 @@ public class AccountManager implements Serializable {
 
         // Reset the logged-in User's properties
         username = password = "";
-        firstName = middleName = lastName = "";
-        address1 = address2 = city = state = zipcode = "";
+        firstName = lastName = "";
+         state = zipcode = "";
         securityQuestion = 0;
         securityAnswer = "";
         email = statusMessage = "";
@@ -736,7 +701,7 @@ public class AccountManager implements Serializable {
         // Obtain the id (primary key in the database) of the signedInUser object
         Integer userId = signedInUser.getId();
 
-        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserID(userId);
+        List<UserPhoto> photoList = getUserPhotoFacade().findUserPhotosByUserID(userId);
 
         if (photoList.isEmpty()) {
             /*
@@ -781,7 +746,7 @@ public class AccountManager implements Serializable {
         Obtain the list of Photo objects that belong to the User whose
         database primary key is userId.
          */
-        List<UserPhoto> photoList = getUserPhotoFacade().findPhotosByUserID(userId);
+        List<UserPhoto> photoList = getUserPhotoFacade().findUserPhotosByUserID(userId);
 
         if (!photoList.isEmpty()) {
 
@@ -843,6 +808,17 @@ public class AccountManager implements Serializable {
                 }
             }
         }
+    }
+    
+    
+ 
+
+    public void setUserPhotoFacade(UserPhotoFacade userPhotoFacade) {
+        this.userPhotoFacade = userPhotoFacade;
+    }
+    // EL in Profile.xhtml invokes this method to obtain the constant value
+    public String photoStorageDirectoryName() {
+        return Constants.PHOTOS_ABSOLUTE_PATH;
     }
 
 }
