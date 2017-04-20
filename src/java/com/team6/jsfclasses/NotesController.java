@@ -6,6 +6,7 @@ import com.team6.jsfclasses.util.JsfUtil.PersistAction;
 import com.team6.sessionbeans.NotesFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -56,6 +57,7 @@ public class NotesController implements Serializable {
     }
 
     public void create() {
+        System.out.println("aaaaaaaaa");
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NotesCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -79,6 +81,23 @@ public class NotesController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+
+    public void getParams() {
+
+        prepareCreate();
+//        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+//                .get("id");
+//        selected.setId(Integer.parseInt(id));
+        selected.setTitle("test");
+        Date currDate = new Date();
+//        currDate.getTime();
+        selected.setCreatedTime(currDate);
+        selected.setModifiedTime(currDate);
+        selected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+                .get("content"));
+        create();
+        //System.out.print(content);
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
