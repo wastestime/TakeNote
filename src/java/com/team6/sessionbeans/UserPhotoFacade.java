@@ -40,9 +40,9 @@ public class UserPhotoFacade extends AbstractFacade<UserPhoto> {
      * @param userID is the Primary Key of the User entity in a table row in the CloudDriveDB database.
      * @return a list of photos associated with the User whose primary key is userID
      */
-    public List<UserPhoto> findPhotosByUserID(Integer userID) {
+    public List<UserPhoto> findUserPhotosByUserID(Integer userID) {
 
-        return (List<UserPhoto>) em.createNamedQuery("UserPhoto.findPhotosByUserID")
+        return (List<UserPhoto>) em.createNamedQuery("UserPhoto.findUserPhotosByUserID")
                 .setParameter("userId", userID)
                 .getResultList();
     }

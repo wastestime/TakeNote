@@ -4,12 +4,131 @@ Created by Luke Mazzu on 2017.04.16
 Copyright © 2017 Luke Mazzu. All rights reserved.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/siteTemplate.xhtml">
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Edit Page"></h:outputText>
+        </ui:define>
+
+        <ui:define name="editableContent">
+
+            <h1>
+                <title>Edit Note</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <script src='resources/js/tinymce/tinymce.min.js'></script>
+                <script src="jquery-3.2.0.min.js"></script>
+                <script>
+                    //            function testAjax() {
+                    //                $.ajax({
+                    //                  url: "getvalue.php", 
+                    //                  data: "",
+                    //                  success: function(e) {
+                    //
+                    //                  }
+                    //               });
+                    //            }
+                    tinymce.init({
+                        selector: 'textarea', // note the comma at the end of the line!
+                        toolbar: 'example',
+                        theme: 'modern',
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                            'searchreplace wordcount visualblocks visualchars code fullscreen',
+                            'insertdatetime media nonbreaking save table contextmenu directionality',
+                            'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                        ],
+                        toolbar1: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                        toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+                        content_css: [
+                            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                            '//www.tinymce.com/css/codepen.min.css'
+                        ],
+                        save_enablewhendirty: true,
+                        save_onsavecallback: function sendParams() {
+                            // USE THIS IN YOUR AJAX CALL
+
+                            var cont = tinymce.get('mytextarea').getContent();
+                            passToJSFManagedBean([{
+                                    name: 'id',
+                                    value: 1
+                                },
+                                {
+                                    name: 'content',
+                                    value: cont
+                                }
+                            ]);
+
+                           // alert("aaa");
+                            // notesController.prepareCreate();
+                            //notesController.selected.id = 1;
+                        },
+
+                        setup:
+                                function (ed) {
+                                    // ed.insertContent('predefine');
+                                    ed.on("init",
+                                            function (ed) {
+                                                tinyMCE.get('mytextarea').setContent("Please start to type words!");
+                                                tinyMCE.execCommand('mceRepaint');
+                                            }
+                                    );
+                                    ed.addButton('example', {
+                                        title: 'My title',
+                                        onclick: function () {
+                                            ed.hide();
+                                        }
+                                    });
+
+
+                                }
+                    }
+                    );
+                    //            
+                    //            
+                    //            tinyMCE.get('mytextarea').setContent("ssss");
+                    //            tinyMCE.execCommand('mceRepaint');
+
+                </script>
+            </h1>
+
+            <body>
+                <h1>==title==</h1>
+                <form method="post">
+                    <textarea id="mytextarea"  rows="20" cols="20" />
+                </form>
+
+                <h:form>
+                    <p:remoteCommand name="passToJSFManagedBean" id="passToJSFManagedBeancmd"
+                                     action="#{notesController.getParams}"
+                                     process="@this" />
+                </h:form>
+                <!--
+                <input type="button" value = "save" onclick= "doy()"/> 
+                -->
+                <script type="text/javascript">
+                    function doy() {
+                        var tmp = tinymce.get('mytextarea').getContent();
+
+                        notesController.selected.id = 1;
+                        alert(tmp);
+
+                        notesController.selected.title = "==title==";
+                        notesController.selected.createdTime = Date.getTime();
+                        notesController.selected.modifiedTime = Date.getTime();
+                        notesController.selected.content = tinymce.get('mytextarea').getContent();
+                        notesController.create();
+
+
+                    }
+                </script>
+            </body>
+
+        </ui:define>
+    </ui:composition >
 </html>
