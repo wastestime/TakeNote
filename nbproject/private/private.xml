@@ -3,17 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/entityclasses/Activity.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/jsfclasses/NotesController.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/Editor.xhtml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/build.xml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/entityclasses/UserPhoto.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/nbproject/private/private.properties</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/Notes.xhtml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/index.xhtml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/entityclasses/Notes.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/nbproject/project.properties</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/.gitignore</file>
+            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/template/headerTemplate.xhtml</file>
+            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/CreateAccount.xhtml</file>
+            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/Profile.xhtml</file>
+            <file>file:/Users/think7z/NetBeansProjects/TakeNote/.gitignore</file>
+            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/resources/css/siteStyles.css</file>
+            <file>file:/Users/think7z/NetBeansProjects/TakeNote/TakeNotesDB.sql</file>
+            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/DeleteAccountDialog.xhtml</file>
+            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/Editor.xhtml</file>
         </group>
     </open-files>
 </project-private>
