@@ -57,7 +57,7 @@ public class NotesController implements Serializable {
     }
 
     public void create() {
-        System.out.println("aaaaaaaaa");
+        System.out.println("bbb");
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NotesCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -66,6 +66,19 @@ public class NotesController implements Serializable {
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("NotesUpdated"));
+    }
+
+    public String getCurrentNote() {
+        if (selected == null) {
+            return "Please Start typing!";
+        }
+        return selected.getContent();
+    }
+     public String getCurrentTitle() {
+        if (selected == null) {
+            return "==title==";
+        }
+        return selected.getTitle();
     }
 
     public void destroy() {
@@ -83,8 +96,8 @@ public class NotesController implements Serializable {
         return items;
     }
 
-    public void getParams() {
-
+    public void getSavedContent() {
+        System.out.println("aaaa1");
         prepareCreate();
 //        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
 //                .get("id");

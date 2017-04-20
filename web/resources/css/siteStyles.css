@@ -245,6 +245,17 @@ Other Style Definitions
     font-weight: normal;
     color: darkred;
 }
+.editorTitle{
+   color: #111; 
+   font-family: 'Lato', sans-serif; 
+   font-size: 54px; 
+   font-weight: 300; 
+   line-height: 58px; 
+   margin: 0 0 58px;
+   align: left;
+   padding-left: 40px;
+
+}
 
 /* Used in CreateAccount, EditAccount, SignIn, and Profile */
 .createColumn1, .viewColumn1 {
@@ -257,7 +268,7 @@ Other Style Definitions
 .createColumn2, .viewColumn2 {
     text-align: left;
     background-color: #FFEBCD;   /* Blanched Almond  */
-    
+
 }
 
 /* Used in CreateAccount, EditAccount, SignIn, and Profile */
@@ -561,7 +572,7 @@ if content overflows an element's box.
     width: 50px;
     white-space: nowrap;  /* Disallow line break */
     padding: 2px;
-    
+
 }
 
 .viewColumnTwo {
