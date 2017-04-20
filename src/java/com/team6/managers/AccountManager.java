@@ -85,7 +85,6 @@ public class AccountManager implements Serializable {
     private String lastName;
 
     private String state;
-    private String zipcode;
 
     private int securityQuestion;
     private String securityAnswer;
@@ -181,14 +180,6 @@ public class AccountManager implements Serializable {
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zip_code) {
-        this.zipcode = zip_code;
     }
 
     public int getSecurityQuestion() {
@@ -677,7 +668,7 @@ public class AccountManager implements Serializable {
         // Reset the logged-in User's properties
         username = password = "";
         firstName = lastName = "";
-         state = zipcode = "";
+        state = "";
         securityQuestion = 0;
         securityAnswer = "";
         email = statusMessage = "";

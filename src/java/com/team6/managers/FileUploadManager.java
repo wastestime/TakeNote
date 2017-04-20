@@ -193,6 +193,41 @@ public class FileUploadManager implements Serializable {
         }
 
     }
+    
+    public void handleNoteUpload(FileUploadEvent event) throws IOException {
+
+        try {
+            String user_name = (String) FacesContext.getCurrentInstance()
+                    .getExternalContext().getSessionMap().get("username");
+
+            User user = getUserFacade().findByUsername(user_name);
+
+            /*
+            To associate the file to the user, record "userId_filename" in the database.
+            Since each file has its own primary key (unique id), the user can upload
+            multiple files with the same name.
+             */
+            String userId_filename = user.getId() + "_" + event.getFile().getFileName();
+
+            /*
+            "The try-with-resources statement is a try statement that declares one or more resources. 
+            A resource is an object that must be closed after the program is finished with it. 
+            The try-with-resources statement ensures that each resource is closed at the end of the
+            statement." [Oracle] 
+             */
+            try (InputStream inputStream = event.getFile().getInputstream();) {
+
+                convertTextFileToNote(inputStream);
+                inputStream.close();
+            }
+            
+        } catch (IOException e) {
+            resultMsg = new FacesMessage("Something went wrong during file upload! See: " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, resultMsg);
+        }
+
+            //save string of note content, redirect page to editor with content filled in
+    }
 
     // Show the File Upload Page
     public String showFileUploadPage() {
@@ -280,6 +315,11 @@ public class FileUploadManager implements Serializable {
         outStream.close();
 
         return targetFile;
+    }
+    
+    private Notes convertTextFileToNote(InputStream inputStream) {
+        //TODO: Convert text to note
+        return new Notes();
     }
 
     /**

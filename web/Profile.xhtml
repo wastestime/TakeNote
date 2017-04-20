@@ -112,7 +112,12 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                                     <!-- ****************** Delete Account End **************************** -->
                                 </li>
-
+                                <li class="verticalMenuItem">
+                                    <!-- MY FILES -->
+                                    <h:link outcome="/Contacts">
+                                        <i class="fa fa-users">&nbsp;</i>My Contacts
+                                    </h:link>
+                                </li>
                                 <li class="verticalMenuItem">
                                     <!-- MY FILES -->
                                     <h:link outcome="/notes/List">
@@ -143,14 +148,14 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                                 <h:outputText value="#{bundle.ViewUserLabel_firstName}"/>
                                 <h:outputText value="#{accountManager.selected.firstName}" />
-                                
+
                                 <h:outputText value="#{bundle.ViewUserLabel_lastName}"/>
                                 <h:outputText value="#{accountManager.selected.lastName}" />
 
                                 <h:outputText value="#{bundle.ViewUserLabel_state}"/>
                                 <h:outputText value="#{accountManager.selected.state}" />
 
- 
+
 
                                 <h:outputText value="#{bundle.ViewUserLabel_email}"/>
                                 <h:outputText value="#{accountManager.selected.email}" />
@@ -161,6 +166,39 @@ Copyright © 2017 Osman Balci. All rights reserved.
                             </p:panelGrid>
 
                         </td>
+
+                        <!-- The third <td> contains the USER PROFILE DATA -->
+
+                        <td width="180" align="center" valign="middle" nowrap="nowrap">
+                            <ul class="verticalMenu">
+                                <li class="verticalMenuItem">
+                                    <!-- Recent Activities -->
+                                    <a>
+                                    <i class="fa fa-clone" aria-hidden="true">&nbsp;</i>Recent Activities
+                                    </a>
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #1 </h>
+                                    
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #2 </h> 
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #3 </h>
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #4 </h> 
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #5 </h> 
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #6 </h>
+                                </li>
+                            </ul>
+                        </td>
+
                     </tr>
                 </table>
 
