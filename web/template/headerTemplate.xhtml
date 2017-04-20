@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Osman Balci on 2017.01.28
-Copyright © 2017 Osman Balci. All rights reserved.
+Created by Guoxin Sun on 2017.04.03
+Copyright © 2017 Guoxin Sun. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!--
     *********************************************
@@ -22,23 +21,22 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
     <ui:composition>
-        <p:growl id="growl" life="4000" autoUpdate="true" />
         <h:form>
-
             <table border="0" cellspacing="0" cellpadding="10" width="100%">
                 <tr>
                     <td align="left" valign="middle">
 
                         <!-- Use absolute path for the image file since it will be accessed from all pages -->
-                        <h:link outcome="index"><img src="resources/images/VideosLogo.png"
-                                                     style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
-                                                     alt="Company Logo" />
+                        <h:link outcome="/index">
+                            <img src="#{resource['images:TakeNoteLogo.png']}"
+                                 style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
+                                 alt="Videos Logo" />
                         </h:link>
 
                     </td>
                     <td align="center" valign="middle">
 
-                        <!-- Welcome the user if signed in -->
+                        <!-- Welcome the customer if signed in -->  
                         <c:if test="#{accountManager.isLoggedIn() == true}">
                             <h1>Hello, #{accountManager.selected.firstName}</h1>
                         </c:if>
@@ -49,58 +47,49 @@ Copyright © 2017 Osman Balci. All rights reserved.
                     </td>
                     <td align="right" valign="middle">
 
-                        <!-- 
-                        With the i tag, you can access an icon given at http://fontawesome.io/icons/ by using
-                        its class name. For this to work, the following must be specified in the siteTemplate file:
-                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" />
-                        -->
-
                         <!-- Clicking "Home" displays the index.xhtml file -->
-                        <h:link outcome="index" styleClass="arialTen">
+                        <h:link outcome="/index" styleClass="arialTen">
                             <i class="fa fa-home">&nbsp;</i>Home
                         </h:link>&nbsp;&nbsp;
-
+                        
                         <!-- "Sign Out" and "My Account" if a user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
-                            <h:link outcome="index" styleClass="arialTen">
-                                <i class="fa fa-home">&nbsp;</i>Home
-                            </h:link>&nbsp;&nbsp;
-
-                            <h:link outcome="Notes" styleClass="arialTen">
-                                <i class="fa fa-heart">&nbsp;</i>Notes
-                            </h:link>&nbsp;&nbsp;
-
-                            <h:link outcome="Upload" styleClass="arialTen">
-                                <i class="fa fa-heart">&nbsp;</i>Upload
-                            </h:link>&nbsp;&nbsp;
-
-                            <h:link outcome="Contacts" styleClass="arialTen">
-                                <i class="fa fa-heart">&nbsp;</i>Contacts
-                            </h:link>&nbsp;&nbsp;
-
-                            <h:link outcome="Profile" styleClass="arialTen">
-                                <i class="fa fa-user">&nbsp;</i>Profile
-                            </h:link>&nbsp;&nbsp;
-
+                            <!-- Clicking "Sign Out" invokes accountManager's logout() method -->
                             <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
                                 <i class="fa fa-sign-out">&nbsp;</i>Sign Out
                             </h:commandLink>&nbsp;&nbsp;
+
+                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
+                            <h:link outcome="/Profile" styleClass="arialTen">
+                                <i class="fa fa-user">&nbsp;</i>My Account
+                            </h:link>&nbsp;&nbsp;
+                            
+                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
+                            <h:link outcome="/Contacts" styleClass="arialTen">
+                                <i class="fa fa-users" aria-hidden="true">&nbsp;</i>My Contacts
+                            </h:link>&nbsp;&nbsp;
+
+                            <!-- Clicking "My Notes" displays the List.xhtml file  -->
+                            <h:link outcome="/notes/List" styleClass="arialTen">
+                                <i class="fa fa-files-o">&nbsp;</i>My Notes
+                            </h:link>&nbsp;&nbsp;
+                            
+                            <!-- Clicking "Take Note" displays the Editor.xhtml file  -->
+                            <h:link outcome="/Editor" styleClass="arialTen">
+                                <i class="fa fa-files-o">&nbsp;</i>Take Note
+                            </h:link>&nbsp;&nbsp;
                         </c:if>
 
                         <!-- "Sign In" and "Create an Account" if no user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == false}">
                             <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
-                            <h:link outcome="index" styleClass="arialTen">
-                                <i class="fa fa-home">&nbsp;</i>Home
-                            </h:link>&nbsp;&nbsp;
-                            
-                            <h:link outcome="SignIn" styleClass="arialTen">
-                                <i class="fa fa-sign-in">&nbsp;</i>Log In
+                            <h:link outcome="/SignIn" styleClass="arialTen">
+                                <i class="fa fa-sign-in">&nbsp;</i>Sign In
                             </h:link>&nbsp;&nbsp;
 
                             <!-- Clicking "My Account" displays the Profile.xhtml file -->
-                            <h:link outcome="CreateAccount" styleClass="arialTen">
-                                <i class="fa fa-user-plus">&nbsp;</i>Sign-Up
+                            <h:link outcome="/CreateAccount" styleClass="arialTen">
+                                <i class="fa fa-user-plus">&nbsp;</i>Create an Account
                             </h:link>&nbsp;&nbsp;
                         </c:if>
 
@@ -109,8 +98,8 @@ Copyright © 2017 Osman Balci. All rights reserved.
             </table>
 
         </h:form>
-
     </ui:composition>
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
 </html>
+

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Osman Balci on 2016.04.23 
+Copyright © 2016 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Change Photo"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent"> 
+            <div align="center" style="width:50%; margin:0 auto;">
+                
+                <!-- The enctype attribute sets the content type of the data to be submitted to the server.  -->
+                <h:form id="ChangePhoto" enctype="multipart/form-data">
+
+                    <h2>Please Choose Your Photo File and Upload It</h2>
+
+                    <p:fileUpload id="file" value="#{fileManager.file}" mode="simple" />
+                    <br/><br/>
+                    <!-- fieldset is an HTML tag that draws a box around the content enclosed within it -->
+                    <fieldset>
+                        <p:commandButton class="commandButton" id="upload" value="Upload" ajax="false" 
+                                         action="#{fileManager.upload()}" icon="ui-icon-arrowthick-1-n" />
+                    </fieldset>
+                    <br/>
+                    <h:outputText styleClass="errorMessages" value="#{fileManager.message}" />
+                    <br/>
+                    <p:button class="commandButton" id="cancel" value="Cancel" outcome="Profile" icon="ui-icon-cancel" />
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+</html>

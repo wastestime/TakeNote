@@ -1,15 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Luke Mazzu on 2017.04.16 
-Copyright © 2017 Luke Mazzu. All rights reserved.
+Created by Osman Balci on 2017.01.28
+Copyright © 2017 Osman Balci. All rights reserved.
 -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <!-- This page is constructed based on the siteTemplate -->
+    <ui:composition template="template/siteTemplate.xhtml">
+
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="My Account"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+            <!--
+                You can place p:growl anywhere on your JSF page since the messages are displayed
+                as an overlay. The life attribute defines how long the message will be displayed 
+                in milliseconds after which it will fade away. 5000 milliseconds = 5 seconds
+                
+                All 'FacesMessage resultMsg' will be displayed here.
+            -->
+            <p:growl id="growl" life="5000" />
+
+            <h:form id="UserProfileForm">
+                <!--
+                <tr> defines a row in the table
+                <td> defines a column within a row.
+                Number of <td> elements = number of columns
+                The table below has 1 row and 2 columns.
+                Left column contains the vertical navigation menu.
+                Right column contains the user's profile data.
+                -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="10">
+                    <tr>
+                        <!-- The first <td> contains the VERTICAL NAVIGATION MENU -->
+
+                        <td width="180" align="left" valign="middle" nowrap="nowrap">
+                            <ul class="verticalMenu">
+
+                                <li class="verticalMenuItem">
+                                    <!-- HOME -->
+                                    <h:link outcome="index">
+                                        <i class="fa fa-home">&nbsp;</i>Home
+                                    </h:link>
+                                </li>
+
+                                <li class="verticalMenuItem">
+                                    <!-- EDIT PROFILE -->
+                                    <h:link outcome="EditAccount">
+                                        <i class="fa fa-pencil-square-o">&nbsp;</i>Edit Profile
+                                    </h:link>
+                                </li>
+
+                                <li class="verticalMenuItem"> 
+                                    <!-- CHANGE PHOTO -->
+                                    <h:link outcome="ChangePhoto">
+                                        <i class="fa fa-file-image-o">&nbsp;</i>Change Photo
+                                    </h:link>
+                                </li>
+
+                                <li class="verticalMenuItem">
+                                    <!-- CHANGE PASSWORD -->
+                                    <h:link outcome="EnterUsername">
+                                        <i class="fa fa-key">&nbsp;</i>Change Password
+                                    </h:link>
+                                </li>
+
+                                <li class="verticalMenuItem">
+                                    <!-- DELETE ACCOUNT -->
+
+                                    <!-- ****************** Delete Account Begin **************************** -->
+                                    <!-- 
+                                    When the user selects YES, ConfirmPasswordDialog in the included DeleteAccountDialog.xhtml file is
+                                    displayed, and the form with id ConfirmPasswordForm in the DeleteAccountDialog.xhtml is updated.
+                                    -->
+                                    <p:commandLink oncomplete="PF('ConfirmPasswordDialog').show()"
+                                                   update=":ConfirmPasswordForm" >
+
+                                        <label style="font-size: 10pt;">
+                                            <i class="fa fa-trash">&nbsp;</i>Delete Account
+                                        </label>
+
+                                        <p:confirm header="Account Deletion Confirmation" 
+                                                   message="Are you sure to permanently delete your account? This cannot be undone!" 
+                                                   icon="ui-icon-alert" />
+                                    </p:commandLink>
+                                    <!-- 
+                                    First, confirmation dialog is displayed to check if user really wants to delete the account.
+                                    If the user clicks YES, then ConfirmPasswordDialog is shown in the DeleteAccountDialog.xhtml file
+                                    to confirm the deletion by entering password. This provides double layer confirmation. 
+                                    -->
+
+                                    <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
+                                        <div align="center">
+
+                                            <p:commandButton value="NO" type="button" 
+                                                             styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            &nbsp;
+                                            <p:commandButton value="YES" type="button" 
+                                                             styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                        </div>
+                                    </p:confirmDialog>
+
+                                    <!-- ****************** Delete Account End **************************** -->
+                                </li>
+                                <li class="verticalMenuItem">
+                                    <!-- MY FILES -->
+                                    <h:link outcome="/Contacts">
+                                        <i class="fa fa-users">&nbsp;</i>My Contacts
+                                    </h:link>
+                                </li>
+                                <li class="verticalMenuItem">
+                                    <!-- MY FILES -->
+                                    <h:link outcome="/notes/List">
+                                        <i class="fa fa-files-o">&nbsp;</i>My Notes
+                                    </h:link>
+                                </li>
+
+                                <li class="verticalMenuItem">
+                                    <!-- SIGN OUT -->
+                                    <h:commandLink action="#{accountManager.logout()}">
+                                        <i class="fa fa-sign-out">&nbsp;</i>Sign Out
+                                    </h:commandLink>
+                                </li>
+                            </ul>
+
+                        </td>
+
+                        <!-- The second <td> contains the USER PROFILE DATA -->
+                        <td align="center" valign="top">
+
+                            <h2> #{accountManager.selected.firstName} #{accountManager.selected.lastName}'s Account Profile </h2>
+
+                            <!-- USER'S PROFILE PHOTO -->
+                            <h:graphicImage class="profilePhoto" value="#{accountManager.userPhoto()}" />
+                            <br />
+                            <br />
+                            <p:panelGrid columns="2" columnClasses="profileColumn1, profileColumn2" >
+
+                                <h:outputText value="#{bundle.ViewUserLabel_firstName}"/>
+                                <h:outputText value="#{accountManager.selected.firstName}" />
+
+                                <h:outputText value="#{bundle.ViewUserLabel_lastName}"/>
+                                <h:outputText value="#{accountManager.selected.lastName}" />
+
+                                <h:outputText value="#{bundle.ViewUserLabel_state}"/>
+                                <h:outputText value="#{accountManager.selected.state}" />
+
+
+
+                                <h:outputText value="#{bundle.ViewUserLabel_email}"/>
+                                <h:outputText value="#{accountManager.selected.email}" />
+
+                                <h:outputText value="#{bundle.ViewUserLabel_username}"/>
+                                <h:outputText value="#{accountManager.selected.username}" />
+
+                            </p:panelGrid>
+
+                        </td>
+
+                        <!-- The third <td> contains the USER PROFILE DATA -->
+
+                        <td width="180" align="center" valign="middle" nowrap="nowrap">
+                            <ul class="verticalMenu">
+                                <li class="verticalMenuItem">
+                                    <!-- Recent Activities -->
+                                    <a>
+                                    <i class="fa fa-clone" aria-hidden="true">&nbsp;</i>Recent Activities
+                                    </a>
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #1 </h>
+                                    
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #2 </h> 
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #3 </h>
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #4 </h> 
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #5 </h> 
+                                </li>
+                                <li class="verticalMenuItem"> 
+                                    <h> #6 </h>
+                                </li>
+                            </ul>
+                        </td>
+
+                    </tr>
+                </table>
+
+            </h:form>
+
+            <ui:include src="DeleteAccountDialog.xhtml"/>
+
+        </ui:define>
+
+    </ui:composition>
+    <!-- Do not enter tags after the composition line since they are ignored by JSF -->
+
 </html>
