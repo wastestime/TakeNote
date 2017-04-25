@@ -100,9 +100,9 @@ public class LoginManager implements Serializable {
         User user = getUserFacade().findByUsername(getUsername());
 
         if (user == null) {
-            errorMessage = "Entered username " + getUsername() + " does not exist!";
+            errorMessage = "Entered username " + getUsername() + " does not exist!";            
             return "";
-
+            
         } else {
             String actualUsername = user.getUsername();
             String enteredUsername = getUsername();
@@ -121,7 +121,7 @@ public class LoginManager implements Serializable {
             }
 
             errorMessage = "";
-
+            
             // Initialize the session map with user properties of interest
             initializeSessionMap(user);
 
