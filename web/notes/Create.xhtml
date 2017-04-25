@@ -12,8 +12,8 @@
             <h:form id="NotesCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{notesController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateNotesLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{notesController.selected.id}" title="#{bundle.CreateNotesTitle_id}" required="true" requiredMessage="#{bundle.CreateNotesRequiredMessage_id}"/>
+<!--                        <p:outputLabel value="#{bundle.CreateNotesLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{notesController.selected.id}" title="#{bundle.CreateNotesTitle_id}" required="true" requiredMessage="#{bundle.CreateNotesRequiredMessage_id}"/>-->
                         <p:outputLabel value="#{bundle.CreateNotesLabel_title}" for="title" />
                         <p:inputText id="title" value="#{notesController.selected.title}" title="#{bundle.CreateNotesTitle_title}" required="true" requiredMessage="#{bundle.CreateNotesRequiredMessage_title}"/>
                         <p:outputLabel value="#{bundle.CreateNotesLabel_createdTime}" for="createdTime" />

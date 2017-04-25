@@ -13,7 +13,8 @@
             <h:outputText value="#{bundle.ListNotesTitle}"></h:outputText>
         </ui:define>
 
-        <ui:define name="body">
+        <ui:define name="editableContent">
+            <p:growl id="growl" life="5000" />
             <h:form id="NotesListForm">
                 <p:panel header="#{bundle.ListNotesTitle}">
                     <p:dataTable id="datalist" value="#{notesController.items}" var="item"
