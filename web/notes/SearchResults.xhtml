@@ -40,7 +40,7 @@ Copyright © 2017 Lance Masters. All rights reserved.
                         Then notesController performs the search and returns applicable items here. 
                         The returned items are displayed in this page as the search results.
                         -->
-                        <p:dataTable id="notes" value="#{notesController.items}" var="item"
+                        <p:dataTable id="notes" value="#{notesController.searchItems}" var="item"
                                  selectionMode="single" selection="#{notesController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
