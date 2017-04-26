@@ -56,11 +56,11 @@
                                 <h:outputText styleClass="dataFields" value="#{item.description}"/>
                             </p:column>
 
-                            <p:column sortBy="#{item.userId.firstName}">
+                            <p:column sortBy="#{item.userId.username}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_owner}" styleClass="facetHeader"/>
                                 </f:facet>
-                                <h:outputText styleClass="dataFields" value="#{item.userId.getName()}"/>
+                                <h:outputText styleClass="dataFields" value="#{item.userId.username}"/>
                             </p:column>
                             
                             <p:column sortBy="#{item.createdTime}">
@@ -92,7 +92,7 @@
                             -->
 
                             <f:facet name="footer">
-                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" 
+                                <p:commandButton id="createButton" icon="ui-icon-plus" value="#{bundle.Create}" 
                                                  styleClass="commandButton" actionListener="#{notesController.prepareCreate}" />
 
                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" 

@@ -40,7 +40,7 @@ Copyright © 2017 Lance Masters. All rights reserved.
                         Then notesController performs the search and returns applicable items here. 
                         The returned items are displayed in this page as the search results.
                         -->
-                        <p:dataTable id="notes" value="#{notesController.searchItems}" var="item"
+                        <p:dataTable id="notes" value="#{notesController.items}" var="item"
                                  selectionMode="single" selection="#{notesController.selected}"
                                  paginator="true"
                                  rowKey="#{item.id}"
@@ -67,11 +67,11 @@ Copyright © 2017 Lance Masters. All rights reserved.
                                 <h:outputText styleClass="dataFields" value="#{item.description}"/>
                             </p:column>
 
-                            <p:column sortBy="#{item.userId.firstName}">
+                            <p:column sortBy="#{item.userId.username}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_owner}" styleClass="facetHeader"/>
                                 </f:facet>
-                                <h:outputText styleClass="dataFields" value="#{item.userId.getName()}"/>
+                                <h:outputText styleClass="dataFields" value="#{item.userId.username}"/>
                             </p:column>
                             
                             <p:column sortBy="#{item.createdTime}">
@@ -104,12 +104,11 @@ Copyright © 2017 Lance Masters. All rights reserved.
 
                             <f:facet name="footer">
                                 <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" 
-                                                 styleClass="commandButton" actionListener="#{notesController.prepareCreate}" 
-                                                 update=":NoteCreateForm" oncomplete="PF('NoteCreateDialog').show()"/>
+                                                 styleClass="commandButton" actionListener="#{notesController.prepareCreate}" />
 
                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" 
                                                  styleClass="commandButton" update=":NoteEditForm" oncomplete="PF('NoteEditDialog').show()" 
-                                                 disabled="#{empty notesController.selected or notesController.sameUser eq false}"/>
+                                                 disabled="#{empty notesController.selected or accountManager.checkSameUser(notesController.selected.userId) eq false}"/>
 
                                 <p:commandButton id="viewButton"   icon="ui-icon-document" value="#{bundle.View}" 
                                                  styleClass="commandButton" update=":NoteViewForm" oncomplete="PF('NoteViewDialog').show()" 
@@ -128,7 +127,7 @@ Copyright © 2017 Lance Masters. All rights reserved.
                                 -->
                                 <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
                                                  styleClass="commandButton" actionListener="#{notesController.destroy}" 
-                                                 update=":growl,notes" disabled="#{empty notesController.selected or notesController.sameUser eq false}">
+                                                 update=":growl,notes" disabled="#{empty notesController.selected or accountManager.checkSameUser(notesController.selected.userId) eq false}">
 
                                     <p:confirm header="Confirmation" 
                                                message="Are you sure you want to permanently delete the note from the database?" 
@@ -158,11 +157,14 @@ Copyright © 2017 Lance Masters. All rights reserved.
                                                  icon="ui-icon-arrowthick-1-s"
                                                  styleClass="commandButton" disabled="#{empty notesController.selected}" actionListener="#{notesController.getPDF()}" >
                                     
-                                    <p:fileDownload value="#{fileDownloadManager.file}" />
+                                    <p:fileDownload value="#{fileDownloadManager.pdf}" />
 
                                 </p:commandButton>
                                 
-                                <!-- Clicking the Back button redirects to the List.xhtml page. -->
+                                <p:commandButton id="searchButton" icon="ui-icon-search" value="#{bundle.Search}" 
+                                                 styleClass="commandButton" update=":NoteSearchForm" 
+                                                 oncomplete="PF('NoteSearchDialog').show()"/>
+                                
                                 <p:button id="backButton" icon="ui-icon-arrowreturn-1-w" 
                                           styleClass="commandButton" outcome="Notes" value="Go Back"/>
 
