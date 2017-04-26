@@ -66,7 +66,7 @@ public class NotesController implements Serializable {
         
         items = new LinkedList<>();
         
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        
         Date createdTime = new Date();
         Date modifiedTime = new Date();
         
@@ -200,6 +200,46 @@ public class NotesController implements Serializable {
         }
         return selected.getTitle();
     }
+     
+     public String getCurrentDescription() {
+          
+         if (selected == null)
+         {
+             return "==description==";
+         }
+         
+         return selected.getDescription();
+     }
+     
+     public String getCurrentUsername() {
+         
+         if (selected == null)
+         {
+             return "==username==";
+         }
+         
+         return selected.getUserId().getUsername();
+     }
+     
+     public String getCurrentCreatedTime() {
+         
+         if (selected == null)
+         {
+             return "==createdTime==";
+         }
+         
+         return selected.getCreatedTime().toString();
+     }
+     
+     public String getCurrentModifiedTime() {
+         
+         if (selected == null)
+         {
+             return "==modifiedTime==";
+         }
+         
+         return selected.getModifiedTime().toString();
+     }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NotesDeleted"));
@@ -281,9 +321,9 @@ public class NotesController implements Serializable {
             case "description":
 
                 return getNotesFacade().descriptionQuery(searchString);
-            case "userId":
-
-                return getNotesFacade().userIdQuery(searchString);
+            case "username":
+                
+                return getNotesFacade().usernameQuery(searchString);
             default:
 
                 return getNotesFacade().allQuery(searchString);
@@ -367,5 +407,6 @@ public class NotesController implements Serializable {
         this.toShareWith = toShareWith;
     }
 
+    
     
 }

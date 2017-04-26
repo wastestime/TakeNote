@@ -25,19 +25,19 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
 
                         <h:outputText value="#{bundle.ViewNoteLabel_title}"/>
-                        <h:outputText value="#{noteController.selected.title}" title="#{bundle.ViewNoteTitle_title}"/>
+                        <h:outputText value="#{notesController.currentTitle}" title="#{bundle.ViewNoteTitle_title}"/>
 
                         <h:outputText value="#{bundle.ViewNoteLabel_description}"/>
-                        <h:outputText value="#{noteController.selected.description}" title="#{bundle.ViewNoteTitle_description}"/>
+                        <h:outputText value="#{notesController.currentDescription}" title="#{bundle.ViewNoteTitle_description}"/>
 
                         <h:outputText value="#{bundle.ViewNoteLabel_userId}"/>
-                        <h:outputText value="#{noteController.selected.userId.getName()}" title="#{bundle.ViewNoteTitle_userId}"/>
+                        <h:outputText value="#{notesController.currentUsername}" title="#{bundle.ViewNoteTitle_userId}"/>
                         
                         <h:outputText value="#{bundle.ViewNoteLabel_createdTime}"/>
-                        <h:outputText value="#{noteController.selected.createdTime}" title="#{bundle.ViewNoteTitle_createdTime}"/>
+                        <h:outputText value="#{notesController.currentCreatedTime}" title="#{bundle.ViewNoteTitle_createdTime}"/>
 
                         <h:outputText value="#{bundle.ViewNoteLabel_modifiedTime}"/>
-                        <h:outputText value="#{noteController.selected.modifiedTime}" title="#{bundle.ViewNoteTitle_modifiedTime}"/>
+                        <h:outputText value="#{notesController.currentModifiedTime}" title="#{bundle.ViewNoteTitle_modifiedTime}"/>
 
                     </p:panelGrid>
                 </h:panelGroup>

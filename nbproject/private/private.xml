@@ -3,19 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/jsfclasses/UserController.java</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/Profile.xhtml</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/Notes.xhtml</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/template/siteTemplate.xhtml</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/Share.xhtml</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/template/contentTemplate.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/Search.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/SearchResults.xhtml</file>
             <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/entityclasses/User.java</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/managers/Constants.java</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/managers/AccountManager.java</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/jsfclasses/UserFileController.java</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/SignIn.xhtml</file>
-            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/template/headerTemplate.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/sessionbeans/NotesFacade.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/Share.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/Profile.xhtml</file>
             <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/jsfclasses/NotesController.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/newhtml.html</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/View.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/Notes.xhtml</file>
         </group>
     </open-files>
 </project-private>

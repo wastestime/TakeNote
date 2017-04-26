@@ -62,11 +62,11 @@ public class NotesFacade extends AbstractFacade<Notes> {
     }
 
     
-    public List<Notes> userIdQuery(String searchString) {
+    public List<Notes> usernameQuery(String searchString) {
         // Place the % wildcard before and after the search string to search for it anywhere in the State name 
         searchString = "%" + searchString + "%";
         // Conduct the search in a case-insensitive manner and return the results in a list.
-        return getEntityManager().createQuery("SELECT c FROM Notes c WHERE c.userId LIKE :searchString").setParameter("searchString", searchString).getResultList();
+        return getEntityManager().createQuery("SELECT c FROM Notes c WHERE c.userId.username LIKE :searchString").setParameter("searchString", searchString).getResultList();
     }
 
     
@@ -74,6 +74,6 @@ public class NotesFacade extends AbstractFacade<Notes> {
         // Place the % wildcard before and after the search string to search for it anywhere in the name 
         searchString = "%" + searchString + "%";
         // Conduct the search in a case-insensitive manner and return the results in a list.
-        return getEntityManager().createQuery("SELECT c FROM Notes c WHERE c.title LIKE :searchString OR c.description LIKE :searchString OR c.userId LIKE :searchString").setParameter("searchString", searchString).getResultList();
+        return getEntityManager().createQuery("SELECT c FROM Notes c WHERE c.title LIKE :searchString OR c.description LIKE :searchString OR c.userId.username LIKE :searchString").setParameter("searchString", searchString).getResultList();
     }
 }
