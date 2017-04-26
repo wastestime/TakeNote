@@ -6,6 +6,7 @@ package com.team6.entityclasses;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.LinkedList;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -129,6 +130,16 @@ public class User implements Serializable {
         this.state = state;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
+    }
+    
+    public void addNote(Notes newNote) {
+        
+        if (notesCollection == null)
+        {
+            notesCollection = new LinkedList<>();
+        }
+        
+        notesCollection.add(newNote);
     }
 
     public Integer getId() {
@@ -262,5 +273,10 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.team6.entityclasses.User[ id=" + id + " ]";
+    }
+    
+    public String getName()
+    {
+        return firstName + " " + lastName;
     }
 }

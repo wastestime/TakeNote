@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Notes.findAll", query = "SELECT n FROM Notes n")
     , @NamedQuery(name = "Notes.findById", query = "SELECT n FROM Notes n WHERE n.id = :id")
     , @NamedQuery(name = "Notes.findByTitle", query = "SELECT n FROM Notes n WHERE n.title = :title")
+    , @NamedQuery(name = "Notes.findByDescription", query = "SELECT n FROM Notes n WHERE n.description = :description")
     , @NamedQuery(name = "Notes.findByCreatedTime", query = "SELECT n FROM Notes n WHERE n.createdTime = :createdTime")
     , @NamedQuery(name = "Notes.findByModifiedTime", query = "SELECT n FROM Notes n WHERE n.modifiedTime = :modifiedTime")})
 public class Notes implements Serializable {
@@ -53,6 +54,11 @@ public class Notes implements Serializable {
     @Size(min = 1, max = 64)
     @Column(name = "title")
     private String title;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 140)
+    @Column(name = "description")
+    private String description;
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_time")
@@ -82,9 +88,10 @@ public class Notes implements Serializable {
         this.id = id;
     }
 
-    public Notes(Integer id, String title, Date createdTime, Date modifiedTime) {
+    public Notes(Integer id, String title, String description, Date createdTime, Date modifiedTime) {
         this.id = id;
         this.title = title;
+        this.description = description;
         this.createdTime = createdTime;
         this.modifiedTime = modifiedTime;
     }
@@ -100,11 +107,19 @@ public class Notes implements Serializable {
     public String getTitle() {
         return title;
     }
-
+    
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     public Date getCreatedTime() {
         return createdTime;
     }

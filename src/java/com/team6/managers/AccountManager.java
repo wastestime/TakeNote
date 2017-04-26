@@ -4,6 +4,7 @@
  */
 package com.team6.managers;
 
+import com.team6.entityclasses.Notes;
 import com.team6.entityclasses.User;
 import com.team6.entityclasses.UserFile;
 import com.team6.entityclasses.UserPhoto;
@@ -97,6 +98,8 @@ public class AccountManager implements Serializable {
 
     private User selected;
 
+    private User toShareWith;
+    
     /*
     The instance variable 'userFacade' is annotated with the @EJB annotation.
     The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference
@@ -811,5 +814,30 @@ public class AccountManager implements Serializable {
     public String photoStorageDirectoryName() {
         return Constants.PHOTOS_ABSOLUTE_PATH;
     }
+    
+    public void shareNote(Notes toShare) {
+        
+        for (User thisUser : selected.getUserCollection())
+        {
+            if (thisUser.equals(toShareWith))
+            {
+                thisUser.addNote(toShare);
+            }
+        }
+    }
 
+    public boolean checkSameUser(User otherUser)
+    {   
+        return (selected != null) && (selected != null) && (otherUser != null) && selected.getId().equals(otherUser);
+    }
+
+    public User getToShareWith() {
+        return toShareWith;
+    }
+
+    public void setToShareWith(User toShareWith) {
+        this.toShareWith = toShareWith;
+    }
+    
+    
 }

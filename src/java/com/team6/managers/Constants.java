@@ -24,8 +24,8 @@ public final class Constants {
      */
     /* paths for linux/mac users */
     /* paths should be inside of the TakeNote project folder */
-    public static final String FILES_ABSOLUTE_PATH = "/CloudStorage/FileStorage/";  
-    public static final String PHOTOS_ABSOLUTE_PATH = "/CloudStorage/PhotoStorage/";
+    public static final String FILES_ABSOLUTE_PATH = "C:\\Users\\Lance\\TakeNote\\pdfStorage\\";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/PDFStorage/";
 
 /*
 Windows OS Users should use the following: 

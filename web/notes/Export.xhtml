@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Geoffrey Lance Masters on 2017.04.24 
+Copyright © 2017 Osman Balci. All rights reserved.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <!--
+        *******************************
+        Dialog pop-up window for SEARCH
+        *******************************
+        -->
+        <!-- Clicking the Search button displays this file in a dialog window on top of the Search button's page. -->
+        <p:dialog position="center center" id="NoteSearchDlg" widgetVar="NoteSearchDialog" modal="true" 
+                  resizable="false" appendTo="@(body)" header="Search Notes" >
+            
+            <h:form id="NoteSearchForm" class="ui-datatable-data">
+                <p:panel>                
+                    
+                    <h:panelGrid columns="4">
+                        
+                        <h:outputLabel value="Search: "/>
+                        
+                        <!-- At least 2 characters to be searched under the selected category are entered here. -->
+                        <p:inputText id="keyword" value="#{notesController.searchString}" 
+                                     required="true" requiredMessage="Please enter a search string!">
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+                        <p:watermark for="keyword" value="Enter search string" id="watermark" />
+                        
+                        <!-- Search category is selected here. -->
+                        <p:selectOneMenu id="field" required="true" requiredMessage="Please select a category!" 
+                                         value="#{notesController.searchField}">
+
+                            <f:selectItem itemLabel="Select Category" itemValue="" noSelectionOption="true"/>
+                            <f:selectItem itemLabel="Title" itemValue="title"/>
+                            <f:selectItem itemLabel="Description" itemValue="description"/>
+                            <f:selectItem itemLabel="Tag" itemValue="tag"/>
+                            
+                        </p:selectOneMenu>
+                        
+                    </h:panelGrid>
+
+                    <h:panelGroup>
+                        <p:spacer height="10"/>
+                        <div align="center">
+                            <!-- SUBMIT button -->
+                            <p:commandButton value="Submit" icon="ui-icon-check" ajax="false" 
+                                             styleClass="commandButton" actionListener="#{notesController.search}"/> 
+                            &nbsp;
+                            <!-- CANCEL button -->
+                            <p:commandButton value="#{bundle.Cancel}" onclick="PF('NoteSearchDialog').hide()"    
+                                             styleClass="commandButton" icon="ui-icon-cancel" />
+                        </div>
+                    </h:panelGroup>
+
+                </p:panel>
+            </h:form>
+
+        </p:dialog>
+    </ui:composition>
+</html>

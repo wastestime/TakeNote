@@ -29,7 +29,7 @@
                                            itemValue="#{userIdItem}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{notesController.create}" value="#{bundle.Save}" update="display,:NotesListForm:datalist,:growl" oncomplete="handleSubmit(args,'NotesCreateDialog');"/>
+                    <p:commandButton actionListener="#{notesController.create}" value="#{bundle.Save}" update="display,:NotesListForm:notes,:growl" oncomplete="handleSubmit(args,'NotesCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="NotesCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

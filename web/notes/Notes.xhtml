@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+
+    <ui:composition template="/template/siteTemplate.xhtml">
+        
+        <ui:define name="title">
+            <!-- Set the page title -->
+            <h:outputText value="Notes"></h:outputText>
+        </ui:define>
+
+        <!-- Create the content for this page below -->
+        <ui:define name="editableContent">
+
+            <div align="center" style="width:97%">
+                <!--
+                PrimeFaces Growl displays messages in an overlay. Place p:growl anywhere on your JSF page. 
+                The location of growl in a JSF page does not matter since the messages are displayed
+                as an overlay. The following will display the messages for 5 seconds and then fade away.
+                -->
+                <p:growl id="growl" life="4000" />
+
+                <h:form id="NotesListForm">
+                    
+                    <p:panel header="#{bundle.ListNotesTitle}">
+                        <p:dataTable id="notes" value="#{notesController.items}" var="item"
+                                 selectionMode="single" selection="#{notesController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,15,20,30,40,50"
+                                 styleClass="dataTable"
+                                 >
+
+                            <p:ajax event="rowSelect" update="createButton viewButton editButton deleteButton shareButton exportButton"/>
+                            <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton shareButton exportButton"/>
+
+                            <p:column sortBy="#{item.title}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListNotesTitle_title}" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.title}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.description}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListNotesTitle_description}" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.description}"/>
+                            </p:column>
+
+                            <p:column sortBy="#{item.userId.firstName}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListNotesTitle_owner}" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.userId.getName()}"/>
+                            </p:column>
+                            
+                            <p:column sortBy="#{item.createdTime}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListNotesTitle_createdTime}" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.createdTime}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.modifiedTime}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListNotesTitle_modifiedTime}" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.modifiedTime}"/>
+                            </p:column>
+
+
+                            <p:column sortBy="#{item.userFileCollection}">
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListNotesTitle_userFileCollection}" styleClass="facetHeader"/>
+                                </f:facet>
+                                <h:outputText styleClass="dataFields" value="#{item.userFileCollection}"/>
+                            </p:column>
+
+                            <!--
+                            The "header" and "footer" facets are defined for the p:dataTable. See PrimeFaces
+                            documentation at http://www.primefaces.org/docs/guide/primefaces_user_guide_5_3.pdf
+                            -->
+
+                            <f:facet name="footer">
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" 
+                                                 styleClass="commandButton" actionListener="#{notesController.prepareCreate}" />
+
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" 
+                                                 styleClass="commandButton" update=":NoteEditForm" oncomplete="PF('NoteEditDialog').show()" 
+                                                 disabled="#{empty notesController.selected or accountManager.checkSameUser(notesController.selected.userId) eq false}"/>
+
+                                <p:commandButton id="viewButton"   icon="ui-icon-document" value="#{bundle.View}" 
+                                                 styleClass="commandButton" update=":NoteViewForm" oncomplete="PF('NoteViewDialog').show()" 
+                                                 disabled="#{empty notesController.selected}"/>
+
+                                <p:commandButton id="shareButton"   icon="ui-icon-pencil" value="#{bundle.Share}" 
+                                                 styleClass="commandButton" update=":NoteShareForm" oncomplete="PF('NoteShareDialog').show()" 
+                                                 disabled="#{empty notesController.selected}"/>
+
+
+
+                                <!-- 
+                                ***************************************************
+                                Display a Confirmation dialog for the DELETE button
+                                *************************************************** 
+                                -->
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
+                                                 styleClass="commandButton" actionListener="#{notesController.destroy}" 
+                                                 update=":growl,notes" disabled="#{empty notesController.selected or accountManager.checkSameUser(notesController.selected.userId) eq false}">
+
+                                    <p:confirm header="Confirmation" 
+                                               message="Are you sure you want to permanently delete the note from the database?" 
+                                               icon="ui-icon-alert" />
+                                </p:commandButton>
+
+                                <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
+                                    <div align="center">
+                                        <!-- The value of the first button listed below will be shown as 
+                                        highlighted (default action) when displayed -->
+                                        <p:commandButton value="No" type="button" 
+                                                         styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        &nbsp;
+                                        <p:commandButton value="Yes" type="button" 
+                                                         styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    </div>
+                                </p:confirmDialog>
+
+                                <!-- 
+                                ************************************************
+                                End of Display of the DELETE Confirmation dialog 
+                                ************************************************ 
+                                -->
+
+                                
+                                <p:commandButton id="exportButton" value="Export" ajax="false" 
+                                                 icon="ui-icon-arrowthick-1-s"
+                                                 styleClass="commandButton" disabled="#{empty notesController.selected}" actionListener="#{notesController.getPDF()}" >
+                                    
+                                    <p:fileDownload value="#{fileDownloadManager.pdf}" />
+
+                                </p:commandButton>
+                                
+                                <p:commandButton id="searchButton" icon="ui-icon-search" value="#{bundle.Search}" 
+                                                 styleClass="commandButton" update=":NoteSearchForm" 
+                                                 oncomplete="PF('NoteSearchDialog').show()"/>
+
+                            </f:facet>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+
+                <!-- Clicking the Edit button displays the included Edit.xhtml file in a dialog window on top of this page. -->
+                <ui:include src="Edit.xhtml"/>
+
+                <!-- Clicking the View button displays the included View.xhtml file in a dialog window on top of this page. -->
+                <ui:include src="View.xhtml"/>
+
+                <!-- Clicking the Search button displays the included Search.xhtml file in a dialog window on top of this page. -->
+                <ui:include src="Search.xhtml"/>
+                
+                <ui:include src="Share.xhtml"/>
+                                
+
+            </div>
+        </ui:define>
+        
+    </ui:composition>
+
+</html>

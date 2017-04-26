@@ -3,14 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/template/headerTemplate.xhtml</file>
-            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/CreateAccount.xhtml</file>
-            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/Profile.xhtml</file>
-            <file>file:/Users/think7z/NetBeansProjects/TakeNote/.gitignore</file>
-            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/resources/css/siteStyles.css</file>
-            <file>file:/Users/think7z/NetBeansProjects/TakeNote/TakeNotesDB.sql</file>
-            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/DeleteAccountDialog.xhtml</file>
-            <file>file:/Users/think7z/NetBeansProjects/TakeNote/web/Editor.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/jsfclasses/UserController.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/Profile.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/Notes.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/template/siteTemplate.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/Share.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/template/contentTemplate.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/entityclasses/User.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/managers/Constants.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/managers/AccountManager.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/jsfclasses/UserFileController.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/SignIn.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/template/headerTemplate.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/jsfclasses/NotesController.java</file>
         </group>
     </open-files>
 </project-private>
