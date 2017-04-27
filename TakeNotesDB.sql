@@ -50,6 +50,7 @@ CREATE TABLE Notes
 (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	title VARCHAR(64) NOT NULL DEFAULT '',
+	description VARCHAR(140) NOT NULL DEFAULT '',
 	user_id INT UNSIGNED,
 	created_time DATETIME NOT NULL, /* Save original creation datetime*/
 	modified_time DATETIME NOT NULL, /* for edit datetime format 'yyyy-MM-dd HH:mm:ss', defaulted to creation time if note was just created */
