@@ -5,12 +5,9 @@ Copyright © 2017 Guoxin Sun. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      lang="en"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!--
@@ -21,216 +18,82 @@ Copyright © 2017 Guoxin Sun. All rights reserved.
     Changes made in this file will show up automatically with all pages created based on the
     siteTemplate for the entire site, achieving great maintainability.
     -->
-    <h:head>
-        <!-- 
-        The <title> element (a) defines a title in the browser's toolbar,
-        (b) provides a title for the page when it is added to favorites, and
-        (c) displays a title for the page in search-engine results.
-        [http://www.w3schools.com/tags/tag_title.asp]
 
-        If you want to change it for a page, use:
-            <ui:define name="title">
-                <h:outputText value="enter page title here"></h:outputText>
-            </ui:define>
-        -->
-        <title><ui:insert name="title">Take Note</ui:insert></title>
-
-        <!-- 
-        Instruct the web browser on how to control the page's dimensions
-        and scaling on mobile devices. 
-        -->
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <!-- Bootstrap core CSS -->
-        <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-
-        <!-- Custom fonts for this template -->
-        <link href="resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
-        <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'/>
-
-        <!-- Custom styles for this template -->
-        <link href="resources/css/grayscale.min.css" rel="stylesheet"/>
-
-        <!-- Temporary navbar container fix -->
-        <style>
-            .navbar-toggler {
-                z-index: 1;
-            }
-
-            @media (max-width: 576px) {
-                nav > .container {
-                    width: 100%;
-                }
-            }
-        </style>
-
-        <!-- 
-        The siteStyles CSS file is linked for use by the entire site. 
-        -->
-        <h:outputStylesheet library="css" name="siteStyles.css" />
-
-        <!-- 
-        The following CSS and JavaScript files are required for the
-        Image Slider, created by http://www.menucool.com, to work.
-        -->
-        <h:outputStylesheet library="css" name="js-image-slider.css" />
-        <script src="resources/js/js-image-slider.js" type="text/javascript"></script>
-
-        <!--
-        The icons and the font-awesome.min.css styles provided by http://fontawesome.io/
-        are linked for use by the entire site.
-        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        As a result of this link, a folder named Remote Files is automatically
-        created in the NetBeans Projects pane containing the font-awesome.min.css file.
-        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-        -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" />
-
-        <!-- 
-        If you need to link an additional CSS file for a particular page, 
-        you can redefine "css" in that page by using <ui:define name="css"> 
-        -->
-        <ui:insert name="css"/>
-
-        <!-- 
-        A favicon (short for favorite icon), also known as a shortcut icon, website icon, tab icon, 
-        URL icon or bookmark icon, is a file named favicon.ico [https://en.wikipedia.org/wiki/Favicon]
-        The icon is displayed to the left of the page title on a tab in the Chrome web browser.
-        The link below in this template enables all pages in your site to display the favorite icon.
-        
-        Use absolute path for the image file since it will be referenced by all pages in the site.
-        -->
-        <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon" />
-
-    </h:head>
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
     <ui:composition>
         <h:form>
-            <!-- Navigation -->
-            <nav id="mainNav" class="navbar fixed-top navbar-toggleable-md navbar-dark">
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu <i class="fa fa-bars"></i>
-                </button>
-                <div class="container">
-                    <a class="navbar-brand" href="index.xhtml">Take Note</a>
-                    <div class="collapse navbar-collapse" id="navbarExample">
+            <table border="0" cellspacing="0" cellpadding="10" width="100%">
+                <tr>
+                    <td align="left" valign="middle">
 
-                        <ul class="navbar-nav ml-auto">
+                        <!-- Use absolute path for the image file since it will be accessed from all pages -->
+                        <h:link outcome="/Profile.xhtml">
+                            <img src="#{resource['images:TakeNoteLogo.png']}"
+                                 style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
+                                 alt="Take Note Logo" />
+                        </h:link>
 
-                            <li class="nav-item">
-                                <p:commandButton action="#{accountManager.logout()}" value="Sign Out"></p:commandButton>
-                            </li>
+                    </td>
+                    <!--Removed because Laurian thinks its strange -->
+                    <!--                    <td align="center" valign="middle">
+                    
+                                             Welcome the customer if signed in   
+                                            <c:if test="#{accountManager.isLoggedIn() == true}">
+                                                <h1>Hello, #{accountManager.selected.firstName}</h1>
+                                            </c:if>
+                                            <c:if test="#{accountManager.isLoggedIn() == false}">
+                                                <h1>Hello, Guest</h1>
+                                            </c:if>
+                    
+                                        </td>-->
+                    <td align="right" valign="middle">
+                        <!-- "Sign Out" and "My Account" if a user is signed in -->
+                        <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <!-- Clicking "Sign Out" invokes accountManager's logout() method -->
+                            <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
+                                <i class="fa fa-sign-out">&nbsp;</i>Sign Out
+                            </h:commandLink>&nbsp;&nbsp;
 
-                            <li class="nav-item">
-                                <p:commandButton action="/Profile.xhtml?faces-redirect=true" value="My Account" ></p:commandButton>
-                                <!--                                <a class="nav-link" href="Profile.xhtml">My Account</a>-->
-                            </li>
-                            <li class="nav-item">
-                                <p:commandButton action="/Contacts.xhtml?faces-redirect=true" value="My Contacts" ></p:commandButton>
-                                <!--<a class="nav-link" href="Contacts.xhtml">My Contacts</a>-->
-                            </li>
-                            <li class="nav-item">
-                                <p:commandButton action="/notes/List.xhtml?faces-redirect=true" value="My Notes" ></p:commandButton>
-                                <!--<a class="nav-link" href="notes/List.xhtml">My Notes</a>-->
-                            </li>
-                            <li class="nav-item">
-                                <p:commandButton action="/Editor.xhtml?faces-redirect=true" value="Take Note" ></p:commandButton>
-                                <!--<a class="nav-link" href="Editor.xhtml">Take Note</a>-->
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <!--            
-                        <table border="0" cellspacing="0" cellpadding="10" width="100%">
-                            <tr>
-                                <td align="left" valign="middle">
-            
-                                     Use absolute path for the image file since it will be accessed from all pages 
-                                    <h:link outcome="/index">
-                                        <img src="#{resource['images:TakeNoteLogo.png']}"
-                                             style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
-                                             alt="Videos Logo" />
-                                    </h:link>
-            
-                                </td>
-                                Removed because Laurian thinks its strange 
-                                                    <td align="center" valign="middle">
-                                
-                                                         Welcome the customer if signed in   
-                                                        <c:if test="#{accountManager.isLoggedIn() == true}">
-                                                            <h1>Hello, #{accountManager.selected.firstName}</h1>
-                                                        </c:if>
-                                                        <c:if test="#{accountManager.isLoggedIn() == false}">
-                                                            <h1>Hello, Guest</h1>
-                                                        </c:if>
-                                
-                                                    </td>
-                                <td align="right" valign="middle">
-            
-                                     Clicking "Home" displays the index.xhtml file 
-                                    <h:link outcome="/index" styleClass="arialTen">
-                                        <i class="fa fa-home">&nbsp;</i>Home
-                                    </h:link>&nbsp;&nbsp;
-            
-                                     "Sign Out" and "My Account" if a user is signed in 
-                                    <c:if test="#{accountManager.isLoggedIn() == true}">
-                                         Clicking "Sign Out" invokes accountManager's logout() method 
-                                        <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
-                                            <i class="fa fa-sign-out">&nbsp;</i>Sign Out
-                                        </h:commandLink>&nbsp;&nbsp;
-            
-                                         Clicking "My Account" displays the Profile.xhtml file 
-                                        <h:link outcome="/Profile" styleClass="arialTen">
-                                            <i class="fa fa-user">&nbsp;</i>My Account
-                                        </h:link>&nbsp;&nbsp;
-            
-                                         Clicking "My Account" displays the Profile.xhtml file 
-                                        <h:link outcome="/Contacts" styleClass="arialTen">
-                                            <i class="fa fa-users" aria-hidden="true">&nbsp;</i>My Contacts
-                                        </h:link>&nbsp;&nbsp;
-            
-                                         Clicking "My Notes" displays the List.xhtml file  
-                                        <h:link outcome="/notes/List" styleClass="arialTen">
-                                            <i class="fa fa-files-o">&nbsp;</i>My Notes
-                                        </h:link>&nbsp;&nbsp;
-            
-                                         Clicking "Take Note" displays the Editor.xhtml file  
-                                        <h:link outcome="/Editor" styleClass="arialTen">
-                                            <i class="fa fa-files-o">&nbsp;</i>Take Note
-                                        </h:link>&nbsp;&nbsp;
-                                    </c:if>
-            
-                                     "Sign In" and "Create an Account" if no user is signed in 
-                                    <c:if test="#{accountManager.isLoggedIn() == false}">
-                                         Clicking "Sign In" displays the SignIn.xhtml file 
-                                        <h:link outcome="/SignIn" styleClass="arialTen">
-                                            <i class="fa fa-sign-in">&nbsp;</i>Sign In
-                                        </h:link>&nbsp;&nbsp;
-            
-                                         Clicking "My Account" displays the Profile.xhtml file 
-                                        <h:link outcome="/CreateAccount" styleClass="arialTen">
-                                            <i class="fa fa-user-plus">&nbsp;</i>Create an Account
-                                        </h:link>&nbsp;&nbsp;
-                                    </c:if>
-            
-                                </td>
-                            </tr>
-                        </table>-->
+                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
+                            <h:link outcome="/Profile" styleClass="arialTen">
+                                <i class="fa fa-user">&nbsp;</i>My Account
+                            </h:link>&nbsp;&nbsp;
+
+                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
+                            <h:link outcome="/Contacts" styleClass="arialTen">
+                                <i class="fa fa-users" aria-hidden="true">&nbsp;</i>My Contacts
+                            </h:link>&nbsp;&nbsp;
+
+                            <!-- Clicking "My Notes" displays the List.xhtml file  -->
+                            <h:link outcome="/notes/List" styleClass="arialTen">
+                                <i class="fa fa-files-o">&nbsp;</i>My Notes
+                            </h:link>&nbsp;&nbsp;
+
+                            <!-- Clicking "Take Note" displays the Editor.xhtml file  -->
+                            <h:link outcome="/Editor" styleClass="arialTen">
+                                <i class="fa fa-files-o">&nbsp;</i>Take Note
+                            </h:link>&nbsp;&nbsp;
+                        </c:if>
+
+                        <!-- "Sign In" and "Create an Account" if no user is signed in -->
+                        <c:if test="#{accountManager.isLoggedIn() == false}">
+                            <!-- Clicking "Sign In" displays the SignIn.xhtml file -->
+                            <h:link outcome="/SignIn" styleClass="arialTen">
+                                <i class="fa fa-sign-in">&nbsp;</i>Sign In
+                            </h:link>&nbsp;&nbsp;
+
+                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
+                            <h:link outcome="/CreateAccount" styleClass="arialTen">
+                                <i class="fa fa-user-plus">&nbsp;</i>Create an Account
+                            </h:link>&nbsp;&nbsp;
+                        </c:if>
+
+                    </td>
+                </tr>
+            </table>
 
         </h:form>
-        <!-- Bootstrap core JavaScript -->
-        <script src="resources/vendor/jquery/jquery.min.js"></script>
-        <script src="resources/vendor/tether/tether.min.js"></script>
-        <script src="resources/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-        <!-- Plugin JavaScript -->
-        <script src="resources/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-        <!-- Custom scripts for this template -->
-        <script src="resources/js/grayscale.min.js"></script>
     </ui:composition>
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
 </html>
-
