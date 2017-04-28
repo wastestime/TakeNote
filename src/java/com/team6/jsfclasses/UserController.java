@@ -1,7 +1,6 @@
 package com.team6.jsfclasses;
 
 import com.team6.entityclasses.ContactConnections;
-import com.team6.entityclasses.Notes;
 import com.team6.entityclasses.User;
 import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
@@ -42,7 +41,7 @@ public class UserController implements Serializable {
     private User selected;
     private String searchQuery;
     private String statusMessage;
-    private User toShareWith;
+
     private List<User> friends; // DONT FORGET TO ADD THSI INTO DATABASE
 
     public UserController() {
@@ -199,13 +198,7 @@ public class UserController implements Serializable {
     public String getSearchQuery() {
         return this.searchQuery;
     }
-    public User getToShareWith() {
-        return toShareWith;
-    }
-
-    public void setToShareWith(User toShareWith) {
-        this.toShareWith = toShareWith;
-    }
+    
     public boolean contains(User user) {
         String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
         User currUser = getUserFacade().findByUsername(user_name);
@@ -291,7 +284,4 @@ public class UserController implements Serializable {
         }
         return this.friends;
     }
-    
-     
-
 }
