@@ -27,8 +27,8 @@ Copyright © 2017 Osman Balci. All rights reserved.
                                          value="#{accountManager.toShareWith}">
 
                             <f:selectItem itemLabel="Select Contact" itemValue="" noSelectionOption="true"/>
-                            <f:selectItems value="#{accountManager.selected.userCollection}" var="user"
-                                           itemLabel="#{user.getName()}" itemValue="#{user.id}"/>
+                            <f:selectItems value="#{userController.fetchContacts()}" var="user"
+                                           itemLabel="#{user.username}" itemValue="#{user.id}"/>
                             
                         </p:selectOneMenu>
                         

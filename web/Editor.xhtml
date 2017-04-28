@@ -49,7 +49,6 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
 
                             save_enablewhendirty: true,
                             save_onsavecallback: function saveContent() {
-                                alert("saved");
                                 var cont = this.getContent();
                                 passToJSFManagedBean([
                                     {
@@ -77,12 +76,7 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                                     }
                                 });
                             },
-                            //                            setup: function () {
-                            //                                alert("o");
-                            //                                //notesController.initialize();
-                            //                               // initializeCommand();
-                            //                            }
-
+                
 
                         }
                         );
@@ -91,7 +85,6 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
 
                     <script>
                         window.onload = function () {
-                            alert("o");
                             document.getElementById('hidden:link').onclick();
 
 

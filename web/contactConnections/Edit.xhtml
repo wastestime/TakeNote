@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ContactConnectionsEditDlg" widgetVar="ContactConnectionsEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditContactConnectionsTitle}">
+            <h:form id="ContactConnectionsEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{contactConnectionsController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditContactConnectionsLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{contactConnectionsController.selected.id}" title="#{bundle.EditContactConnectionsTitle_id}" required="true" requiredMessage="#{bundle.EditContactConnectionsRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditContactConnectionsLabel_userId}" for="userId" />
+                        <p:selectOneMenu id="userId" value="#{contactConnectionsController.selected.userId}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="userIdItem"
+                                           itemValue="#{userIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditContactConnectionsLabel_contactUid}" for="contactUid" />
+                        <p:selectOneMenu id="contactUid" value="#{contactConnectionsController.selected.contactUid}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{userController.itemsAvailableSelectOne}"
+                                           var="contactUidItem"
+                                           itemValue="#{contactUidItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{contactConnectionsController.update}" value="#{bundle.Save}" update="display,:ContactConnectionsListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ContactConnectionsEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ContactConnectionsEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
