@@ -29,11 +29,11 @@ CREATE TABLE User
 /* Table that stores the contact lists for each user */
 CREATE TABLE ContactConnections
 (
-	user_id INT UNSIGNED,
-	contact_uid INT UNSIGNED,
-	PRIMARY KEY(user_id, contact_uid), /* composite key, each contact can have multiple connections */
-	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
-	FOREIGN KEY (contact_uid) REFERENCES User(id) ON DELETE CASCADE
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    user_id INT UNSIGNED,
+    contact_uid INT UNSIGNED,
+    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+    FOREIGN KEY (contact_uid) REFERENCES User(id) ON DELETE CASCADE
 );
 
 /* The UserPhoto table contains attributes of interest of a user's photo. */

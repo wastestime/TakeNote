@@ -445,7 +445,7 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
 .dataTable {
     padding-left: 5px;
     padding-right: 5px;
-    width: 50%;
+    width: 100%;
 }
 
 /* Override PrimeFaces style definitions for the Data Table component */

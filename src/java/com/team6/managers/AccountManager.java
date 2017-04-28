@@ -8,7 +8,7 @@ import com.team6.entityclasses.Notes;
 import com.team6.entityclasses.User;
 import com.team6.entityclasses.UserFile;
 import com.team6.entityclasses.UserPhoto;
-
+import com.team6.jsfclasses.UserController;
 import com.team6.sessionbeans.UserFacade;
 import com.team6.sessionbeans.UserFileFacade;
 import com.team6.sessionbeans.UserPhotoFacade;
@@ -98,7 +98,7 @@ public class AccountManager implements Serializable {
 
     private User selected;
 
-    private User toShareWith;
+    
     
     /*
     The instance variable 'userFacade' is annotated with the @EJB annotation.
@@ -107,6 +107,7 @@ public class AccountManager implements Serializable {
      */
     @EJB
     private UserFacade userFacade;
+   
 
     /*
     The instance variable 'userFileFacade' is annotated with the @EJB annotation.
@@ -815,29 +816,14 @@ public class AccountManager implements Serializable {
         return Constants.PHOTOS_ABSOLUTE_PATH;
     }
     
-    public void shareNote(Notes toShare) {
-        
-        for (User thisUser : selected.getUserCollection())
-        {
-            if (thisUser.equals(toShareWith))
-            {
-                thisUser.addNote(toShare);
-            }
-        }
-    }
+   
 
     public boolean checkSameUser(User otherUser)
     {   
         return (selected != null) && (selected != null) && (otherUser != null) && selected.getId().equals(otherUser);
     }
 
-    public User getToShareWith() {
-        return toShareWith;
-    }
-
-    public void setToShareWith(User toShareWith) {
-        this.toShareWith = toShareWith;
-    }
+    
     
     
 }

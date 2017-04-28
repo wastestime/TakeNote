@@ -46,12 +46,6 @@ Copyright © 2017 Osman Balci. All rights reserved.
                         <td width="180" align="left" valign="middle" nowrap="nowrap">
                             <ul class="verticalMenu">
 
-                                <li class="verticalMenuItem">
-                                    <!-- HOME -->
-                                    <h:link outcome="index">
-                                        <i class="fa fa-home">&nbsp;</i>Home
-                                    </h:link>
-                                </li>
 
                                 <li class="verticalMenuItem">
                                     <!-- EDIT PROFILE -->
@@ -102,35 +96,19 @@ Copyright © 2017 Osman Balci. All rights reserved.
                                     <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
                                         <div align="center">
 
-                                            <p:commandButton value="NO" type="button" 
+                                            <p:commandButton value="NO" 
                                                              styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                                             &nbsp;
-                                            <p:commandButton value="YES" type="button" 
+                                            <p:commandButton value="YES" 
                                                              styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                                         </div>
                                     </p:confirmDialog>
 
                                     <!-- ****************** Delete Account End **************************** -->
                                 </li>
-                                <li class="verticalMenuItem">
-                                    <!-- MY FILES -->
-                                    <h:link outcome="/Contacts">
-                                        <i class="fa fa-users">&nbsp;</i>My Contacts
-                                    </h:link>
-                                </li>
-                                <li class="verticalMenuItem">
-                                    <!-- MY FILES -->
-                                    <h:link outcome="notes/Notes">
-                                        <i class="fa fa-files-o">&nbsp;</i>My Notes
-                                    </h:link>
-                                </li>
 
-                                <li class="verticalMenuItem">
-                                    <!-- SIGN OUT -->
-                                    <h:commandLink action="#{accountManager.logout()}">
-                                        <i class="fa fa-sign-out">&nbsp;</i>Sign Out
-                                    </h:commandLink>
-                                </li>
+
+
                             </ul>
 
                         </td>
@@ -171,42 +149,120 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                         <td width="180" align="center" valign="middle" nowrap="nowrap">
                             <ul class="verticalMenu">
+
                                 <li class="verticalMenuItem">
-                                    <!-- Recent Activities -->
-                                    <a>
-                                    <i class="fa fa-clone" aria-hidden="true">&nbsp;</i>Recent Activities
-                                    </a>
+                                    <p:commandLink oncomplete="PF('contactsDialog').show()"
+                                                   update="contactsForm">
+                                        <label style="font-size: 10pt;">
+                                            <i class="fa fa-address-book">&nbsp;</i>My Contacts
+                                        </label>
+                                    </p:commandLink>
+
+
                                 </li>
-                                <li class="verticalMenuItem"> 
-                                    <h> #1 </h>
-                                    
+
+                                <li class="verticalMenuItem">
+                                    <p:commandLink actionListener="#{userController.update}" 
+                                                   oncomplete="PF('UserSearchDialog').show()" 
+                                                   update="contactsForm">
+                                        <label style="font-size: 10pt;">
+                                            <i class="fa fa-user-plus">&nbsp;</i>Add Contact
+                                        </label>
+                                    </p:commandLink>
                                 </li>
-                                <li class="verticalMenuItem"> 
-                                    <h> #2 </h> 
+
+                                <li class="verticalMenuItem">
+                                    <p:commandLink 
+                                                   actionListener="#{notesController.prepareCreate}" 
+                                                 update="NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()">
+                                        <label style="font-size: 10pt;">
+                                            <i class="fa fa-pencil">&nbsp;</i>Take Note
+                                        </label>
+                                    </p:commandLink>
                                 </li>
-                                <li class="verticalMenuItem"> 
-                                    <h> #3 </h>
+
+                                <li class="verticalMenuItem">
+                                    <!-- Clicking "My Notes" displays the List.xhtml file  -->
+                                    <h:link outcome="/notes/Notes" styleClass="arialTen">
+                                        <i class="fa fa-files-o">&nbsp;</i>My Notes
+                                    </h:link>
                                 </li>
-                                <li class="verticalMenuItem"> 
-                                    <h> #4 </h> 
-                                </li>
-                                <li class="verticalMenuItem"> 
-                                    <h> #5 </h> 
-                                </li>
-                                <li class="verticalMenuItem"> 
-                                    <h> #6 </h>
-                                </li>
+
                             </ul>
                         </td>
 
                     </tr>
                 </table>
+                <h3 style="margin-top: 0">Activities</h3>
+                <p:timeline id="timelineFirst" value="#{linkedTimelinesView.modelFirst}" var="task" 
+                            height="250px" widgetVar="timelineFirstWdgt">  
+                    <p:ajax event="rangechange" oncomplete="onrangechange1()"/>  
+                    <p:ajax event="select" listener="#{linkedTimelinesView.onSelect}"/>  
+
+                    <h:panelGroup layout="block" rendered="#{not task.period}" style="padding-bottom:5px">  
+                        <h:outputText value="#{task.title}"/>  
+                    </h:panelGroup>  
+                    <p:graphicImage width="20" height="20" value="#{task.imagePath}"/>  
+                    <h:panelGroup rendered="#{task.period}" style="padding:8px">  
+                        <h:outputText value="#{task.title}"/>  
+                    </h:panelGroup>  
+                </p:timeline>  
+
 
             </h:form>
+            <script type="text/javascript">
+                function onrangechange1() {
+                    var range = PF('timelineFirstWdgt').getVisibleRange();
+                    PF('timelineSecondWdgt').setVisibleRange(range.start, range.end);
+                }
 
+                function onrangechange2() {
+                    var range = PF('timelineSecondWdgt').getVisibleRange();
+                    PF('timelineFirstWdgt').setVisibleRange(range.start, range.end);
+                }
+            </script>
             <ui:include src="DeleteAccountDialog.xhtml"/>
+            <ui:include src="CreateNote.xhtml"/>
+            <!-- 
+            ====================================================================
+            |  Clicking the MOVIE SEARCH link displays this Dialog window for  |
+            |  the user to enter a search query and click the Search button.   |
+            ====================================================================
+            -->
+            <p:dialog position="center center" id="UserSearchDlg" widgetVar="UserSearchDialog" showEffect="slide" hideEffect="explode"
+                      modal="true" resizable="false" appendTo="@(body)" header="Add Connection" width="300px">
 
+                <h:form id="searchDialogForm">
+                    <div align="center" bgcolor="#FDF5E6" >
+                        <br />
+                        <h:outputLabel for="searchQueryField" value="Enter a username as your contact " />
+                        <br /><br />
+
+
+                        <h:inputText id="searchQueryField" style="width:200px"
+                                     value="#{userController.searchQuery}" >
+                        </h:inputText>  
+                        <br /><br /><br />
+
+
+                        <p:commandButton value="Add" id="searchButton"  ajax="false" 
+                                         styleClass="commandButton" icon="ui-icon-plus"
+                                         action="#{userController.addFriend()}" />
+                        &nbsp;&nbsp;
+
+                        <!-- CANCEL button -->
+                        <p:commandButton value="#{bundle.Cancel}" onclick="PF('searchUserDialog').hide()" 
+                                         styleClass="commandButton" icon="ui-icon-cancel"/>
+                        <br /><br />
+                    </div>
+                </h:form>  
+
+            </p:dialog>
+            <ui:include src="Contacts.xhtml"/>
         </ui:define>
+
+
+
 
     </ui:composition>
     <!-- Do not enter tags after the composition line since they are ignored by JSF -->

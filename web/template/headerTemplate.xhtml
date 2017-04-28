@@ -27,52 +27,47 @@ Copyright © 2017 Guoxin Sun. All rights reserved.
                     <td align="left" valign="middle">
 
                         <!-- Use absolute path for the image file since it will be accessed from all pages -->
-                        <h:link outcome="/Profile.xhtml">
+                        <h:link outcome="/index">
                             <img src="#{resource['images:TakeNoteLogo.png']}"
                                  style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
-                                 alt="Take Note Logo" />
+                                 alt="Videos Logo" />
                         </h:link>
 
                     </td>
-                    <!--Removed because Laurian thinks its strange -->
-                    <!--                    <td align="center" valign="middle">
-                    
-                                             Welcome the customer if signed in   
-                                            <c:if test="#{accountManager.isLoggedIn() == true}">
-                                                <h1>Hello, #{accountManager.selected.firstName}</h1>
-                                            </c:if>
-                                            <c:if test="#{accountManager.isLoggedIn() == false}">
-                                                <h1>Hello, Guest</h1>
-                                            </c:if>
-                    
-                                        </td>-->
+                    <td align="center" valign="middle">
+
+                        <!-- Welcome the customer if signed in -->  
+                        <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <h1>Hello, #{accountManager.selected.firstName}</h1>
+                        </c:if>
+                        <c:if test="#{accountManager.isLoggedIn() == false}">
+                            <h1>Please sign in to take notes</h1>
+                        </c:if>
+
+                    </td>
                     <td align="right" valign="middle">
+
+                        <!-- Clicking "Home" displays the index.xhtml file -->
+                        <h:link outcome="/index" styleClass="arialTen">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                        </h:link>&nbsp;&nbsp;
+                        
                         <!-- "Sign Out" and "My Account" if a user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">
-                            <!-- Clicking "Sign Out" invokes accountManager's logout() method -->
-                            <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
-                                <i class="fa fa-sign-out">&nbsp;</i>Sign Out
-                            </h:commandLink>&nbsp;&nbsp;
+                            
 
                             <!-- Clicking "My Account" displays the Profile.xhtml file -->
                             <h:link outcome="/Profile" styleClass="arialTen">
                                 <i class="fa fa-user">&nbsp;</i>My Account
                             </h:link>&nbsp;&nbsp;
-
-                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
-                            <h:link outcome="/Contacts" styleClass="arialTen">
-                                <i class="fa fa-users" aria-hidden="true">&nbsp;</i>My Contacts
-                            </h:link>&nbsp;&nbsp;
-
-                            <!-- Clicking "My Notes" displays the List.xhtml file  -->
-                            <h:link outcome="/notes/Notes.xhtml" styleClass="arialTen">
-                                <i class="fa fa-files-o">&nbsp;</i>My Notes
-                            </h:link>&nbsp;&nbsp;
-
-                            <!-- Clicking "Take Note" displays the Editor.xhtml file  -->
-                            <h:link outcome="/Editor" styleClass="arialTen">
-                                <i class="fa fa-files-o">&nbsp;</i>Take Note
-                            </h:link>&nbsp;&nbsp;
+                        
+                       
+                            <!-- Clicking "Sign Out" invokes accountManager's logout() method -->
+                            <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
+                                <i class="fa fa-sign-out">&nbsp;</i>Sign Out
+                            </h:commandLink>&nbsp;&nbsp;
+                            
+                       
                         </c:if>
 
                         <!-- "Sign In" and "Create an Account" if no user is signed in -->

@@ -8,7 +8,7 @@
     <ui:composition>
 
         <p:dialog id="NotesCreateDlg" showEffect="slide" hideEffect="explode" widgetVar="NotesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateNotesTitle}">
-            <h:form id="NotesCreateForm" >
+            <h:form id="NotesCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{notesController.editorSelected != null}" columnClasses="accountColumn1, accountColumn2">
                         <p:outputLabel value="#{bundle.CreateNotesLabel_title}" for="title" />

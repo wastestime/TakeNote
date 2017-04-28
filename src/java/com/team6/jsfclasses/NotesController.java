@@ -71,7 +71,9 @@ public class NotesController implements Serializable {
     private Notes editorSelected;
     private String searchString;
     private String searchField;
-    private int toShareWith;
+    private User toShareWith;
+
+    
     private boolean isInitialized = false;
 
     public NotesController() {
@@ -494,12 +496,18 @@ public class NotesController implements Serializable {
         this.searchField = searchField;
     }
 
-    public int getToShareWith() {
+    public User getToShareWith() {
         return toShareWith;
     }
 
-    public void setToShareWith(int toShareWith) {
+    public void setToShareWith(User toShareWith) {
         this.toShareWith = toShareWith;
     }
-
+    
+     public void shareNote(User toShareWith) {
+        //TODO
+        // ADD NODE TO USER'S NOTES... BUT CAN ONLY BE VIEWED
+        // need a field in notes indicates whether a user own the notes or not
+        
+    }
 }

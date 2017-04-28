@@ -1,11 +1,15 @@
 package com.team6.jsfclasses;
 
+import com.team6.entityclasses.ContactConnections;
+import com.team6.entityclasses.Notes;
 import com.team6.entityclasses.User;
 import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
+import com.team6.sessionbeans.ContactConnectionsFacade;
 import com.team6.sessionbeans.UserFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,6 +18,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -24,11 +29,32 @@ import javax.faces.convert.FacesConverter;
 public class UserController implements Serializable {
 
     @EJB
+    private UserFacade userFacade;
+
+    public ContactConnectionsFacade getContactConnectionsFacade() {
+        return contactConnectionsFacade;
+    }
+    @EJB
+    private ContactConnectionsFacade contactConnectionsFacade;
+    @EJB
     private com.team6.sessionbeans.UserFacade ejbFacade;
     private List<User> items = null;
     private User selected;
+    private String searchQuery;
+    private String statusMessage;
+    private User toShareWith;
+    private List<User> friends; // DONT FORGET TO ADD THSI INTO DATABASE
 
     public UserController() {
+        this.searchQuery=null;
+
+        this.friends = new ArrayList();
+        // READ FROM DATABASE
+
+    }
+
+    public UserFacade getEjbFacade() {
+        return ejbFacade;
     }
 
     public User getSelected() {
@@ -37,6 +63,10 @@ public class UserController implements Serializable {
 
     public void setSelected(User selected) {
         this.selected = selected;
+    }
+
+    public UserFacade getUserFacade() {
+        return this.userFacade;
     }
 
     protected void setEmbeddableKeys() {
@@ -161,4 +191,107 @@ public class UserController implements Serializable {
         }
 
     }
+
+    public void setSearchQuery(String searchQuery) {
+        this.searchQuery = searchQuery;
+    }
+
+    public String getSearchQuery() {
+        return this.searchQuery;
+    }
+    public User getToShareWith() {
+        return toShareWith;
+    }
+
+    public void setToShareWith(User toShareWith) {
+        this.toShareWith = toShareWith;
+    }
+    public boolean contains(User user) {
+        String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        User currUser = getUserFacade().findByUsername(user_name);
+        List<ContactConnections> contacts = getContactConnectionsFacade().findUserContacts(currUser.getId());
+        boolean flag = false;
+        System.out.printf("!!!!!! user id to add = %d\n", user.getId());
+        for (ContactConnections c : contacts) {
+            System.out.printf("********* user_id = %d, contact = %d\n", c.getUserId().getId(), c.getContactUid().getId());
+            if (c.getContactUid().getId().equals(user.getId())) {
+                flag = true;
+                System.out.printf("==duplicate addding is not allowed!\n");
+                break;
+            }
+        }
+        return flag;
+    }
+
+    public void addFriend() {
+        if (this.searchQuery != null) {
+            System.out.printf("=======%s  ========\n", this.searchQuery);
+            User user = getUserFacade().findByUsername(this.searchQuery);
+            if (user == null) {
+                statusMessage = "Invalid username as input!";
+                FacesMessage message = new FacesMessage(statusMessage);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+                return;
+            }
+            if (!contains(user)) {
+                
+                String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+                User currUser = getUserFacade().findByUsername(user_name);
+                if (user.getId().equals(currUser.getId())) {
+                    statusMessage = "You can't as yourself as friend!";
+                    FacesMessage message = new FacesMessage(statusMessage);
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    return;
+                }
+                //this.friends.add(user);
+                System.out.printf("+++++the selected user is : %s...", currUser.getUsername());
+                ContactConnections cc = new ContactConnections(currUser, user);
+                getContactConnectionsFacade().create(cc);
+                System.out.printf("After add size =%d  ========\n", this.friends.size());
+                // by setting friends to null, we foce the get friends method 
+                // above to retrieve all the users' contacts again
+                //this.friends = null;
+                statusMessage = "You added a new friend!";
+                FacesMessage message = new FacesMessage(statusMessage);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            } else {
+                statusMessage = "You were already friends!";
+                FacesMessage message = new FacesMessage(statusMessage);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+            }
+            searchQuery=null;
+
+        }
+    }
+    public void removeConnection() {
+        String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        User currUser = getUserFacade().findByUsername(user_name);
+        List<ContactConnections> contacts = getContactConnectionsFacade().findUserContacts(currUser.getId());
+        for (ContactConnections c : contacts) {
+            if (c.getContactUid().getId().equals(this.selected.getId())) {
+                getContactConnectionsFacade().remove(c);
+                break;
+            }
+        }
+    }
+    
+    public void refreshList() {
+        this.friends.clear();
+    }
+    public List<User> fetchContacts() {
+        if (this.friends.isEmpty()) {
+            //read from data base
+            String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+            User currUser = getUserFacade().findByUsername(user_name);
+            List<ContactConnections> contacts = getContactConnectionsFacade().findUserContacts(currUser.getId());
+            
+            contacts.forEach((c) -> {
+                this.friends.add(getUserFacade().findByUsername(c.getContactUid().getUsername()));
+            });
+        }
+        return this.friends;
+    }
+    
+     
+
 }

@@ -13,9 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -101,13 +98,9 @@ public class User implements Serializable {
     @Column(name = "security_answer")
     private String securityAnswer;
     
-    @JoinTable(name = "ContactConnections", joinColumns = {
-        @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "contact_uid", referencedColumnName = "id")})
-    @ManyToMany
     private Collection<User> userCollection;
-    @ManyToMany(mappedBy = "userCollection")
-    private Collection<User> userCollection1;
+
+    
     @OneToMany(mappedBy = "userId")
     private Collection<UserPhoto> userPhotoCollection;
     @OneToMany(mappedBy = "userId")
@@ -130,16 +123,6 @@ public class User implements Serializable {
         this.state = state;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
-    }
-    
-    public void addNote(Notes newNote) {
-        
-        if (notesCollection == null)
-        {
-            notesCollection = new LinkedList<>();
-        }
-        
-        notesCollection.add(newNote);
     }
 
     public Integer getId() {
@@ -215,28 +198,12 @@ public class User implements Serializable {
     }
 
     @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
-
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
-    }
-
-    @XmlTransient
-    public Collection<User> getUserCollection1() {
-        return userCollection1;
-    }
-
-    public void setUserCollection1(Collection<User> userCollection1) {
-        this.userCollection1 = userCollection1;
-    }
-
-    @XmlTransient
     public Collection<UserPhoto> getUserPhotoCollection() {
         return userPhotoCollection;
     }
-
+    public Collection<User> getUserCollection() {
+        return userCollection;
+    }
     public void setUserPhotoCollection(Collection<UserPhoto> userPhotoCollection) {
         this.userPhotoCollection = userPhotoCollection;
     }
@@ -275,8 +242,13 @@ public class User implements Serializable {
         return "com.team6.entityclasses.User[ id=" + id + " ]";
     }
     
-    public String getName()
-    {
-        return firstName + " " + lastName;
+    public void addNote(Notes newNote) {
+        
+        if (notesCollection == null)
+        {
+            notesCollection = new LinkedList<>();
+        }
+        notesCollection.add(newNote);
+        //also have to add to the databasewq
     }
 }
