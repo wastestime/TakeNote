@@ -37,7 +37,8 @@ Copyright © 2017 Osman Balci. All rights reserved.
                     </div>
                     <br/>
 
-                    <p:fileUpload fileUploadListener="#{fileUploadManager.handleNoteUpload}" multiple="false" 
+                    <p:fileUpload id="upload"
+                                  fileUploadListener="#{fileUploadManager.handleNoteUpload}" multiple="false" 
                                   mode="advanced" sizeLimit="10000000" fileLimit="1"
                                   dragDropSupport="true" update="messages" />
                     <br/>

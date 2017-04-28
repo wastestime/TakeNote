@@ -1,10 +1,12 @@
 package com.team6.jsfclasses;
 
+import com.team6.entityclasses.Notes;
 import com.team6.entityclasses.User;
 import com.team6.entityclasses.UserFile;
 import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
 import com.team6.managers.Constants;
+import com.team6.sessionbeans.NotesFacade;
 import com.team6.sessionbeans.UserFacade;
 import com.team6.sessionbeans.UserFileFacade;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 
 @Named("userFileController")
 @SessionScoped
@@ -42,6 +45,11 @@ public class UserFileController implements Serializable {
     @EJB
     private UserFacade userFacade;
 
+    @EJB
+    private NotesFacade notesFacade;
+
+    @Inject
+    private NotesController notesController;
     /*
     The instance variable 'userFileFacade' is annotated with the @EJB annotation.
     The @EJB annotation directs the EJB Container (of the GlassFish AS) to inject (store) the object reference 
@@ -105,21 +113,56 @@ public class UserFileController implements Serializable {
         this.fileTypeMessage = fileTypeMessage;
     }
 
-    public List<UserFile> getItems() {
+    public NotesFacade getNotesFacade() {
+        return notesFacade;
+    }
 
+    public void setNotesFacade(NotesFacade notesFacade) {
+        this.notesFacade = notesFacade;
+    }
+
+    public NotesController getNotesController() {
+        return notesController;
+    }
+
+    public void setNotesController(NotesController notesController) {
+        this.notesController = notesController;
+    }
+
+    public HashMap<Integer, String> getCleanedFileNameHashMap() {
+        return cleanedFileNameHashMap;
+    }
+
+    public void setCleanedFileNameHashMap(HashMap<Integer, String> cleanedFileNameHashMap) {
+        this.cleanedFileNameHashMap = cleanedFileNameHashMap;
+    }
+
+    public List<UserFile> getItems() {
+        System.out.println("get Items In User File Controller");
+        if (!getNotesController().isIsInitialized()) {
+            return items;
+        }
         if (items == null) {
+
             // Obtain the signed-in user's username
             String usernameOfSignedInUser = (String) FacesContext.getCurrentInstance()
                     .getExternalContext().getSessionMap().get("username");
 
             // Obtain the object reference of the signed-in user
             User signedInUser = getUserFacade().findByUsername(usernameOfSignedInUser);
+            String noteTitle = (String) FacesContext.getCurrentInstance()
+                    .getExternalContext().getSessionMap().get("title");
 
+            Notes note = getNotesFacade().findByUserIdAndTitle(signedInUser.getId(), noteTitle);
+
+            if (note == null) {
+                return null;
+            }
             // Obtain the id (primary key in the database) of the signedInUser object
             Integer userId = signedInUser.getId();
-
+            Integer noteId = note.getId();
             // Obtain only those files from the database that belong to the signed-in user
-            items = getUserFileFacade().findUserFilesByUserID(userId);
+            items = getUserFileFacade().findUserFilesByNoteId(noteId);
 
             // Instantiate a new hash map object
             cleanedFileNameHashMap = new HashMap<>();
@@ -144,6 +187,7 @@ public class UserFileController implements Serializable {
                 cleanedFileNameHashMap.put(fileId, cleanedFileName);
             }
         }
+
         return items;
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Luke Mazzu on 2017.04.16 
+Created by Luke Mazzu on 2017.04.16
 Copyright © 2017 Luke Mazzu. All rights reserved.
 -->
 <!DOCTYPE html>
@@ -16,22 +16,15 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
             <h:outputText value="Edit Page"></h:outputText>
         </ui:define>
 
-        <ui:define name="editableContent">
+        <ui:define name="editableContent" >
+
             <div align="center">
                 <h1>
                     <title>Edit Note</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
                     <script src='resources/js/tinymce/tinymce.min.js'></script>
                     <script>
-                        //            function testAjax() {
-                        //                $.ajax({
-                        //                  url: "getvalue.php", 
-                        //                  data: "",
-                        //                  success: function(e) {
-                        //
-                        //                  }
-                        //               });
-                        //            }
+
                         tinymce.init({
                             selector: 'textarea', // note the comma at the end of the line!
                             toolbar: 'example',
@@ -45,23 +38,20 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                                 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
                                 'searchreplace wordcount visualblocks visualchars code fullscreen',
                                 'insertdatetime media nonbreaking save table contextmenu directionality',
-                                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc '
                             ],
-                            toolbar1: 'save | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                            toolbar1: 'save | submit | undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
                             toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
                             content_css: [
                                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                                 '//www.tinymce.com/css/codepen.min.css'
                             ],
-    
+
                             save_enablewhendirty: true,
                             save_onsavecallback: function saveContent() {
                                 alert("saved");
                                 var cont = this.getContent();
-                                passToJSFManagedBean([{
-                                        name: 'id',
-                                        value: 1
-                                    },
+                                passToJSFManagedBean([
                                     {
                                         name: 'content',
                                         value: cont
@@ -69,26 +59,94 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                                 ]);
 
                             },
+
+                            setup: function (editor) {
+                                editor.addButton('submit', {
+                                    text: 'Submit',
+                                    icon: false,
+                                    onclick: function () {
+                                        var cont = editor.getContent();
+                                        passToJSFManagedBean([
+                                            {
+                                                name: 'content',
+                                                value: cont
+                                            }
+                                        ]);
+
+                                        window.location.href = 'notes/Notes.xhtml';
+                                    }
+                                });
+                            },
+                            //                            setup: function () {
+                            //                                alert("o");
+                            //                                //notesController.initialize();
+                            //                               // initializeCommand();
+                            //                            }
+
+
                         }
                         );
 
                     </script>
+
+                    <script>
+                        window.onload = function () {
+                            alert("o");
+                            document.getElementById('hidden:link').onclick();
+
+
+                        }
+                    </script>
                 </h1>
 
-                <body>
-                    <h:form >
-                        <div align ="left">
-                            <h:outputLabel class="editorTitle" value="#{notesController.getCurrentTitle()}" />
-                        </div>
-                        <form method="post">
-                            <p:inputTextarea id = "mytextarea2" value ="#{notesController.getCurrentNote()}" queryDelay="0" minQueryLength="0" />
-                        </form>
-                        <p:remoteCommand name="passToJSFManagedBean" id="passToJSFManagedBeancmd"
-                                         action="#{notesController.getSavedContent}"
-                                         process="@this" autoRun="true" />
-                    </h:form>
-                </body>
+                <h:form id="editorPart">
+                    <div align ="left">
+                        <h:outputLabel class="editorTitle" value="#{notesController.getEditorTitle()}" />
+                    </div>
+                    <form method="post">
+                        <p:inputTextarea id = "mytextarea2" value ="#{notesController.getEditorNote()}" queryDelay="0" minQueryLength="0" />
+                    </form>
+                    <p:remoteCommand name="passToJSFManagedBean" id="passToJSFManagedBean2"
+                                     action="#{notesController.save}"
+                                     process="@this" autoRun="true" />
+
+                </h:form>
+                <h:form id="hidden" style="display:none">
+                    <h:commandLink id="link">
+                        <f:ajax event="click" listener="#{notesController.initialize()}" />
+                    </h:commandLink>
+                </h:form>
             </div>
+
+
+
+
+            <h:form id="UserFileListForm">
+                <h2>Attachments</h2>
+                <p:dataTable id="attach" style="width: 50%"  value="#{userFileController.items}" var="item"
+                             selectionMode="single" selection="#{userFileController.selected}"
+                             rowKey="#{item.id}"
+                             >
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{bundle.ListUserFileTitle_filename}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.filename}"/>
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+            <h:form enctype="multipart/form-data">
+
+                <p:fileUpload  fileUploadListener="#{fileUploadManager.handleFileUpload}"
+                               mode="advanced"  update="messages,UserFileListForm"  id="atttachment" styleClass="att"/>                                <br/>
+                <p:growl id="messages" showDetail="true" />
+                <br/>
+            </h:form>
+
+
+
 
         </ui:define>
     </ui:composition >

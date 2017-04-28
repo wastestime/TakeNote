@@ -22,18 +22,20 @@ public final class Constants {
         Therefore, we use the following two external directories 
         for the storage and retrieval of user's files.
      */
-    /* paths for linux/mac users */
-    /* paths should be inside of the TakeNote project folder */
-    public static final String FILES_ABSOLUTE_PATH = "C:\\Users\\Lance\\TakeNote\\pdfStorage\\";
-    public static final String PHOTOS_ABSOLUTE_PATH = "/PDFStorage/";
+ /* paths for linux/mac users */
+ /* paths should be inside of the TakeNote project folder */
+//    public static final String FILES_ABSOLUTE_PATH = "/CloudStorage/FileStorage/";  
+//    public static final String PHOTOS_ABSOLUTE_PATH = "/CloudStorage/PhotoStorage/";
+    public static final String FILES_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\FileStorage\\";
+    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\PhotoStorage\\";
 
-/*
+    /*
 Windows OS Users should use the following: 
     public static final String FILES_ABSOLUTE_PATH = "CloudStorage\\FileStorage\\";  
     public static final String PHOTOS_ABSOLUTE_PATH = "CloudStorage\\PhotoStorage\\";
-*/
+     */
 
-    /*
+ /*
     In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the
     Alternate Document Root directory with the following statement:
         
@@ -41,16 +43,19 @@ Windows OS Users should use the following:
     
     Relative path is defined with respect to the Alternate Document Root starting with 'CloudStorage'.
      */
-    public static final String FILES_RELATIVE_PATH = "CloudStorage/FileStorage/";
-    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
-    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage/PhotoStorage/defaultUserPhoto.png";
+//    public static final String FILES_RELATIVE_PATH = "CloudStorage/FileStorage/";
+//    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
+//    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage/PhotoStorage/defaultUserPhoto.png";
 
-/*
+        public static final String FILES_RELATIVE_PATH = "CloudStorage\\FileStorage\\";
+    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage\\PhotoStorage\\";
+    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage\\PhotoStorage\\defaultUserPhoto.png";
+    /*
 Windows OS Users should use the following: 
 The same as above. The relative paths are specified in the same way.
-*/
+     */
 
-    /* Temporary filename */
+ /* Temporary filename */
     public static final String TEMP_FILE = "tmp_file";
 
     /* =========== Our Design Decision ===========

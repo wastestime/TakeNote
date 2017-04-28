@@ -7,6 +7,7 @@ package com.team6.managers;
 import com.team6.entityclasses.User;
 import com.team6.entityclasses.UserFile;
 import com.team6.entityclasses.Notes;
+import com.team6.jsfclasses.NotesController;
 import com.team6.sessionbeans.UserFacade;
 import com.team6.sessionbeans.UserFileFacade;
 import com.team6.sessionbeans.NotesFacade;
@@ -66,7 +67,10 @@ public class FileUploadManager implements Serializable {
 
     @EJB
     private NotesFacade notesFacade;
-    
+
+    @Inject
+    private NotesController notesController;
+
     /*
     The instance variable 'userFileController' is annotated with the @Inject annotation.
     The @Inject annotation directs the JavaServer Faces (JSF) CDI Container to inject (store) the object reference 
@@ -103,10 +107,11 @@ public class FileUploadManager implements Serializable {
     public UserFileFacade getUserFileFacade() {
         return userFileFacade;
     }
-    
+
     public NotesFacade getNotesFacade() {
         return notesFacade;
     }
+
     public UserFileController getUserFileController() {
         return userFileController;
     }
@@ -117,21 +122,34 @@ public class FileUploadManager implements Serializable {
     ================
      */
     public void handleFileUpload(FileUploadEvent event) throws IOException {
+        System.out.println("handleUpload");
 
         try {
+            notesController.save();
             String user_name = (String) FacesContext.getCurrentInstance()
                     .getExternalContext().getSessionMap().get("username");
-            int note_id = (Integer) FacesContext.getCurrentInstance()
-                    .getExternalContext().getSessionMap().get("note_id");
-            User user = getUserFacade().findByUsername(user_name);
-            Notes note = getNotesFacade().findById(note_id);
+//            int note_id = (int)FacesContext.getCurrentInstance()
+//                    .getExternalContext().getSessionMap().get("note_id");
+            String noteTitle = (String) FacesContext.getCurrentInstance()
+                    .getExternalContext().getSessionMap().get("title");
+//            String noteTitle = notesController.getSelected().getTitle();
 
-            /*
-            To associate the file to the user, record "userId_filename" in the database.
+            User user = getUserFacade().findByUsername(user_name);
+            // Notes note = getNotesFacade().findByTitle(noteTitle);
+
+            Notes note = getNotesFacade().findByUserIdAndTitle(user.getId(), noteTitle);
+            
+            System.out.println("id"+user.getId()+"title"+noteTitle);
+            int note_id = note.getId();
+
+//            int note_id = note.getId();
+//      Notes note = getNotesFacade().findById(1);
+            /* To associate the file to the user, record "userId_filename" in the database.
             Since each file has its own primary key (unique id), the user can upload
             multiple files with the same name.
              */
-            String noteId_filename = note.getId() + "_" + event.getFile().getFileName();
+            String noteId_filename = note.getTitle() + "_" + event.getFile().getFileName();
+            System.out.println(event.getFile().getFileName());
 
             /*
             "The try-with-resources statement is a try statement that declares one or more resources. 
@@ -146,6 +164,7 @@ public class FileUploadManager implements Serializable {
                 inputStream.close();
             }
 
+
             /*
             Create a new UserFile object with attibutes: (See UserFile table definition inputStream DB)
                 <> id = auto generated as the unique Primary key for the user file object
@@ -153,7 +172,7 @@ public class FileUploadManager implements Serializable {
                 <> user_id = user
              */
             UserFile newUserFile = new UserFile(note_id, noteId_filename);
-
+            newUserFile.setNoteId(note);
             /*
             ==============================================================
             If the userId_filename was used before, delete the earlier file.
@@ -185,15 +204,14 @@ public class FileUploadManager implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, resultMsg);
 
             // After successful upload, show the UserFiles.xhtml facelets page
-            FacesContext.getCurrentInstance().getExternalContext().redirect("UserFiles.xhtml");
-
+            // FacesContext.getCurrentInstance().getExternalContext().redirect("UserFiles.xhtml");
         } catch (IOException e) {
             resultMsg = new FacesMessage("Something went wrong during file upload! See: " + e.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, resultMsg);
         }
 
     }
-    
+
     public void handleNoteUpload(FileUploadEvent event) throws IOException {
 
         try {
@@ -220,13 +238,13 @@ public class FileUploadManager implements Serializable {
                 convertTextFileToNote(inputStream);
                 inputStream.close();
             }
-            
+
         } catch (IOException e) {
             resultMsg = new FacesMessage("Something went wrong during file upload! See: " + e.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, resultMsg);
         }
 
-            //save string of note content, redirect page to editor with content filled in
+        //save string of note content, redirect page to editor with content filled in
     }
 
     // Show the File Upload Page
@@ -308,15 +326,16 @@ public class FileUploadManager implements Serializable {
 
         // Write the series of bytes on uploadedFile.
         File targetFile = new File(Constants.FILES_ABSOLUTE_PATH, file_name);
-
+        System.out.println(targetFile.getPath());
         OutputStream outStream;
         outStream = new FileOutputStream(targetFile);
+        System.out.println("uploadCheck");
         outStream.write(buffer);
         outStream.close();
 
         return targetFile;
     }
-    
+
     private Notes convertTextFileToNote(InputStream inputStream) {
         //TODO: Convert text to note
         return new Notes();

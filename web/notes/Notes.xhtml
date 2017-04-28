@@ -9,7 +9,7 @@
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
     <ui:composition template="/template/siteTemplate.xhtml">
-        
+
         <ui:define name="title">
             <!-- Set the page title -->
             <h:outputText value="Notes"></h:outputText>
@@ -27,16 +27,16 @@
                 <p:growl id="growl" life="4000" />
 
                 <h:form id="NotesListForm">
-                    
+
                     <p:panel header="#{bundle.ListNotesTitle}">
                         <p:dataTable id="notes" value="#{notesController.items}" var="item"
-                                 selectionMode="single" selection="#{notesController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="5"
-                                 rowsPerPageTemplate="5,10,15,20,30,40,50"
-                                 styleClass="dataTable"
-                                 >
+                                     selectionMode="single" selection="#{notesController.selected}"
+                                     paginator="true"
+                                     rowKey="#{item.id}"
+                                     rows="5"
+                                     rowsPerPageTemplate="5,10,15,20,30,40,50"
+                                     styleClass="dataTable"
+                                     >
 
                             <p:ajax event="rowSelect" update="createButton viewButton editButton deleteButton shareButton exportButton"/>
                             <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton shareButton exportButton"/>
@@ -62,7 +62,7 @@
                                 </f:facet>
                                 <h:outputText styleClass="dataFields" value="#{item.userId.username}"/>
                             </p:column>
-                            
+
                             <p:column sortBy="#{item.createdTime}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_createdTime}" styleClass="facetHeader"/>
@@ -92,9 +92,16 @@
                             -->
 
                             <f:facet name="footer">
-                                <p:commandButton id="createButton" icon="ui-icon-plus" value="#{bundle.Create}" 
-                                                 styleClass="commandButton" actionListener="#{notesController.prepareCreate}" />
+                              
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   
+                                                 value="#{bundle.Create}" actionListener="#{notesController.prepareCreate}" 
+                                                 update=":NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()"/>
 
+                               
+                                  <!--
+                                <p:commandButton id="createButton" icon="ui-icon-plus"   
+                                                 value="#{bundle.Create}"  actionListener="#{notesController.prepareCreate}"  action="/Editor?faces-redirect=true"/>
+                                 -->
                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" 
                                                  styleClass="commandButton" update=":NoteEditForm" oncomplete="PF('NoteEditDialog').show()" 
                                                  disabled="#{empty notesController.selected or accountManager.checkSameUser(notesController.selected.userId) eq false}"/>
@@ -141,15 +148,15 @@
                                 ************************************************ 
                                 -->
 
-                                
+
                                 <p:commandButton id="exportButton" value="Export" ajax="false" 
                                                  icon="ui-icon-arrowthick-1-s"
                                                  styleClass="commandButton" disabled="#{empty notesController.selected}" actionListener="#{notesController.getPDF()}" >
-                                    
+
                                     <p:fileDownload value="#{fileDownloadManager.pdf}" />
 
                                 </p:commandButton>
-                                
+
                                 <p:commandButton id="searchButton" icon="ui-icon-search" value="#{bundle.Search}" 
                                                  styleClass="commandButton" update=":NoteSearchForm" 
                                                  oncomplete="PF('NoteSearchDialog').show()"/>
@@ -159,19 +166,19 @@
                     </p:panel>
                 </h:form>
 
-
+                 <ui:include src="Create.xhtml"/>
                 <!-- Clicking the View button displays the included View.xhtml file in a dialog window on top of this page. -->
                 <ui:include src="View.xhtml"/>
 
                 <!-- Clicking the Search button displays the included Search.xhtml file in a dialog window on top of this page. -->
                 <ui:include src="Search.xhtml"/>
-                
+
                 <ui:include src="Share.xhtml"/>
-                                
+
 
             </div>
         </ui:define>
-        
+
     </ui:composition>
 
 </html>

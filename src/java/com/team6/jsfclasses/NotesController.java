@@ -9,6 +9,8 @@ import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
 import com.team6.managers.Constants;
 import com.team6.sessionbeans.NotesFacade;
+import com.team6.sessionbeans.UserFacade;
+import com.team6.sessionbeans.UserFileFacade;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,17 +31,19 @@ import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import org.primefaces.context.RequestContext;
 
 @Named("notesController")
 @SessionScoped
 public class NotesController implements Serializable {
 
-    
     /*
     Using the @Inject annotation, the compiler is directed to store the object reference of the
     UserFileController CDI-named bean into the instance variable userFileController at runtime.
@@ -49,76 +53,43 @@ public class NotesController implements Serializable {
         import com.mycompany.jsfclasses.UserFileController;
         import javax.inject.Inject;
      */
-    @Inject
-    private UserFileController userFileController;
-    
+    @EJB
+    private com.team6.sessionbeans.NotesFacade ejbFacade;
+
+    @EJB
+    private UserFacade userFacade;
+
+    @EJB
+    private UserFileFacade userFileFacade;
+
     @EJB
     private com.team6.sessionbeans.NotesFacade notesFacade;
 
     private List<Notes> items = null;
     private List<Notes> searchItems = null;
     private Notes selected;
+    private Notes editorSelected;
     private String searchString;
     private String searchField;
     private int toShareWith;
+    private boolean isInitialized = false;
 
     public NotesController() {
-        
         items = new LinkedList<>();
-        
-        
-        Date createdTime = new Date();
-        Date modifiedTime = new Date();
-        
-        Notes note1 = new Notes( 1, "note1", "note1 description", createdTime, modifiedTime);
-        Notes note2 = new Notes( 2, "note2", "note2 description", createdTime, modifiedTime);
-        Notes note3 = new Notes( 3, "note3", "note3 description", createdTime, modifiedTime);
-        Notes note4 = new Notes( 4, "note4", "note4 description", createdTime, modifiedTime);
-        note1.setContent("Hello World!1");
-        note2.setContent("Hello World!2");
-        note3.setContent("Hello World!3");
-        note4.setContent("Hello World!4");
-        
-        User user1 = new User(10, "yomn5", "abcd123", "xx", "Geoffrey", "Masters", "VA", 0, "dog");
-        User user2 = new User(11, "yomn6", "abcd123", "xx", "Geoffrey", "Masters", "VA", 0, "dog");
-        User user3 = new User(1, "yomn567", "abcd123", "xx", "Geoffrey", "Masters", "VA", 0, "dog");
-        User user4 = new User(13, "yomn8", "abcd123", "xx", "Geoffrey", "Masters", "VA", 0, "dog");
-        
-        note1.setUserId(user1);
-        note2.setUserId(user2);
-        note3.setUserId(user3);
-        note4.setUserId(user4);
-        
-        Collection<User> ucol = new LinkedList<>();
-        ucol.add(user2);
-        ucol.add(user3);
-        ucol.add(user4);
-        
-        
-        user1.setUserCollection(ucol);
-        
-        items.add(note1);
-        items.add(note2);
-        items.add(note3);
-        items.add(note4);
-        
     }
-    
+
     public void getPDF() {
-        
+
         File folder = new File(Constants.FILES_ABSOLUTE_PATH);
         File[] files = folder.listFiles();
-        
-        if (files != null)
-        {
-            for (File f : files)
-            {
+
+        if (files != null) {
+            for (File f : files) {
                 f.delete();
             }
         }
-        
-        if (selected != null)
-        {
+
+        if (selected != null) {
             String FILE = Constants.FILES_ABSOLUTE_PATH + selected.getTitle() + ".pdf";
 
             try {
@@ -137,9 +108,7 @@ public class NotesController implements Serializable {
                 HTMLWorker worker = new HTMLWorker(document);
                 worker.parse(new StringReader(selected.getContent()));
                 document.close();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -164,20 +133,20 @@ public class NotesController implements Serializable {
     }
 
     public Notes prepareCreate() {
-        selected = new Notes();
+        editorSelected = new Notes();
         initializeEmbeddableKey();
-        
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../Editor.xhtml");
-        } catch (IOException ex) {
-            Logger.getLogger(NotesController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return selected;
+
+//        try {
+//            FacesContext.getCurrentInstance().getExternalContext().redirect("../Editor.xhtml");
+//        } catch (IOException ex) {
+//            Logger.getLogger(NotesController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        return editorSelected;
     }
+//
 
     public void create() {
-        System.out.println("bbb");
+        System.out.println("createInNoteController");
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NotesCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -188,99 +157,207 @@ public class NotesController implements Serializable {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("NotesUpdated"));
     }
 
-    public String getCurrentNote() {
-        if (selected == null) {
+    public String getEditorNote() {
+        String user_name = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
+
+        int user_id = (int) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("user_id");
+        System.out.println(user_id);
+
+        Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
+        if (existNote != null) {
+            editorSelected = existNote;
+        }
+        if (editorSelected == null || editorSelected.getContent() == null) {
             return "Please Start typing!";
         }
-        return selected.getContent();
+        return editorSelected.getContent();
     }
-     public String getCurrentTitle() {
+
+    public String getCurrentTitle() {
         if (selected == null) {
             return "==title==";
         }
         return selected.getTitle();
     }
-     
-     public String getCurrentDescription() {
-          
-         if (selected == null)
-         {
-             return "==description==";
-         }
-         
-         return selected.getDescription();
-     }
-     
-     public String getCurrentUsername() {
-         
-         if (selected == null)
-         {
-             return "==username==";
-         }
-         
-         return selected.getUserId().getUsername();
-     }
-     
-     public String getCurrentCreatedTime() {
-         
-         if (selected == null)
-         {
-             return "==createdTime==";
-         }
-         
-         return selected.getCreatedTime().toString();
-     }
-     
-     public String getCurrentModifiedTime() {
-         
-         if (selected == null)
-         {
-             return "==modifiedTime==";
-         }
-         
-         return selected.getModifiedTime().toString();
-     }
+
+    public String getEditorTitle() {
+        if (editorSelected == null) {
+            return "==title==";
+        }
+        return editorSelected.getTitle();
+    }
+
+    public String getCurrentDescription() {
+
+        if (selected == null) {
+            return "==description==";
+        }
+
+        return selected.getDescription();
+    }
+
+    public String getCurrentNote() {
+        if (selected == null || selected.getContent() == null) {
+            return "Please Start typing!";
+        }
+        return selected.getContent();
+    }
+
+    public String getCurrentUsername() {
+
+        if (selected == null) {
+            return "==username==";
+        }
+
+        return selected.getUserId().getUsername();
+    }
+
+    public String getCurrentCreatedTime() {
+
+        if (selected == null) {
+            return "==createdTime==";
+        }
+
+        return selected.getCreatedTime().toString();
+    }
+
+    public String getCurrentModifiedTime() {
+
+        if (selected == null) {
+            return "==modifiedTime==";
+        }
+
+        return selected.getModifiedTime().toString();
+    }
 
     public void destroy() {
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NotesDeleted"));
         if (!JsfUtil.isValidationFailed()) {
+            editorSelected = null;
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public List<Notes> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
+//        if (items == null) {
+        String user_name = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
+        User user = getUserFacade().findByUsername(user_name);
+        int user_id = user.getId();
+        items = getFacade().findNotesByUserId(user_id);
         return items;
+        //        }
+        //        return items;
     }
 
-    public void getSavedContent() {
-        System.out.println("aaaa1");
-        prepareCreate();
+    public NotesFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(NotesFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public UserFileFacade getUserFileFacade() {
+        return userFileFacade;
+    }
+
+    public void setUserFileFacade(UserFileFacade userFileFacade) {
+        this.userFileFacade = userFileFacade;
+    }
+
+    public UserFacade getUserFacade() {
+        return userFacade;
+    }
+
+    public void initialize() throws IOException {
+        System.out.println("initialize editor");
+
+        //prepareCreate();
+        String user_name = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
+
+        int user_id = (int) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("user_id");
+        System.out.println(user_id);
+
+        Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
+        if (existNote != null) {
+            System.out.println("Same name");
+            System.out.println(existNote.getContent());
+
+            editorSelected = existNote;
+
+        } else {
+            User user = getUserFacade().findByUsername(user_name);
+            editorSelected.setUserId(user);
+            editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+                    .get("content"));
+            Date currDate = new Date();
+            editorSelected.setCreatedTime(currDate);
+            editorSelected.setModifiedTime(currDate);
+
+            create();
+            isInitialized = true;
+        }
+        initializeSessionMap();
+    }
+
+    public Notes getEditorSelected() {
+        return editorSelected;
+    }
+
+    public void setEditorSelected(Notes editorSelected) {
+        this.editorSelected = editorSelected;
+    }
+
+    public void save() {
+        System.out.println("save In Notes Controller");
+
 //        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
 //                .get("id");
 //        selected.setId(Integer.parseInt(id));
-        selected.setTitle("test");
+//        int note_id = (Integer) FacesContext.getCurrentInstance()
+//                .getExternalContext().getSessionMap().get("note_id");
+//        User user = getUserFacade().find(user_id);
+        //editorSelected.setTitle("test");
+//        selected.setUserId(user);
+        String user_name = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
+
+        int user_id = (int) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("user_id");
+        Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
+        editorSelected = existNote;
         Date currDate = new Date();
 //        currDate.getTime();
-        selected.setCreatedTime(currDate);
-        selected.setModifiedTime(currDate);
-        selected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+//        selected.setCreatedTime(currDate);
+        editorSelected.setModifiedTime(currDate);
+        editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
                 .get("content"));
-        create();
+        update();
         //System.out.print(content);
     }
 
+    public boolean isIsInitialized() {
+        return isInitialized;
+    }
+
+    public void setIsInitialized(boolean isInitialized) {
+        this.isInitialized = isInitialized;
+    }
+
     private void persist(PersistAction persistAction, String successMessage) {
-        if (selected != null) {
+        if (editorSelected != null) {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
+                    getFacade().edit(editorSelected);
                 } else {
-                    getFacade().remove(selected);
+                    getFacade().remove(editorSelected);
                 }
                 JsfUtil.addSuccessMessage(successMessage);
             } catch (EJBException ex) {
@@ -301,6 +378,24 @@ public class NotesController implements Serializable {
         }
     }
 
+    public void initializeSessionMap() {
+
+        String user_name = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
+
+        int user_id = (int) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("user_id");
+        Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
+
+        // Put the User's object reference into session map variable user
+        FacesContext.getCurrentInstance().getExternalContext().
+                getSessionMap().put("title", existNote.getTitle());
+
+        // Put the User's database primary key into session map variable user_id
+        FacesContext.getCurrentInstance().getExternalContext().
+                getSessionMap().put("note_id", existNote.getId());
+    }
+
     public Notes getNotes(java.lang.Integer id) {
         return getFacade().find(id);
     }
@@ -312,24 +407,24 @@ public class NotesController implements Serializable {
     public List<Notes> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
-    
+
     public List<Notes> getSearchItems() {
         switch (searchField) {
             case "title":
-               
+
                 return getNotesFacade().titleQuery(searchString);
             case "description":
 
                 return getNotesFacade().descriptionQuery(searchString);
             case "username":
-                
+
                 return getNotesFacade().usernameQuery(searchString);
             default:
 
                 return getNotesFacade().allQuery(searchString);
         }
     }
-    
+
     public void search(ActionEvent actionEvent) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect("SearchResults.xhtml");
     }
@@ -407,6 +502,4 @@ public class NotesController implements Serializable {
         this.toShareWith = toShareWith;
     }
 
-    
-    
 }
