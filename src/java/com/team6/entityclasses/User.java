@@ -98,7 +98,6 @@ public class User implements Serializable {
     @Column(name = "security_answer")
     private String securityAnswer;
     
-    private Collection<User> userCollection;
 
     
     @OneToMany(mappedBy = "userId")
@@ -201,9 +200,7 @@ public class User implements Serializable {
     public Collection<UserPhoto> getUserPhotoCollection() {
         return userPhotoCollection;
     }
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
+  
     public void setUserPhotoCollection(Collection<UserPhoto> userPhotoCollection) {
         this.userPhotoCollection = userPhotoCollection;
     }
