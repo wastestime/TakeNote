@@ -28,7 +28,7 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                             <f:selectItem itemLabel="Select Contact" itemValue="" noSelectionOption="true"/>
                             <f:selectItems value="#{userController.fetchContacts()}" var="user"
-                                           itemLabel="#{user.username}" itemValue="#{user.id}"/>
+                                           itemLabel="#{user.username}" itemValue="#{user}"/>
                             
                         </p:selectOneMenu>
                         

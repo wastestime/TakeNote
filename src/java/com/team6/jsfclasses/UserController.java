@@ -1,6 +1,7 @@
 package com.team6.jsfclasses;
 
 import com.team6.entityclasses.ContactConnections;
+import com.team6.entityclasses.Notes;
 import com.team6.entityclasses.User;
 import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
@@ -43,6 +44,7 @@ public class UserController implements Serializable {
     private String statusMessage;
 
     private List<User> friends; // DONT FORGET TO ADD THSI INTO DATABASE
+    
 
     public UserController() {
         this.searchQuery=null;

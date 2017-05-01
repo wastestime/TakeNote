@@ -5,7 +5,6 @@
 package com.team6.sessionbeans;
 
 import com.team6.entityclasses.Notes;
-import com.team6.entityclasses.User;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -42,14 +41,14 @@ public class NotesFacade extends AbstractFacade<Notes> {
         }
     }
 
-    public List<Notes> findNotesByUserId(int userid) {
-        if (em.createQuery("SELECT c FROM Notes c WHERE c.userId.id = :userid")
-                .setParameter("userid", userid)
+    public List<Notes> findNotesByUserId(int userId) {
+        if (em.createQuery("SELECT c FROM Notes c WHERE (c.userId.id = :userId AND c.sharedWith = null) OR (c.sharedWith.id = :userId AND c.userId.id != :userId)")
+                .setParameter("userId", userId)
                 .getResultList().isEmpty()) {
             return null;
         } else {
-            return (em.createQuery("SELECT c FROM Notes c WHERE c.userId.id = :userid")
-                    .setParameter("userid", userid)
+            return (em.createQuery("SELECT c FROM Notes c WHERE (c.userId.id = :userId AND c.sharedWith = null) OR (c.sharedWith.id = :userId AND c.userId.id != :userId)")
+                    .setParameter("userId", userId)
                     .getResultList());
         }
     }
@@ -65,6 +64,62 @@ public class NotesFacade extends AbstractFacade<Notes> {
                     .setParameter("title", title)
                     .setParameter("userId", userId)
                     .getSingleResult());
+        }
+    }
+    
+    public Notes findSharedByUserIdAndTitle(int userId, String title) {
+        if (em.createQuery("SELECT c FROM Notes c WHERE c.title = :title AND c.sharedWith.id = :userId")
+                .setParameter("title", title)
+                .setParameter("userId", userId)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Notes) (em.createQuery("SELECT c FROM Notes c WHERE c.title = :title AND c.sharedWith.id = :userId")
+                    .setParameter("title", title)
+                    .setParameter("userId", userId)
+                    .getSingleResult());
+        }
+    }
+    
+    public List<Notes> findNotesByUserIdAndTitle(int userId, String title) {
+        if (em.createQuery("SELECT c FROM Notes c WHERE c.title LIKE :title AND ((c.userId.id = :userId AND c.sharedWith = null) OR (c.sharedWith.id = :userId AND c.userId.id != :userId))")
+                .setParameter("title", title)
+                .setParameter("userId", userId)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (em.createQuery("SELECT c FROM Notes c WHERE c.title LIKE :title AND ((c.userId.id = :userId AND c.sharedWith = null) OR (c.sharedWith.id = :userId AND c.userId.id != :userId))")
+                    .setParameter("title", title)
+                    .setParameter("userId", userId)
+                    .getResultList());
+        }
+    }
+    
+    public List<Notes> findNotesByUserIdAndDescription(int userId, String description) {
+        if (em.createQuery("SELECT c FROM Notes c WHERE c.description LIKE :description AND ((c.userId.id = :userId AND c.sharedWith = null) OR (c.sharedWith.id = :userId AND c.userId.id != :userId))")
+                .setParameter("description", description)
+                .setParameter("userId", userId)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (em.createQuery("SELECT c FROM Notes c WHERE c.description LIKE :description AND ((c.userId.id = :userId AND c.sharedWith = null) OR (c.sharedWith.id = :userId AND c.userId.id != :userId))")
+                    .setParameter("description", description)
+                    .setParameter("userId", userId)
+                    .getResultList());
+        }
+    }
+    
+    public List<Notes> findNotesByUserIdAndOwner(int userId, String owner) {
+        if (em.createQuery("SELECT c FROM Notes c WHERE c.userId.username LIKE :owner AND ((c.userId.id = :userId AND c.sharedWith = null) OR (c.sharedWith.id = :userId AND c.userId.id != :userId))")
+                .setParameter("owner", owner)
+                .setParameter("userId", userId)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return em.createQuery("SELECT c FROM Notes c WHERE c.userId.username LIKE :owner AND (c.userId.id = :userId AND c.sharedWith = null) OR c.sharedWith.id =: userId")
+                    .setParameter("owner", owner)
+                    .setParameter("userId", userId)
+                    .getResultList();
         }
     }
 
