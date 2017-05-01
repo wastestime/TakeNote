@@ -80,6 +80,9 @@ public class Notes implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
+    @JoinColumn(name = "sharedWith", referencedColumnName = "id")
+    @ManyToOne
+    private User sharedWith;
 
     public Notes() {
     }
@@ -94,6 +97,7 @@ public class Notes implements Serializable {
         this.description = description;
         this.createdTime = createdTime;
         this.modifiedTime = modifiedTime;
+        sharedWith = null;
     }
 
     public Integer getId() {
@@ -169,6 +173,16 @@ public class Notes implements Serializable {
     public void setUserId(User userId) {
         this.userId = userId;
     }
+
+    public User getSharedWith() {
+        return sharedWith;
+    }
+
+    public void setSharedWith(User sharedWith) {
+        this.sharedWith = sharedWith;
+    }
+    
+    
 
     @Override
     public int hashCode() {

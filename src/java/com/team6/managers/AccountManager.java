@@ -804,9 +804,6 @@ public class AccountManager implements Serializable {
             }
         }
     }
-    
-    
- 
 
     public void setUserPhotoFacade(UserPhotoFacade userPhotoFacade) {
         this.userPhotoFacade = userPhotoFacade;
@@ -815,15 +812,4 @@ public class AccountManager implements Serializable {
     public String photoStorageDirectoryName() {
         return Constants.PHOTOS_ABSOLUTE_PATH;
     }
-    
-   
-
-    public boolean checkSameUser(User otherUser)
-    {   
-        return (selected != null) && (selected != null) && (otherUser != null) && selected.getId().equals(otherUser);
-    }
-
-    
-    
-    
 }
