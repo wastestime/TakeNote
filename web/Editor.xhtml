@@ -32,7 +32,6 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                             height: '400',
                             autoresize_min_height: '400',
                             autoresize_max_height: '800',
-
                             theme: 'modern',
                             plugins: [
                                 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
@@ -46,6 +45,13 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                                 '//www.tinymce.com/css/codepen.min.css'
                             ],
+                            templates: [
+                                {title: 'Some title 2', description: 'Some desc 2', url: 'EditorTemplate.html'}
+                            ],
+                            template_replace_values: {
+                                "h2": "Replace with this content",
+                                //anotherClassName: "Replacement content"
+                            },
 
                             save_enablewhendirty: true,
                             save_onsavecallback: function saveContent() {
@@ -56,9 +62,8 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                                         value: cont
                                     }
                                 ]);
-
-                            },
-
+                            }
+                            ,
                             setup: function (editor) {
                                 editor.addButton('submit', {
                                     text: 'Submit',
@@ -71,23 +76,18 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                                                 value: cont
                                             }
                                         ]);
-
                                         window.location.href = 'notes/Notes.xhtml';
                                     }
                                 });
-                            },
-                
-
+                            }
+                            ,
                         }
                         );
-
                     </script>
 
                     <script>
                         window.onload = function () {
                             document.getElementById('hidden:link').onclick();
-
-
                         }
                     </script>
                 </h1>
@@ -116,7 +116,7 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
 
             <h:form id="UserFileListForm">
                 <h2>Attachments</h2>
-                <p:dataTable id="attach" style="width: 50%"  value="#{userFileController.items}" var="item"
+                <p:dataTable id="attach" style="width: 50%"  value="#{userFileController.getItems()}" var="item"
                              selectionMode="single" selection="#{userFileController.selected}"
                              rowKey="#{item.id}"
                              >
@@ -133,7 +133,7 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
             <h:form enctype="multipart/form-data">
 
                 <p:fileUpload  fileUploadListener="#{fileUploadManager.handleFileUpload}"
-                               mode="advanced"  update="messages,UserFileListForm"  id="atttachment" styleClass="att"/>                                <br/>
+                               mode="advanced"  update="messages,UserFileListForm"   id="atttachment" styleClass="att"/>                                <br/>
                 <p:growl id="messages" showDetail="true" />
                 <br/>
             </h:form>

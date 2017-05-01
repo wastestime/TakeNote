@@ -308,8 +308,7 @@ public class NotesController implements Serializable {
         Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
         if (existNote != null) {
             System.out.println("Same name");
-            System.out.println(existNote.getContent());
-
+            System.out.println("existNote.getContent()="+existNote.getContent());
             editorSelected = existNote;
 
         } else {
