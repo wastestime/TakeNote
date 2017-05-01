@@ -9,9 +9,13 @@
             <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/Share.xhtml</file>
             <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/Notes.xhtml</file>
             <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/jsfclasses/NotesController.java</file>
+<<<<<<< HEAD
             <file>file:/C:/Users/Lance/git/Team6/TakeNote/TakeNotesDB.sql</file>
             <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/entityclasses/Notes.java</file>
             <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/SearchResults.xhtml</file>
+=======
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/entityclasses/Notes.java</file>
+>>>>>>> dadc8dfdf1dc2cc1d437f3952a600f981aff64b6
         </group>
     </open-files>
 </project-private>

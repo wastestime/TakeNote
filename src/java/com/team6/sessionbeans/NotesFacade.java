@@ -116,7 +116,11 @@ public class NotesFacade extends AbstractFacade<Notes> {
                 .getResultList().isEmpty()) {
             return null;
         } else {
+<<<<<<< HEAD
             return em.createQuery("SELECT c FROM Notes c WHERE c.userId.username LIKE :owner AND ((c.userId.id = :userId AND c.sharedWith = null) OR (c.sharedWith.id = :userId AND c.userId.id != :userId))")
+=======
+            return em.createQuery("SELECT c FROM Notes c WHERE c.userId.username LIKE :owner AND (c.userId.id = :userId AND c.sharedWith = null) OR c.sharedWith.id =: userId")
+>>>>>>> dadc8dfdf1dc2cc1d437f3952a600f981aff64b6
                     .setParameter("owner", owner)
                     .setParameter("userId", userId)
                     .getResultList();
