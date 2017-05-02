@@ -4,9 +4,9 @@
  */
 package com.team6.managers;
 
+import com.team6.entityclasses.Activity;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -17,9 +17,9 @@ import org.primefaces.event.timeline.TimelineSelectEvent;
 import org.primefaces.model.timeline.TimelineEvent;
 import org.primefaces.model.timeline.TimelineModel;
  
-@ManagedBean(name = "linkedTimelinesView")
+@ManagedBean(name = "activityManager")
 @ViewScoped
-public class LinkedTimelinesView implements Serializable {
+public class ActivityManager implements Serializable {
  
     private TimelineModel modelFirst;  // model of the first timeline  
     private boolean aSelected;         // flag if the project A is selected (for test of select() call on the 2. model)  
@@ -34,19 +34,19 @@ public class LinkedTimelinesView implements Serializable {
  
         Calendar cal = Calendar.getInstance();
         cal.set(2017, Calendar.APRIL, 25, 17, 30, 0);
-        modelFirst.add(new TimelineEvent(new Task("Edit Activity", "/resources/images/activityImages/edit.png", false), cal.getTime()));
+        modelFirst.add(new TimelineEvent(new Activity("Edit Activity", "/resources/images/activityImages/edit.png"), cal.getTime()));
         
         cal.set(2017, Calendar.APRIL, 27, 11, 45, 0);
-        modelFirst.add(new TimelineEvent(new Task("Edit Activity", "/resources/images/activityImages/edit.png", false), cal.getTime()));
+        modelFirst.add(new TimelineEvent(new Activity("Edit Activity", "/resources/images/activityImages/edit.png"), cal.getTime()));
         
         cal.set(2017, Calendar.APRIL, 26, 16, 45, 0);
-        modelFirst.add(new TimelineEvent(new Task("Create Activity", "/resources/images/activityImages/create.png", false), cal.getTime()));
+        modelFirst.add(new TimelineEvent(new Activity("Create Activity", "/resources/images/activityImages/create.png"), cal.getTime()));
         
         cal.set(2017, Calendar.APRIL, 27, 12, 30, 0);
-        modelFirst.add(new TimelineEvent(new Task("Delete Activity", "/resources/images/activityImages/delete.png", false), cal.getTime()));
+        modelFirst.add(new TimelineEvent(new Activity("Delete Activity", "/resources/images/activityImages/delete.png"), cal.getTime()));
         
         cal.set(2017, Calendar.APRIL, 27, 17, 30, 0);
-        modelFirst.add(new TimelineEvent(new Task("Delete Activity", "/resources/images/activityImages/delete.png", false), cal.getTime()));
+        modelFirst.add(new TimelineEvent(new Activity("Delete Activity", "/resources/images/activityImages/delete.png"), cal.getTime()));
         
         /*    #{resource['images:edit.png']}
         cal.set(2015, Calendar.AUGUST, 23, 23, 0, 0);
@@ -94,30 +94,5 @@ public class LinkedTimelinesView implements Serializable {
  
     public TimelineModel getModelFirst() {
         return modelFirst;
-    }
- 
-    public class Task implements Serializable {
- 
-        private String title;
-        private String imagePath;
-        private boolean period;
- 
-        public Task(String title, String imagePath, boolean period) {
-            this.title = title;
-            this.imagePath = imagePath;
-            this.period = period;
-        }
- 
-        public String getTitle() {
-            return title;
-        }
- 
-        public String getImagePath() {
-            return imagePath;
-        }
- 
-        public boolean isPeriod() {
-            return period;
-        }
     }
 }

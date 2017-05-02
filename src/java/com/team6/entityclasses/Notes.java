@@ -75,8 +75,7 @@ public class Notes implements Serializable {
     private String content;
     @OneToMany(mappedBy = "noteId")
     private Collection<UserFile> userFileCollection;
-    @OneToMany(mappedBy = "noteId")
-    private Collection<Activity> activityCollection;
+  
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
@@ -160,15 +159,6 @@ public class Notes implements Serializable {
 
     public void setUserFileCollection(Collection<UserFile> userFileCollection) {
         this.userFileCollection = userFileCollection;
-    }
-
-    @XmlTransient
-    public Collection<Activity> getActivityCollection() {
-        return activityCollection;
-    }
-
-    public void setActivityCollection(Collection<Activity> activityCollection) {
-        this.activityCollection = activityCollection;
     }
 
     public User getUserId() {
