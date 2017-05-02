@@ -333,7 +333,12 @@ public class UserController implements Serializable {
         if(title.toLowerCase().contains("edit")) {
             a.setImagePath("/resources/images/activityImages/edit.png");
             getActivityFacade().create(a);
-        } else if (title.toLowerCase().contains("create")) {
+        }
+        else if (title.toLowerCase().contains("create account")) {
+            a.setImagePath("/resources/images/activityImages/create_account.png");
+            getActivityFacade().create(a);
+        }
+        else if (title.toLowerCase().contains("create")) {
             a.setImagePath("/resources/images/activityImages/create.png");
             getActivityFacade().create(a);
         }
@@ -352,8 +357,19 @@ public class UserController implements Serializable {
             getActivityFacade().create(a);
         }
         else if (title.toLowerCase().contains("remove friend")){
-            
             a.setImagePath("/resources/images/activityImages/unfriend.png");
+            getActivityFacade().create(a);
+        }
+        else if (title.toLowerCase().contains("change photo")){
+            a.setImagePath("/resources/images/activityImages/photo.png");
+            getActivityFacade().create(a);
+        }
+        else if (title.toLowerCase().contains("password")){
+            a.setImagePath("/resources/images/activityImages/password.png");
+            getActivityFacade().create(a);
+        }
+        else if (title.toLowerCase().contains("upload textfile")){
+            a.setImagePath("/resources/images/activityImages/upload.png");
             getActivityFacade().create(a);
         }
         

@@ -8,6 +8,7 @@ import com.team6.entityclasses.User;
 import com.team6.entityclasses.UserFile;
 import com.team6.entityclasses.Notes;
 import com.team6.jsfclasses.NotesController;
+import com.team6.jsfclasses.UserController;
 import com.team6.sessionbeans.UserFacade;
 import com.team6.sessionbeans.UserFileFacade;
 import com.team6.sessionbeans.NotesFacade;
@@ -72,6 +73,8 @@ public class FileUploadManager implements Serializable {
 
     @Inject
     private NotesController notesController;
+    @Inject
+    private UserController userController;
 
     /*
     The instance variable 'userFileController' is annotated with the @Inject annotation.
@@ -227,7 +230,8 @@ public class FileUploadManager implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, resultMsg);
         }
         notesController.setEditorSelected(new Notes(title, description, contents));
-
+        System.out.println("===========================sfdsfadsfup loaddddd");
+        userController.addActivity("Upload Textfile");
         FacesContext.getCurrentInstance().getExternalContext().redirect("Editor.xhtml");
     }
 

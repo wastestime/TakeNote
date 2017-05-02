@@ -26,6 +26,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /*
@@ -125,6 +126,8 @@ public class AccountManager implements Serializable {
     @EJB
     private UserPhotoFacade userPhotoFacade;
 
+    @Inject
+    private UserController userController;
     // Constructor method instantiating an instance of AccountManager
     public AccountManager() {
     }
@@ -332,6 +335,7 @@ public class AccountManager implements Serializable {
                 newUser.setPassword(password);
                 
                 getUserFacade().create(newUser);
+                userController.addActivity("Create Account");
 
             } catch (EJBException e) {
                 username = "";
@@ -388,6 +392,7 @@ public class AccountManager implements Serializable {
 
                 // Store the changes in the CloudDriveDB database
                 getUserFacade().edit(editUser);
+                userController.addActivity("Edit Profile");
 
             } catch (EJBException e) {
                 username = "";

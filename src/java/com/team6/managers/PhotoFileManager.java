@@ -5,6 +5,7 @@
 
 import com.team6.entityclasses.User;
 import com.team6.entityclasses.UserPhoto;
+import com.team6.jsfclasses.UserController;
 import com.team6.managers.Constants;
 import com.team6.sessionbeans.UserFacade;
 import com.team6.sessionbeans.UserPhotoFacade;
@@ -23,6 +24,7 @@ import javax.faces.application.FacesMessage;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.imgscalr.Scalr;
 import org.primefaces.model.UploadedFile;
@@ -60,6 +62,8 @@ public class PhotoFileManager implements Serializable {
     @EJB
     private UserPhotoFacade userPhotoFacade;
 
+    @Inject
+    private UserController userController;
     /*
     =========================
     Getter and Setter Methods
@@ -171,7 +175,7 @@ public class PhotoFileManager implements Serializable {
 
         storePhotoFile(file);
         message = "";
-
+        userController.addActivity("Change Photo");
         // Redirect to show the Profile page
         return "Profile?faces-redirect=true";
     }

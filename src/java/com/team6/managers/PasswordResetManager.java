@@ -5,6 +5,7 @@
 package com.team6.managers;
 
 import com.team6.entityclasses.User;
+import com.team6.jsfclasses.UserController;
 import com.team6.sessionbeans.UserFacade;
 import java.io.Serializable;
 import javax.ejb.EJB;
@@ -14,7 +15,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
+
 
 @Named(value = "passwordResetManager")
 @SessionScoped
@@ -36,7 +39,9 @@ public class PasswordResetManager implements Serializable {
      */
     @EJB
     private UserFacade userFacade;
-
+    
+    @Inject
+    private UserController userController;
     /*
     =========================
     Getter and Setter Methods
@@ -207,7 +212,7 @@ public class PasswordResetManager implements Serializable {
                 // Redirect to show the ResetPassword page
                 return "ResetPassword?faces-redirect=true";
             }
-
+            userController.addActivity("Change Password");
             // Redirect to show the index (Home) page
             return "index?faces-redirect=true";
             
