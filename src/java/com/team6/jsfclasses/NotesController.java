@@ -320,7 +320,7 @@ public class NotesController implements Serializable {
             Date currDate = new Date();
             editorSelected.setCreatedTime(currDate);
             editorSelected.setModifiedTime(currDate);
-            //editorSelected.setDescription("Uploaded File");
+
             
             notesFacade.create(editorSelected);
             isInitialized = true;

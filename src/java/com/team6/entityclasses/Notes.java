@@ -101,6 +101,8 @@ public class Notes implements Serializable {
         this.content = content;
     }
 
+  
+
     public Notes(Integer id, String title, String description, Date createdTime, Date modifiedTime) {
         this.id = id;
         this.title = title;
@@ -121,7 +123,7 @@ public class Notes implements Serializable {
     public String getTitle() {
         return title;
     }
-    
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -133,7 +135,7 @@ public class Notes implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -182,8 +184,6 @@ public class Notes implements Serializable {
     public void setSharedWith(User sharedWith) {
         this.sharedWith = sharedWith;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -209,5 +209,5 @@ public class Notes implements Serializable {
     public String toString() {
         return "com.team6.entityclasses.Notes[ id=" + id + " ]";
     }
-    
+
 }
