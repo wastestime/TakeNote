@@ -94,6 +94,12 @@ public class Notes implements Serializable {
         this.title = title;
         this.content = content;
     }
+    
+        public Notes(String title,String description, String content) {
+        this.title = title;
+        this.description = description;
+        this.content = content;
+    }
 
     public Notes(Integer id, String title, String description, Date createdTime, Date modifiedTime) {
         this.id = id;
