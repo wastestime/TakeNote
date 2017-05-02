@@ -30,17 +30,17 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                 <div align="center">
 
-                    <h2>Upload File</h2>
+                    <h2>Upload Text File</h2>
 
                     <div class="arialTen">
-                        Click Choose to select one or more files or drag one or more files and drop on the white area.
+                        Click Choose to select a text file or drag and drop on the white area.
                     </div>
                     <br/>
 
                     <p:fileUpload id="upload"
                                   fileUploadListener="#{fileUploadManager.handleNoteUpload}" multiple="false" 
                                   mode="advanced" sizeLimit="10000000" fileLimit="1"
-                                  dragDropSupport="true" update="messages" />
+                                  dragDropSupport="true" update="messages" allowTypes="/(\.|\/)(txt)$/" />
                     <br/>
                     <!-- Allow maximum 10MB file size and no more than 5 files to upload at the same time -->
                     <br/><br/>
