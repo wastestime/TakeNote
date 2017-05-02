@@ -136,6 +136,10 @@ public class UserFileController implements Serializable {
     public void setCleanedFileNameHashMap(HashMap<Integer, String> cleanedFileNameHashMap) {
         this.cleanedFileNameHashMap = cleanedFileNameHashMap;
     }
+    
+    public void downloadAttachment(UserFile currItem){
+        System.out.println("download Attachment"+currItem.getFilename());
+    }
 
     public List<UserFile> getItems() {
         System.out.println("get Items In User File Controller");
@@ -315,9 +319,9 @@ public class UserFileController implements Serializable {
     Delete Selected User File
     =========================
      */
-    public String deleteSelectedUserFile() {
+    public String deleteSelectedUserFile(UserFile item) {
 
-        UserFile userFileToDelete = selected;
+        UserFile userFileToDelete = item;
 
         FacesMessage resultMsg;
 
