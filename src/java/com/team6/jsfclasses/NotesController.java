@@ -59,7 +59,7 @@ public class NotesController implements Serializable {
 
     @EJB
     private UserFileFacade userFileFacade;
-
+    
     @EJB
     private com.team6.sessionbeans.NotesFacade notesFacade;
 
@@ -309,17 +309,20 @@ public class NotesController implements Serializable {
             System.out.println("Same name");
             System.out.println("existNote.getContent()="+existNote.getContent());
             editorSelected = existNote;
-
         } else {
             User user = getUserFacade().findByUsername(user_name);
             editorSelected.setUserId(user);
-            editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+            if(editorSelected.getContent() == null)
+            {
+                editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
                     .get("content"));
+            }
             Date currDate = new Date();
             editorSelected.setCreatedTime(currDate);
             editorSelected.setModifiedTime(currDate);
-
-            create();
+            editorSelected.setDescription("Uploaded File");
+            
+            notesFacade.create(editorSelected);
             isInitialized = true;
         }
         initializeSessionMap();
@@ -406,6 +409,7 @@ public class NotesController implements Serializable {
 
         int user_id = (int) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap().get("user_id");
+        
         Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
 
         // Put the User's object reference into session map variable user
@@ -416,6 +420,7 @@ public class NotesController implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().
                 getSessionMap().put("note_id", existNote.getId());
     }
+    
 
     public Notes getNotes(java.lang.Integer id) {
         return getFacade().find(id);

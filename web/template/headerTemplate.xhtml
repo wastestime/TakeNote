@@ -61,7 +61,11 @@ Copyright © 2017 Guoxin Sun. All rights reserved.
                                 <i class="fa fa-user">&nbsp;</i>My Account
                             </h:link>&nbsp;&nbsp;
                         
-                       
+                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
+                            <h:link outcome="/Upload" styleClass="arialTen">
+                                <i class="fa fa-upload">&nbsp;</i>Upload
+                            </h:link>&nbsp;&nbsp;
+                            
                             <!-- Clicking "Sign Out" invokes accountManager's logout() method -->
                             <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
                                 <i class="fa fa-sign-out">&nbsp;</i>Sign Out
