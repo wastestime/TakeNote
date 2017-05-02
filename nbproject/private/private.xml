@@ -3,23 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/resources/css/jsfcrud.css</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/template/contentTemplate.xhtml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/sessionbeans/UserFileFacade.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/entityclasses/UserFile.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/managers/FileUploadManager.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/template/headerTemplate.xhtml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/jsfclasses/UserFileController.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/template/siteTemplate.xhtml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/entityclasses/User.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/jsfclasses/NotesController.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/template/footerTemplate.xhtml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/Editor.xhtml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/sessionbeans/NotesFacade.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/managers/Constants.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/Profile.xhtml</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/src/java/com/team6/entityclasses/Notes.java</file>
-            <file>file:/C:/Users/kehan/Documents/NetBeansProjects/TakeNote/web/resources/css/siteStyles.css</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/entityclasses/User.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/sessionbeans/NotesFacade.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/jsfclasses/UserController.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/Share.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/Notes.xhtml</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/jsfclasses/NotesController.java</file>
+<<<<<<< HEAD
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/TakeNotesDB.sql</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/entityclasses/Notes.java</file>
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/web/notes/SearchResults.xhtml</file>
+=======
+            <file>file:/C:/Users/Lance/git/Team6/TakeNote/src/java/com/team6/entityclasses/Notes.java</file>
+>>>>>>> dadc8dfdf1dc2cc1d437f3952a600f981aff64b6
         </group>
     </open-files>
 </project-private>

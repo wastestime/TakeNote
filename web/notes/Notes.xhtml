@@ -102,9 +102,9 @@
                                 <p:commandButton id="createButton" icon="ui-icon-plus"   
                                                  value="#{bundle.Create}"  actionListener="#{notesController.prepareCreate}"  action="/Editor?faces-redirect=true"/>
                                  -->
-                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" 
+                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{notesController.prepareEdit}" 
                                                  styleClass="commandButton" update=":NoteEditForm" oncomplete="PF('NoteEditDialog').show()" 
-                                                 disabled="#{empty notesController.selected or accountManager.checkSameUser(notesController.selected.userId) eq false}"/>
+                                                 disabled="#{empty notesController.selected or notesController.checkSameUser() eq false}"/>
 
                                 <p:commandButton id="viewButton"   icon="ui-icon-document" value="#{bundle.View}" 
                                                  styleClass="commandButton" update=":NoteViewForm" oncomplete="PF('NoteViewDialog').show()" 
@@ -123,7 +123,7 @@
                                 -->
                                 <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
                                                  styleClass="commandButton" actionListener="#{notesController.destroy}" 
-                                                 update=":growl,notes" disabled="#{empty notesController.selected or accountManager.checkSameUser(notesController.selected.userId) eq false}">
+                                                 update=":growl,notes" disabled="#{empty notesController.selected or notesController.checkSameUser() eq false}">
 
                                     <p:confirm header="Confirmation" 
                                                message="Are you sure you want to permanently delete the note from the database?" 
@@ -175,6 +175,7 @@
 
                 <ui:include src="Share.xhtml"/>
 
+                <ui:include src="Edit.xhtml"/>
 
             </div>
         </ui:define>

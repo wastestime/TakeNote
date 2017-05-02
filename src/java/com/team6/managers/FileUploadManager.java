@@ -312,8 +312,8 @@ public class FileUploadManager implements Serializable {
         System.out.println(targetFile.getPath());
         OutputStream outStream;
         outStream = new FileOutputStream(targetFile);
-        System.out.println("uploadCheck");
         outStream.write(buffer);
+                System.out.println("uploadCheck");
         outStream.close();
 
         return targetFile;

@@ -104,7 +104,7 @@ public class User implements Serializable {
     private Collection<UserPhoto> userPhotoCollection;
     @OneToMany(mappedBy = "userId")
     private Collection<Notes> notesCollection;
-
+    
     public User() {
     }
 
@@ -122,6 +122,7 @@ public class User implements Serializable {
         this.state = state;
         this.securityQuestion = securityQuestion;
         this.securityAnswer = securityAnswer;
+                
     }
 
     public Integer getId() {
@@ -213,7 +214,9 @@ public class User implements Serializable {
     public void setNotesCollection(Collection<Notes> notesCollection) {
         this.notesCollection = notesCollection;
     }
-
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -237,15 +240,5 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.team6.entityclasses.User[ id=" + id + " ]";
-    }
-    
-    public void addNote(Notes newNote) {
-        
-        if (notesCollection == null)
-        {
-            notesCollection = new LinkedList<>();
-        }
-        notesCollection.add(newNote);
-        //also have to add to the databasewq
     }
 }

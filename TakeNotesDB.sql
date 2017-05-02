@@ -52,10 +52,13 @@ CREATE TABLE Notes
 	title VARCHAR(64) NOT NULL DEFAULT '',
 	description VARCHAR(140) NOT NULL DEFAULT '',
 	user_id INT UNSIGNED,
+	sharedWith INT UNSIGNED,
 	created_time DATETIME NOT NULL, /* Save original creation datetime*/
 	modified_time DATETIME NOT NULL, /* for edit datetime format 'yyyy-MM-dd HH:mm:ss', defaulted to creation time if note was just created */
 	content TEXT,
-	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+	FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+	FOREIGN KEY (sharedWith) REFERENCES User(id) ON DELETE CASCADE
+	
 );
 /* Table that stores user activities when a note is created, edited, or deleted*/
 CREATE TABLE Activity
