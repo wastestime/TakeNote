@@ -269,7 +269,6 @@ public class NotesController implements Serializable {
             newNote.setCreatedTime(selected.getCreatedTime());
             newNote.setModifiedTime(selected.getModifiedTime());
             newNote.setUserFileCollection(selected.getUserFileCollection());
-            newNote.setActivityCollection(selected.getActivityCollection());
             newNote.setContent(selected.getContent());
             newNote.setUserId(selected.getUserId());
             newNote.setSharedWith(toShareWith);
