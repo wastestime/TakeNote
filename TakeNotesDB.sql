@@ -67,6 +67,7 @@ CREATE TABLE Activity
     user_id INT UNSIGNED,
     title VARCHAR(64) NOT NULL DEFAULT '',
     imagePath VARCHAR(140) NOT NULL DEFAULT '',
+    timeCreated DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
 /* 

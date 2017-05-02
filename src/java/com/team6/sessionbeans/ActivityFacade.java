@@ -5,6 +5,7 @@
 package com.team6.sessionbeans;
 
 import com.team6.entityclasses.Activity;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,4 +29,11 @@ public class ActivityFacade extends AbstractFacade<Activity> {
         super(Activity.class);
     }
     
+    public List<Activity> findUserActivities(Integer userID) {
+        List<Activity> activities = em.createNamedQuery("Activity.findActivitiesByUserID")
+                .setParameter("userID", userID)
+                .getResultList();
+
+        return activities;     
+    }
 }

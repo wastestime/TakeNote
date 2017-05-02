@@ -1,5 +1,5 @@
 package com.team6.jsfclasses;
-
+import com.team6.jsfclasses.UserController;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -62,7 +62,14 @@ public class NotesController implements Serializable {
     
     @EJB
     private com.team6.sessionbeans.NotesFacade notesFacade;
+    
+    @Inject 
+    private UserController userController;
 
+    public UserController getUserController() {
+        return userController;
+    }
+    
     private List<Notes> items = null;
     private List<Notes> searchItems = null;
     private Notes selected;
@@ -135,19 +142,23 @@ public class NotesController implements Serializable {
     public Notes prepareCreate() {
         editorSelected = new Notes();
         initializeEmbeddableKey();
-        
+        System.out.println("prepare create !!!!!!!!!!!=========");
+
+
         return editorSelected;
     }
     
     public Notes prepareEdit() {
         
         editorSelected = getNotesFacade().findById(selected.getId());
-        
+        userController.addActivity("Edit Activity");
+
         return editorSelected;
     }
 
     public void create() {
         System.out.println("createInNoteController");
+
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NotesCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -234,7 +245,7 @@ public class NotesController implements Serializable {
     }
 
     public void destroy() {
-        
+        userController.addActivity("Delete Activity");
         editorSelected = selected;
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NotesDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -258,7 +269,7 @@ public class NotesController implements Serializable {
     }
     
     public void shareNote() {
-        
+        userController.addActivity("Share Activity");
         Notes exists = getNotesFacade().findSharedByUserIdAndTitle(toShareWith.getId(), selected.getTitle());
         
         if (exists == null)
@@ -321,7 +332,9 @@ public class NotesController implements Serializable {
             editorSelected.setCreatedTime(currDate);
             editorSelected.setModifiedTime(currDate);
             editorSelected.setDescription("Uploaded File");
-            
+            System.out.println("!!!!!!!!create activity and notes!!!!!!!!");
+            userController.addActivity("Create Activity");
+
             notesFacade.create(editorSelected);
             isInitialized = true;
         }

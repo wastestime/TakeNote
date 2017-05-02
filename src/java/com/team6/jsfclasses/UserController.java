@@ -1,15 +1,17 @@
 package com.team6.jsfclasses;
 
+import com.team6.entityclasses.Activity;
 import com.team6.entityclasses.ContactConnections;
-import com.team6.entityclasses.Notes;
 import com.team6.entityclasses.User;
 import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
+import com.team6.sessionbeans.ActivityFacade;
 import com.team6.sessionbeans.ContactConnectionsFacade;
 import com.team6.sessionbeans.UserFacade;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -23,6 +25,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import org.primefaces.model.timeline.TimelineEvent;
+import org.primefaces.model.timeline.TimelineModel;
 
 @Named("userController")
 @SessionScoped
@@ -37,19 +41,27 @@ public class UserController implements Serializable {
     @EJB
     private ContactConnectionsFacade contactConnectionsFacade;
     @EJB
+    private ActivityFacade activityFacade;
+
+  
+    
+    @EJB
     private com.team6.sessionbeans.UserFacade ejbFacade;
     private List<User> items = null;
     private User selected;
     private String searchQuery;
     private String statusMessage;
+    //private String activityTitle;
 
-    private List<User> friends; // DONT FORGET TO ADD THSI INTO DATABASE
     
+    private List<User> friends; // DONT FORGET TO ADD THSI INTO DATABASE
+    private List<Activity> activities;
 
     public UserController() {
         this.searchQuery=null;
-
+        //this.activityTitle = null;
         this.friends = new ArrayList();
+        this.activities = new ArrayList();
         // READ FROM DATABASE
 
     }
@@ -70,6 +82,21 @@ public class UserController implements Serializable {
         return this.userFacade;
     }
 
+    public ActivityFacade getActivityFacade() {
+        return activityFacade;
+    }
+
+    public void setActivityFacade(ActivityFacade activityFacade) {
+        this.activityFacade = activityFacade;
+    }
+    /*public String getActivityTitle() {
+        return activityTitle;
+    }
+
+    public void setActivityTitle(String activityTitle) {
+        this.activityTitle = activityTitle;
+    }
+    */
     protected void setEmbeddableKeys() {
     }
 
@@ -220,7 +247,7 @@ public class UserController implements Serializable {
 
     public void addFriend() {
         if (this.searchQuery != null) {
-            System.out.printf("=======%s  ========\n", this.searchQuery);
+            //System.out.printf("=======%s  ========\n", this.searchQuery);
             User user = getUserFacade().findByUsername(this.searchQuery);
             if (user == null) {
                 statusMessage = "Invalid username as input!";
@@ -246,6 +273,8 @@ public class UserController implements Serializable {
                 // by setting friends to null, we foce the get friends method 
                 // above to retrieve all the users' contacts again
                 //this.friends = null;
+                addActivity("Add Friend");
+
                 statusMessage = "You added a new friend!";
                 FacesMessage message = new FacesMessage(statusMessage);
                 FacesContext.getCurrentInstance().addMessage(null, message);
@@ -265,6 +294,7 @@ public class UserController implements Serializable {
         for (ContactConnections c : contacts) {
             if (c.getContactUid().getId().equals(this.selected.getId())) {
                 getContactConnectionsFacade().remove(c);
+                addActivity("Remove Friend");
                 break;
             }
         }
@@ -286,4 +316,70 @@ public class UserController implements Serializable {
         }
         return this.friends;
     }
+    
+    public void addActivity(String title) {
+        // came in should be "edit" "create" "delete"
+        Activity a = new Activity();
+        System.out.println("wwwwwwwww in =========addddActivity");
+        // prepare the activity
+        a.setTitle(title);
+        
+        String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        User currUser = getUserFacade().findByUsername(user_name);
+        a.setUserId(currUser);
+        
+        a.setTimeCreated(new Date());
+        
+        if(title.toLowerCase().contains("edit")) {
+            a.setImagePath("/resources/images/activityImages/edit.png");
+            getActivityFacade().create(a);
+        } else if (title.toLowerCase().contains("create")) {
+            a.setImagePath("/resources/images/activityImages/create.png");
+            getActivityFacade().create(a);
+        }
+        else if (title.toLowerCase().contains("delete")){
+            a.setImagePath("/resources/images/activityImages/delete.png");
+            getActivityFacade().create(a);
+        }
+        else if (title.toLowerCase().contains("share")){
+            
+            a.setImagePath("/resources/images/activityImages/share.png");
+            getActivityFacade().create(a);
+        }
+        else if (title.toLowerCase().contains("add friend")){
+            
+            a.setImagePath("/resources/images/activityImages/friend.png");
+            getActivityFacade().create(a);
+        }
+        else if (title.toLowerCase().contains("remove friend")){
+            
+            a.setImagePath("/resources/images/activityImages/unfriend.png");
+            getActivityFacade().create(a);
+        }
+        
+        
+        // create in the database
+        
+    }
+    
+    public TimelineModel fetchEvents() {
+        //this.activities.clear();
+        TimelineModel events = new TimelineModel();
+        //if (this.activities.isEmpty()) {
+            //read from data base
+            String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+            User currUser = getUserFacade().findByUsername(user_name);
+            
+            List<Activity> temps = getActivityFacade().findUserActivities(currUser.getId());
+            
+            temps.forEach((a) -> {
+                events.add(new TimelineEvent(a, a.getTimeCreated()));
+            });
+
+        //}
+        return events;
+    
+    }
+    
+    
 }

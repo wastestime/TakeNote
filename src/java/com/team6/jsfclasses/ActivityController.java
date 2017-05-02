@@ -52,6 +52,7 @@ public class ActivityController implements Serializable {
     public Activity prepareCreate() {
         selected = new Activity();
         initializeEmbeddableKey();
+        //addActivity("Create");
         return selected;
     }
 

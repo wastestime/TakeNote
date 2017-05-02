@@ -194,7 +194,7 @@ Copyright © 2017 Osman Balci. All rights reserved.
                     </tr>
                 </table>
                 <h3 style="margin-top: 0">Activities</h3>
-                <p:timeline id="timelineFirst" value="#{activityManager.modelFirst}" var="activity" 
+                <p:timeline id="timelineFirst" value="#{userController.fetchEvents()}" var="activity" 
                             height="250px" widgetVar="activityWdgt">  
                     <p:ajax event="rangechange" oncomplete="onrangechange1()"/>  
                     <p:ajax event="select" listener="#{activityManager.onSelect}"/>  
