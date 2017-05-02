@@ -331,10 +331,8 @@ public class NotesController implements Serializable {
             Date currDate = new Date();
             editorSelected.setCreatedTime(currDate);
             editorSelected.setModifiedTime(currDate);
-            editorSelected.setDescription("Uploaded File");
-            System.out.println("!!!!!!!!create activity and notes!!!!!!!!");
-            userController.addActivity("Create Activity");
 
+            
             notesFacade.create(editorSelected);
             isInitialized = true;
         }

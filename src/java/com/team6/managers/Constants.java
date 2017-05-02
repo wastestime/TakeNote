@@ -26,10 +26,10 @@ public final class Constants {
  /* paths should be inside of the TakeNote project folder */
 //    public static final String FILES_ABSOLUTE_PATH = "/CloudStorage/FileStorage/";  
 //    public static final String PHOTOS_ABSOLUTE_PATH = "/CloudStorage/PhotoStorage/";
-    public static final String FILES_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/FileStorage/";
-    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/PhotoStorage/";
-    //public static final String FILES_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\FileStorage\\";
-    //public static final String PHOTOS_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\PhotoStorage\\";
+//    public static final String FILES_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/FileStorage/";
+//    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/PhotoStorage/";
+    public static final String FILES_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\FileStorage\\";
+    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\PhotoStorage\\";
 
     /*
 Windows OS Users should use the following: 
@@ -49,14 +49,14 @@ Windows OS Users should use the following:
 //    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
 //    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage/PhotoStorage/defaultUserPhoto.png";
     
-    public static final String FILES_RELATIVE_PATH = "CloudStorage/FileStorage/";
-    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
-    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage/PhotoStorage/defaultUserPhoto.png";
+//    public static final String FILES_RELATIVE_PATH = "CloudStorage/FileStorage/";
+//    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
+//    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage/PhotoStorage/defaultUserPhoto.png";
     
     
-    //public static final String FILES_RELATIVE_PATH = "CloudStorage\\FileStorage\\";
-    //public static final String PHOTOS_RELATIVE_PATH = "CloudStorage\\PhotoStorage\\";
-    //public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage\\PhotoStorage\\defaultUserPhoto.png";
+    public static final String FILES_RELATIVE_PATH = "CloudStorage\\FileStorage\\";
+    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage\\PhotoStorage\\";
+    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage\\PhotoStorage\\defaultUserPhoto.png";
     /*
 Windows OS Users should use the following: 
 The same as above. The relative paths are specified in the same way.

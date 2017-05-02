@@ -140,8 +140,8 @@ public class FileUploadManager implements Serializable {
             // Notes note = getNotesFacade().findByTitle(noteTitle);
 
             Notes note = getNotesFacade().findByUserIdAndTitle(user.getId(), noteTitle);
-            
-            System.out.println("id"+user.getId()+"title"+noteTitle);
+
+            System.out.println("id" + user.getId() + "title" + noteTitle);
             int note_id = note.getId();
 
 //            int note_id = note.getId();
@@ -217,7 +217,8 @@ public class FileUploadManager implements Serializable {
     public void handleNoteUpload(FileUploadEvent event) throws IOException {
         String contents = "";
         String title = "";
-        
+        String description = "Uploaded File";
+
         try {
             contents = convertTextFileToString(event.getFile());
             title = event.getFile().getFileName();
@@ -225,8 +226,8 @@ public class FileUploadManager implements Serializable {
             resultMsg = new FacesMessage("Something went wrong during file upload! See: " + e.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, resultMsg);
         }
-        notesController.setEditorSelected(new Notes(title, contents));
-        
+        notesController.setEditorSelected(new Notes(title, description, contents));
+
         FacesContext.getCurrentInstance().getExternalContext().redirect("Editor.xhtml");
     }
 
@@ -312,8 +313,9 @@ public class FileUploadManager implements Serializable {
         System.out.println(targetFile.getPath());
         OutputStream outStream;
         outStream = new FileOutputStream(targetFile);
+        System.out.println("uploadCheck");
         outStream.write(buffer);
-                System.out.println("uploadCheck");
+        System.out.println("uploadCheck");
         outStream.close();
 
         return targetFile;
