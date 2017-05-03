@@ -68,7 +68,7 @@
                                     <h:outputText value="#{bundle.ListNotesTitle_createdTime}" styleClass="facetHeader"/>
                                 </f:facet>
                                 <h:outputText styleClass="dataFields" value="#{item.createdTime}">
-                                    <f:convertDateTime pattern="MMMMM dd yyyy  hh:mm aaa" />
+<!--                                    <f:convertDateTime timeZone="EDT" pattern="MMMM dd YYYY | EEE HH:mm:ss zzz"/>-->
                                 </h:outputText>
                             </p:column>
 
@@ -78,7 +78,7 @@
                                     <h:outputText value="#{bundle.ListNotesTitle_modifiedTime}" styleClass="facetHeader"/>
                                 </f:facet>
                                 <h:outputText styleClass="dataFields" value="#{item.modifiedTime}">
-                                    <f:convertDateTime pattern="MMMMM dd yyyy  hh:mm aaa" />
+<!--                                    <f:convertDateTime  timeZone="EDT" pattern="MMMM dd YYYY | EEE HH:mm:ss zzz" />-->
                                 </h:outputText>
                             </p:column>
 
