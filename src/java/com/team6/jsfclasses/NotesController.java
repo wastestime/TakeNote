@@ -1,5 +1,4 @@
 package com.team6.jsfclasses;
-import com.team6.jsfclasses.UserController;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -11,15 +10,11 @@ import com.team6.managers.Constants;
 import com.team6.sessionbeans.NotesFacade;
 import com.team6.sessionbeans.UserFacade;
 import com.team6.sessionbeans.UserFileFacade;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.io.Serializable;
 import java.io.StringReader;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,14 +26,11 @@ import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import org.primefaces.context.RequestContext;
 
 @Named("notesController")
 @SessionScoped
@@ -88,14 +80,20 @@ public class NotesController implements Serializable {
 
     public void getPDF() {
 
-        File folder = new File(Constants.FILES_ABSOLUTE_PATH);
-        File[] files = folder.listFiles();
-
-        if (files != null) {
-            for (File f : files) {
-                f.delete();
-            }
-        }
+//        File folder = new File(Constants.FILES_ABSOLUTE_PATH);
+//        File[] files = folder.listFiles();
+//
+//        if (files != null) {
+//            for (File f : files) {
+//                
+//                String fileName = f.getName();
+//                
+//                if (fileName.substring(fileName.length() - 5).equals(".pdf"))
+//                {
+//                    f.delete();
+//                }
+//            }
+//        }
 
         if (selected != null) {
             pdfPath = Constants.FILES_ABSOLUTE_PATH + selected.getTitle() + ".pdf";
@@ -128,6 +126,8 @@ public class NotesController implements Serializable {
 
     public void setSelected(Notes selected) {
         this.selected = selected;
+        
+        getPDF();
     }
 
     protected void setEmbeddableKeys() {
@@ -266,7 +266,12 @@ public class NotesController implements Serializable {
         int user_id = user.getId();
         items = getFacade().findNotesByUserId(user_id);
 
-        return items;
+        if (items != null)
+        {
+            return items;
+        }
+        
+        return new LinkedList<Notes>();
     }
     
     public void shareNote() {

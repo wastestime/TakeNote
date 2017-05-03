@@ -32,6 +32,7 @@ import org.primefaces.model.UploadedFile;
 import org.primefaces.event.FileUploadEvent;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 
 /**
  *
@@ -207,6 +208,14 @@ public class FileUploadManager implements Serializable {
 
             resultMsg = new FacesMessage("File(s) Uploaded Successfully!");
             FacesContext.getCurrentInstance().addMessage(null, resultMsg);
+            
+            Notes selected = notesController.getEditorSelected();
+            Collection<UserFile> attachments = selected.getUserFileCollection();
+            attachments.add(newUserFile);
+            selected.setUserFileCollection(attachments);
+            notesController.setEditorSelected(selected);
+            
+            notesController.update();
 
             // After successful upload, show the UserFiles.xhtml facelets page
             // FacesContext.getCurrentInstance().getExternalContext().redirect("UserFiles.xhtml");

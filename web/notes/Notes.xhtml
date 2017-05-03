@@ -109,7 +109,7 @@
 
                                 <p:commandButton id="viewButton"   icon="ui-icon-document" value="#{bundle.View}" 
                                                  styleClass="commandButton" update=":NoteViewForm" oncomplete="PF('NoteViewDialog').show()" 
-                                                 disabled="#{empty notesController.selected}" actionListener="#{notesController.getPDF()}"/>
+                                                 disabled="#{empty notesController.selected}" />
 
                                 <p:commandButton id="shareButton"   icon="ui-icon-pencil" value="#{bundle.Share}" 
                                                  styleClass="commandButton" update=":NoteShareForm" oncomplete="PF('NoteShareDialog').show()" 
@@ -152,7 +152,7 @@
 
                                 <p:commandButton id="exportButton" value="Export" ajax="false" 
                                                  icon="ui-icon-arrowthick-1-s"
-                                                 styleClass="commandButton" disabled="#{empty notesController.selected}" actionListener="#{notesController.getPDF()}" >
+                                                 styleClass="commandButton" disabled="#{empty notesController.selected}" >
 
                                     <p:fileDownload value="#{fileDownloadManager.pdf}" />
 

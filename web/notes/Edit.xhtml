@@ -50,7 +50,7 @@ Copyright © 2017 Osman Balci. All rights reserved.
                     <p:spacer height="10"/> 
                     <div align="center">
                         <!-- SAVE button -->
-                        <p:commandButton actionListener="#{notesController.update}" value="#{bundle.Save}" 
+                        <p:commandButton actionListener="#{notesController.update}" value="Edit Note" 
                                          styleClass="commandButton" icon="ui-icon-disk" ajax="false"
                                          update="display,:NoteListForm:datalist,:growl" 
                                          oncomplete="handleSubmit(args, 'NoteEditDialog');" action="/Editor?faces-redirect=true"/>

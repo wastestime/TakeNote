@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -351,6 +352,14 @@ public class UserFileController implements Serializable {
         }
 
         FacesContext.getCurrentInstance().addMessage(null, resultMsg);
+        
+        Notes selected = notesController.getEditorSelected();
+        Collection<UserFile> attachments = selected.getUserFileCollection();
+        attachments.remove(item);
+        selected.setUserFileCollection(attachments);
+        notesController.setEditorSelected(selected);
+
+        notesController.update();
 
         return "UserFiles?faces-redirect=true";
     }
