@@ -78,7 +78,9 @@ Copyright © 2017 Lance Masters. All rights reserved.
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_createdTime}" styleClass="facetHeader"/>
                                 </f:facet>
-                                <h:outputText styleClass="dataFields" value="#{item.createdTime}"/>
+                                <h:outputText styleClass="dataFields" value="#{item.createdTime}">
+                                    <f:convertDateTime pattern="MMMMM dd yyyy  hh:mm aaa" />
+                                </h:outputText>
                             </p:column>
 
 
@@ -86,7 +88,9 @@ Copyright © 2017 Lance Masters. All rights reserved.
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_modifiedTime}" styleClass="facetHeader"/>
                                 </f:facet>
-                                <h:outputText styleClass="dataFields" value="#{item.modifiedTime}"/>
+                                <h:outputText styleClass="dataFields" value="#{item.modifiedTime}">
+                                    <f:convertDateTime pattern="MMMMM dd yyyy  hh:mm aaa" />
+                                </h:outputText>
                             </p:column>
 
 
@@ -94,7 +98,7 @@ Copyright © 2017 Lance Masters. All rights reserved.
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_userFileCollection}" styleClass="facetHeader"/>
                                 </f:facet>
-                                <h:outputText styleClass="dataFields" value="#{item.userFileCollection}"/>
+                                <h:outputText styleClass="dataFields" value="#{item.numAttatchments}"/>
                             </p:column>
 
                             <!--

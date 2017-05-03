@@ -343,7 +343,7 @@ public class AccountManager implements Serializable {
             }
             // Initialize the session map for the newly created User object
             initializeSessionMap();
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            //FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
             userController.addActivity("Create Account");
            
             /*
