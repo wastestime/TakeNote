@@ -194,17 +194,17 @@ Copyright © 2017 Osman Balci. All rights reserved.
                     </tr>
                 </table>
                 <h3 style="margin-top: 0">Activities</h3>
-                <p:timeline id="timelineFirst" value="#{linkedTimelinesView.modelFirst}" var="task" 
-                            height="250px" widgetVar="timelineFirstWdgt">  
+                <p:timeline id="timelineFirst" value="#{userController.fetchEvents()}" var="activity" 
+                            height="250px" widgetVar="activityWdgt">  
                     <p:ajax event="rangechange" oncomplete="onrangechange1()"/>  
-                    <p:ajax event="select" listener="#{linkedTimelinesView.onSelect}"/>  
+                    <p:ajax event="select" listener="#{activityManager.onSelect}"/>  
 
-                    <h:panelGroup layout="block" rendered="#{not task.period}" style="padding-bottom:5px">  
-                        <h:outputText value="#{task.title}"/>  
+                    <h:panelGroup layout="block" rendered="true" style="padding-bottom:5px">  
+                        <h:outputText value="#{activity.title}"/>  
                     </h:panelGroup>  
-                    <p:graphicImage width="20" height="20" value="#{task.imagePath}"/>  
-                    <h:panelGroup rendered="#{task.period}" style="padding:8px">  
-                        <h:outputText value="#{task.title}"/>  
+                    <p:graphicImage width="20" height="20" value="#{activity.imagePath}"/>  
+                    <h:panelGroup rendered="false" style="padding:8px">  
+                        <h:outputText value="#{activity.title}"/>  
                     </h:panelGroup>  
                 </p:timeline>  
 

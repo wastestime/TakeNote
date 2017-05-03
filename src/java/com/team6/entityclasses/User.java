@@ -42,6 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findBySecurityAnswer", query = "SELECT u FROM User u WHERE u.securityAnswer = :securityAnswer")})
 public class User implements Serializable {
 
+    @OneToMany(mappedBy = "userId")
+    private Collection<Activity> activityCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -240,5 +243,14 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.team6.entityclasses.User[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Activity> getActivityCollection() {
+        return activityCollection;
+    }
+
+    public void setActivityCollection(Collection<Activity> activityCollection) {
+        this.activityCollection = activityCollection;
     }
 }

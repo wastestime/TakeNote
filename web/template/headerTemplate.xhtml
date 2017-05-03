@@ -25,13 +25,22 @@ Copyright © 2017 Guoxin Sun. All rights reserved.
             <table border="0" cellspacing="0" cellpadding="10" width="100%">
                 <tr>
                     <td align="left" valign="middle">
-
-                        <!-- Use absolute path for the image file since it will be accessed from all pages -->
-                        <h:link outcome="/index">
+                        <c:if test="#{accountManager.isLoggedIn() == true}">
+                            <h:link outcome="/Profile">
                             <img src="#{resource['images:TakeNoteLogo.png']}"
                                  style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
                                  alt="Videos Logo" />
                         </h:link>
+                        </c:if>
+                        <c:if test="#{accountManager.isLoggedIn() == false}">
+                            <h:link outcome="/index">
+                                <img src="#{resource['images:TakeNoteLogo.png']}"
+                                 style="width:100%; height:100%; max-height:64px; max-width:230px; border: none"
+                                 alt="Videos Logo" />
+                            </h:link>
+                        </c:if>
+                        <!-- Use absolute path for the image file since it will be accessed from all pages -->
+                        
 
                     </td>
                     <td align="center" valign="middle">
@@ -61,7 +70,11 @@ Copyright © 2017 Guoxin Sun. All rights reserved.
                                 <i class="fa fa-user">&nbsp;</i>My Account
                             </h:link>&nbsp;&nbsp;
                         
-                       
+                            <!-- Clicking "My Account" displays the Profile.xhtml file -->
+                            <h:link outcome="/Upload" styleClass="arialTen">
+                                <i class="fa fa-upload">&nbsp;</i>Upload
+                            </h:link>&nbsp;&nbsp;
+                            
                             <!-- Clicking "Sign Out" invokes accountManager's logout() method -->
                             <h:commandLink action="#{accountManager.logout()}" styleClass="arialTen" >
                                 <i class="fa fa-sign-out">&nbsp;</i>Sign Out

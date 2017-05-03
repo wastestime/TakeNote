@@ -8,6 +8,7 @@ import com.team6.entityclasses.User;
 import com.team6.entityclasses.UserFile;
 import com.team6.entityclasses.Notes;
 import com.team6.jsfclasses.NotesController;
+import com.team6.jsfclasses.UserController;
 import com.team6.sessionbeans.UserFacade;
 import com.team6.sessionbeans.UserFileFacade;
 import com.team6.sessionbeans.NotesFacade;
@@ -29,6 +30,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.event.FileUploadEvent;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  *
@@ -70,6 +73,8 @@ public class FileUploadManager implements Serializable {
 
     @Inject
     private NotesController notesController;
+    @Inject
+    private UserController userController;
 
     /*
     The instance variable 'userFileController' is annotated with the @Inject annotation.
@@ -138,8 +143,8 @@ public class FileUploadManager implements Serializable {
             // Notes note = getNotesFacade().findByTitle(noteTitle);
 
             Notes note = getNotesFacade().findByUserIdAndTitle(user.getId(), noteTitle);
-            
-            System.out.println("id"+user.getId()+"title"+noteTitle);
+
+            System.out.println("id" + user.getId() + "title" + noteTitle);
             int note_id = note.getId();
 
 //            int note_id = note.getId();
@@ -213,38 +218,21 @@ public class FileUploadManager implements Serializable {
     }
 
     public void handleNoteUpload(FileUploadEvent event) throws IOException {
+        String contents = "";
+        String title = "";
+        String description = "Uploaded File";
 
         try {
-            String user_name = (String) FacesContext.getCurrentInstance()
-                    .getExternalContext().getSessionMap().get("username");
-
-            User user = getUserFacade().findByUsername(user_name);
-
-            /*
-            To associate the file to the user, record "userId_filename" in the database.
-            Since each file has its own primary key (unique id), the user can upload
-            multiple files with the same name.
-             */
-            String userId_filename = user.getId() + "_" + event.getFile().getFileName();
-
-            /*
-            "The try-with-resources statement is a try statement that declares one or more resources. 
-            A resource is an object that must be closed after the program is finished with it. 
-            The try-with-resources statement ensures that each resource is closed at the end of the
-            statement." [Oracle] 
-             */
-            try (InputStream inputStream = event.getFile().getInputstream();) {
-
-                convertTextFileToNote(inputStream);
-                inputStream.close();
-            }
-
+            contents = convertTextFileToString(event.getFile());
+            title = event.getFile().getFileName();
         } catch (IOException e) {
             resultMsg = new FacesMessage("Something went wrong during file upload! See: " + e.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, resultMsg);
         }
-
-        //save string of note content, redirect page to editor with content filled in
+        notesController.setEditorSelected(new Notes(title, description, contents));
+        System.out.println("===========================sfdsfadsfup loaddddd");
+        userController.addActivity("Upload Textfile");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("Editor.xhtml");
     }
 
     // Show the File Upload Page
@@ -331,14 +319,15 @@ public class FileUploadManager implements Serializable {
         outStream = new FileOutputStream(targetFile);
         System.out.println("uploadCheck");
         outStream.write(buffer);
+        System.out.println("uploadCheck");
         outStream.close();
 
         return targetFile;
     }
 
-    private Notes convertTextFileToNote(InputStream inputStream) {
-        //TODO: Convert text to note
-        return new Notes();
+    static private String convertTextFileToString(UploadedFile file) throws IOException {
+        byte[] encoded = file.getContents();
+        return new String(encoded, StandardCharsets.UTF_8).substring(1);
     }
 
     /**

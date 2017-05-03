@@ -1,5 +1,5 @@
 package com.team6.jsfclasses;
-
+import com.team6.jsfclasses.UserController;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -59,10 +59,17 @@ public class NotesController implements Serializable {
 
     @EJB
     private UserFileFacade userFileFacade;
-
+    
     @EJB
     private com.team6.sessionbeans.NotesFacade notesFacade;
+    
+    @Inject 
+    private UserController userController;
 
+    public UserController getUserController() {
+        return userController;
+    }
+    
     private List<Notes> items = null;
     private List<Notes> searchItems = null;
     private Notes selected;
@@ -136,19 +143,23 @@ public class NotesController implements Serializable {
     public Notes prepareCreate() {
         editorSelected = new Notes();
         initializeEmbeddableKey();
-        
+        System.out.println("prepare create !!!!!!!!!!!=========");
+
+
         return editorSelected;
     }
     
     public Notes prepareEdit() {
         
         editorSelected = getNotesFacade().findById(selected.getId());
-        
+        userController.addActivity("Edit Activity");
+
         return editorSelected;
     }
 
     public void create() {
         System.out.println("createInNoteController");
+
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NotesCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -235,7 +246,7 @@ public class NotesController implements Serializable {
     }
 
     public void destroy() {
-        
+        userController.addActivity("Delete Activity");
         editorSelected = selected;
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NotesDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -259,7 +270,7 @@ public class NotesController implements Serializable {
     }
     
     public void shareNote() {
-        
+        userController.addActivity("Share Activity");
         Notes exists = getNotesFacade().findSharedByUserIdAndTitle(toShareWith.getId(), selected.getTitle());
         
         if (exists == null)
@@ -270,7 +281,6 @@ public class NotesController implements Serializable {
             newNote.setCreatedTime(selected.getCreatedTime());
             newNote.setModifiedTime(selected.getModifiedTime());
             newNote.setUserFileCollection(selected.getUserFileCollection());
-            newNote.setActivityCollection(selected.getActivityCollection());
             newNote.setContent(selected.getContent());
             newNote.setUserId(selected.getUserId());
             newNote.setSharedWith(toShareWith);
@@ -315,20 +325,22 @@ public class NotesController implements Serializable {
         Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
         if (existNote != null) {
             System.out.println("Same name");
-            System.out.println(existNote.getContent());
-
+            System.out.println("existNote.getContent()="+existNote.getContent());
             editorSelected = existNote;
-
         } else {
             User user = getUserFacade().findByUsername(user_name);
             editorSelected.setUserId(user);
-            editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
+            if(editorSelected.getContent() == null)
+            {
+                editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
                     .get("content"));
+            }
             Date currDate = new Date();
             editorSelected.setCreatedTime(currDate);
             editorSelected.setModifiedTime(currDate);
-
-            create();
+            userController.addActivity("Create Note");
+            
+            notesFacade.create(editorSelected);
             isInitialized = true;
         }
         initializeSessionMap();
@@ -428,6 +440,7 @@ public class NotesController implements Serializable {
 
         int user_id = (int) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap().get("user_id");
+        
         Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
 
         // Put the User's object reference into session map variable user
@@ -438,6 +451,7 @@ public class NotesController implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().
                 getSessionMap().put("note_id", existNote.getId());
     }
+    
 
     public Notes getNotes(java.lang.Integer id) {
         return getFacade().find(id);

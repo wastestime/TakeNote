@@ -75,8 +75,7 @@ public class Notes implements Serializable {
     private String content;
     @OneToMany(mappedBy = "noteId")
     private Collection<UserFile> userFileCollection;
-    @OneToMany(mappedBy = "noteId")
-    private Collection<Activity> activityCollection;
+  
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
@@ -90,6 +89,19 @@ public class Notes implements Serializable {
     public Notes(Integer id) {
         this.id = id;
     }
+
+    public Notes(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+    
+        public Notes(String title,String description, String content) {
+        this.title = title;
+        this.description = description;
+        this.content = content;
+    }
+
+  
 
     public Notes(Integer id, String title, String description, Date createdTime, Date modifiedTime) {
         this.id = id;
@@ -111,7 +123,7 @@ public class Notes implements Serializable {
     public String getTitle() {
         return title;
     }
-    
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -123,7 +135,7 @@ public class Notes implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -157,15 +169,6 @@ public class Notes implements Serializable {
         this.userFileCollection = userFileCollection;
     }
 
-    @XmlTransient
-    public Collection<Activity> getActivityCollection() {
-        return activityCollection;
-    }
-
-    public void setActivityCollection(Collection<Activity> activityCollection) {
-        this.activityCollection = activityCollection;
-    }
-
     public User getUserId() {
         return userId;
     }
@@ -187,7 +190,6 @@ public class Notes implements Serializable {
         return userFileCollection.size();
     }
     
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -212,5 +214,5 @@ public class Notes implements Serializable {
     public String toString() {
         return "com.team6.entityclasses.Notes[ id=" + id + " ]";
     }
-    
+
 }

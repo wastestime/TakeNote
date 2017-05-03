@@ -58,9 +58,9 @@ public class FileDownloadManager implements Serializable {
     Getter Method
     =============
      */
-    public StreamedContent getFile() throws FileNotFoundException {
+    public StreamedContent getFile(UserFile fileToDownload) throws FileNotFoundException {
 
-        UserFile fileToDownload = userFileController.getSelected();
+        //UserFile fileToDownload = userFileController.getSelected();
 
         String nameOfFileToDownload = fileToDownload.getFilename();
         String absolutePathOfFileToDownload = fileToDownload.getFilePath();

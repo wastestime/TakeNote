@@ -93,15 +93,16 @@
 
                             <f:facet name="footer">
                               
-                                <p:commandButton id="createButton" icon="ui-icon-plus"    styleClass="commandButton"
-                                                 value="#{bundle.Create}" actionListener="#{notesController.prepareCreate}" 
-                                                 update=":NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()"/>
+                                <p:commandButton id="createButton" icon="ui-icon-plus"  styleClass="commandButton"
+                                                 value="#{bundle.Create}" 
+                                                 
+                                                 actionListener="#{notesController.prepareCreate}"
+                                                
+                                                 update=":NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()"/> 
+                                    
 
                                
-                                  <!--
-                                <p:commandButton id="createButton" icon="ui-icon-plus"   
-                                                 value="#{bundle.Create}"  actionListener="#{notesController.prepareCreate}"  action="/Editor?faces-redirect=true"/>
-                                 -->
+                            
                                  <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{notesController.prepareEdit}" 
                                                  styleClass="commandButton" update=":NoteEditForm" oncomplete="PF('NoteEditDialog').show()" 
                                                  disabled="#{empty notesController.selected or notesController.checkSameUser() eq false}"/>

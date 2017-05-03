@@ -136,13 +136,19 @@ public class UserFileController implements Serializable {
     public void setCleanedFileNameHashMap(HashMap<Integer, String> cleanedFileNameHashMap) {
         this.cleanedFileNameHashMap = cleanedFileNameHashMap;
     }
+    
+    public void downloadAttachment(UserFile currItem){
+        System.out.println("download Attachment"+currItem.getFilename());
+    }
 
     public List<UserFile> getItems() {
         System.out.println("get Items In User File Controller");
-        if (!getNotesController().isIsInitialized()) {
-            return items;
-        }
-        if (items == null) {
+        items = null;
+//        if (!getNotesController().isIsInitialized()) {
+//            System.out.println("Get attachment before editor initialize");
+//            return items;
+//        }
+//        if (items == null) {
 
             // Obtain the signed-in user's username
             String usernameOfSignedInUser = (String) FacesContext.getCurrentInstance()
@@ -150,9 +156,10 @@ public class UserFileController implements Serializable {
 
             // Obtain the object reference of the signed-in user
             User signedInUser = getUserFacade().findByUsername(usernameOfSignedInUser);
-            String noteTitle = (String) FacesContext.getCurrentInstance()
-                    .getExternalContext().getSessionMap().get("title");
-
+//            String noteTitle = (String) FacesContext.getCurrentInstance()
+//                        .getExternalContext().getSessionMap().get("title");
+              String noteTitle= notesController.getEditorSelected().getTitle();
+            
             Notes note = getNotesFacade().findByUserIdAndTitle(signedInUser.getId(), noteTitle);
 
             if (note == null) {
@@ -186,7 +193,7 @@ public class UserFileController implements Serializable {
                 // Create an entry in the hash map as a key-value pair
                 cleanedFileNameHashMap.put(fileId, cleanedFileName);
             }
-        }
+//        }
 
         return items;
     }
@@ -312,9 +319,9 @@ public class UserFileController implements Serializable {
     Delete Selected User File
     =========================
      */
-    public String deleteSelectedUserFile() {
+    public String deleteSelectedUserFile(UserFile item) {
 
-        UserFile userFileToDelete = selected;
+        UserFile userFileToDelete = item;
 
         FacesMessage resultMsg;
 
