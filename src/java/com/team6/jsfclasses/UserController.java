@@ -6,6 +6,7 @@ import com.team6.entityclasses.User;
 import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
 import com.team6.managers.AccountManager;
+import com.team6.managers.NotificationManager;
 import com.team6.sessionbeans.ActivityFacade;
 import com.team6.sessionbeans.ContactConnectionsFacade;
 import com.team6.sessionbeans.UserFacade;
@@ -47,6 +48,8 @@ public class UserController implements Serializable {
 
     @Inject
     private AccountManager accountManager;
+    @Inject 
+    private NotificationManager notificationManager;
     
     @EJB
     private com.team6.sessionbeans.UserFacade ejbFacade;
@@ -277,7 +280,9 @@ public class UserController implements Serializable {
                 // above to retrieve all the users' contacts again
                 //this.friends = null;
                 addActivity("Add Friend");
-
+                notificationManager.sendNotificationToUser(user.getEmail(),"Someone added you as a friend", currUser.getUsername()+"added you as a friend on " + 
+                        "jupiter.cs.vt.edu/TakeNote" + " !"
+                );
                 statusMessage = "You added a new friend!";
                 FacesMessage message = new FacesMessage(statusMessage);
                 FacesContext.getCurrentInstance().addMessage(null, message);

@@ -7,6 +7,7 @@ import com.team6.entityclasses.User;
 import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
 import com.team6.managers.Constants;
+import com.team6.managers.NotificationManager;
 import com.team6.sessionbeans.NotesFacade;
 import com.team6.sessionbeans.UserFacade;
 import com.team6.sessionbeans.UserFileFacade;
@@ -57,7 +58,10 @@ public class NotesController implements Serializable {
     
     @Inject 
     private UserController userController;
-
+    
+    @Inject 
+    private NotificationManager notificationManager;
+    
     public UserController getUserController() {
         return userController;
     }
@@ -287,6 +291,11 @@ public class NotesController implements Serializable {
     
     public void shareNote() {
         userController.addActivity("Share Activity");
+        String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        User currUser = getUserFacade().findByUsername(user_name);
+        notificationManager.sendNotificationToUser(this.toShareWith.getEmail(),"Someone shared you a note", currUser.getUsername()+" shared you a note \" " + selected.getTitle() + "\" on " + 
+                        "jupiter.cs.vt.edu/TakeNote" + " !"
+                );
         Notes exists = getNotesFacade().findSharedByUserIdAndTitle(toShareWith.getId(), selected.getTitle());
         
         if (exists == null)
