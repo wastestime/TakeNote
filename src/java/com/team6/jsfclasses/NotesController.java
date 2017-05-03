@@ -99,7 +99,18 @@ public class NotesController implements Serializable {
             pdfPath = Constants.FILES_ABSOLUTE_PATH + selected.getTitle() + ".pdf";
 
             try {
-
+                
+//                PdfDocument pdf = new PdfDocument(new PdfWriter(pdfPath));
+//                Document document = new Document(pdf);
+//                document.add(new Paragraph("Hello World"));
+//                document.close();
+                
+//                PdfWriter writer = new PdfWriter(pdfPath, new FileOutputStream(pdfPath));
+//                PdfDocument pdf = new PdfDocument(writer);
+//                Document document = new Document(pdf);
+//                document.add(new Paragraph(selected.getContent()));                
+//                document.close();
+                
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
                 document.open();
@@ -114,6 +125,7 @@ public class NotesController implements Serializable {
                 HTMLWorker worker = new HTMLWorker(document);
                 worker.parse(new StringReader(selected.getContent()));
                 document.close();
+                  
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -263,11 +275,10 @@ public class NotesController implements Serializable {
             .getExternalContext().getSessionMap().get("username");
 
         User user = getUserFacade().findByUsername(user_name);
-        int user_id = user.getId();
-        items = getFacade().findNotesByUserId(user_id);
-
-        if (items != null)
+        if (user != null)
         {
+            int user_id = user.getId();
+            items = getFacade().findNotesByUserId(user_id);
             return items;
         }
         

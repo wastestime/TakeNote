@@ -311,11 +311,16 @@ public class UserController implements Serializable {
             //read from data base
             String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
             User currUser = getUserFacade().findByUsername(user_name);
-            List<ContactConnections> contacts = getContactConnectionsFacade().findUserContacts(currUser.getId());
             
-            contacts.forEach((c) -> {
+            if (currUser != null)
+            {
+                List<ContactConnections> contacts = getContactConnectionsFacade().findUserContacts(currUser.getId());
+                contacts.forEach((c) -> {
                 this.friends.add(getUserFacade().findByUsername(c.getContactUid().getUsername()));
             });
+            }
+            
+            
         }
         return this.friends;
     }
