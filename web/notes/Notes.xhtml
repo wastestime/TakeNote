@@ -83,7 +83,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_userFileCollection}" styleClass="facetHeader"/>
                                 </f:facet>
-                                <h:outputText styleClass="dataFields" value="#{item.userFileCollection}"/>
+                                <h:outputText styleClass="dataFields" value="#{item.numAttatchments}"/>
                             </p:column>
 
                             <!--
@@ -108,7 +108,7 @@
 
                                 <p:commandButton id="viewButton"   icon="ui-icon-document" value="#{bundle.View}" 
                                                  styleClass="commandButton" update=":NoteViewForm" oncomplete="PF('NoteViewDialog').show()" 
-                                                 disabled="#{empty notesController.selected}"/>
+                                                 disabled="#{empty notesController.selected}" actionListener="#{notesController.getPDF()}"/>
 
                                 <p:commandButton id="shareButton"   icon="ui-icon-pencil" value="#{bundle.Share}" 
                                                  styleClass="commandButton" update=":NoteShareForm" oncomplete="PF('NoteShareDialog').show()" 

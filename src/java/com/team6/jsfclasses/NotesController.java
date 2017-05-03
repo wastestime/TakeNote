@@ -70,6 +70,7 @@ public class NotesController implements Serializable {
     private String searchString;
     private String searchField;
     private User toShareWith;
+    private String pdfPath;
 
     
     private boolean isInitialized = false;
@@ -90,12 +91,12 @@ public class NotesController implements Serializable {
         }
 
         if (selected != null) {
-            String FILE = Constants.FILES_ABSOLUTE_PATH + selected.getTitle() + ".pdf";
+            pdfPath = Constants.FILES_ABSOLUTE_PATH + selected.getTitle() + ".pdf";
 
             try {
 
                 Document document = new Document();
-                PdfWriter.getInstance(document, new FileOutputStream(FILE));
+                PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
                 document.open();
 
                 document.addTitle(selected.getTitle());
@@ -278,6 +279,12 @@ public class NotesController implements Serializable {
 
             create();
         }
+        else
+        {
+            exists.setContent(selected.getContent());
+            editorSelected = exists;
+            update();
+        }
         
         
     }
@@ -360,8 +367,21 @@ public class NotesController implements Serializable {
         editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
                 .get("content"));
         
-        
         update();
+        
+        List<Notes> shared = getNotesFacade().findAllSharedNotes(existNote.getUserId().getId(), selected.getTitle());
+        
+        if (shared != null)
+        {
+            for (Notes thisNote : shared)
+            {
+                thisNote.setContent(existNote.getContent());
+                
+                editorSelected = thisNote;
+                
+                update();
+            }                       
+        }
         //System.out.print(content);
     }
 
@@ -534,6 +554,11 @@ public class NotesController implements Serializable {
 
     public void setToShareWith(User toShareWith) {
         this.toShareWith = toShareWith;
+    }
+    
+    public String getPDFPath()
+    {
+        return pdfPath;
     }
 
     public boolean checkSameUser() {

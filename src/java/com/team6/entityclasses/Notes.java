@@ -182,6 +182,10 @@ public class Notes implements Serializable {
         this.sharedWith = sharedWith;
     }
     
+    public int getNumAttatchments()
+    {
+        return userFileCollection.size();
+    }
     
 
     @Override

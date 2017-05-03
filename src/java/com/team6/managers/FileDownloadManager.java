@@ -88,28 +88,33 @@ public class FileDownloadManager implements Serializable {
     
     public StreamedContent getpdf() throws FileNotFoundException {
 
-        String nameOfFileToDownload = noteController.getSelected().getTitle() + ".pdf";
-        String absolutePathOfFileToDownload = Constants.FILES_ABSOLUTE_PATH + nameOfFileToDownload;
-        String contentMimeType = FacesContext.getCurrentInstance().getExternalContext().getMimeType(absolutePathOfFileToDownload);
+        if (noteController.getSelected() != null)
+        {
+            String nameOfFileToDownload = noteController.getSelected().getTitle() + ".pdf";
+            String absolutePathOfFileToDownload = Constants.FILES_ABSOLUTE_PATH + nameOfFileToDownload;
+            String contentMimeType = FacesContext.getCurrentInstance().getExternalContext().getMimeType(absolutePathOfFileToDownload);
 
-        /*
-        System.out.println prints under the GlassFish tab of the Output window.
-        Print out intermediate values to effectively debug your application logic.
+            /*
+            System.out.println prints under the GlassFish tab of the Output window.
+            Print out intermediate values to effectively debug your application logic.
+
+            System.out.println("*** Name of the file to download = " + nameOfFileToDownload + " ***\n");
+            System.out.println("*** Path of the file to download = " + absolutePathOfFileToDownload + " ***\n");
+            System.out.println("*** MIME Type of the file to download = " + contentMimeType + " ***");
+             */
+            InputStream stream = ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().
+                    getContext()).getResourceAsStream(absolutePathOfFileToDownload);
+
+            // Obtain the filename without the prefix "userId_" inserted to associate the file to a user
+            String downloadedFileName = nameOfFileToDownload.substring(nameOfFileToDownload.indexOf("_") + 1);
+
+            // FileInputStream must be used here since our files are stored in a directory external to our application
+            pdf = new DefaultStreamedContent(new FileInputStream(absolutePathOfFileToDownload), contentMimeType, downloadedFileName);
+
+            return pdf;
+        }
         
-        System.out.println("*** Name of the file to download = " + nameOfFileToDownload + " ***\n");
-        System.out.println("*** Path of the file to download = " + absolutePathOfFileToDownload + " ***\n");
-        System.out.println("*** MIME Type of the file to download = " + contentMimeType + " ***");
-         */
-        InputStream stream = ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().
-                getContext()).getResourceAsStream(absolutePathOfFileToDownload);
-
-        // Obtain the filename without the prefix "userId_" inserted to associate the file to a user
-        String downloadedFileName = nameOfFileToDownload.substring(nameOfFileToDownload.indexOf("_") + 1);
-
-        // FileInputStream must be used here since our files are stored in a directory external to our application
-        pdf = new DefaultStreamedContent(new FileInputStream(absolutePathOfFileToDownload), contentMimeType, downloadedFileName);
-
-        return pdf;
+        return null;
     }
 
 }

@@ -54,13 +54,13 @@ public class NotesFacade extends AbstractFacade<Notes> {
     }
 
     public Notes findByUserIdAndTitle(int userId, String title) {
-        if (em.createQuery("SELECT c FROM Notes c WHERE c.title = :title AND c.userId.id = :userId")
+        if (em.createQuery("SELECT c FROM Notes c WHERE c.title LIKE :title AND (c.userId.id = :userId AND c.sharedWith = null)")
                 .setParameter("title", title)
                 .setParameter("userId", userId)
                 .getResultList().isEmpty()) {
             return null;
         } else {
-            return (Notes) (em.createQuery("SELECT c FROM Notes c WHERE c.title = :title AND c.userId.id = :userId")
+            return (Notes) (em.createQuery("SELECT c FROM Notes c WHERE c.title LIKE :title AND (c.userId.id = :userId AND c.sharedWith = null)")
                     .setParameter("title", title)
                     .setParameter("userId", userId)
                     .getSingleResult());
@@ -68,16 +68,31 @@ public class NotesFacade extends AbstractFacade<Notes> {
     }
     
     public Notes findSharedByUserIdAndTitle(int userId, String title) {
-        if (em.createQuery("SELECT c FROM Notes c WHERE c.title = :title AND c.sharedWith.id = :userId")
+        if (em.createQuery("SELECT c FROM Notes c WHERE c.title LIKE :title AND c.sharedWith.id = :userId")
                 .setParameter("title", title)
                 .setParameter("userId", userId)
                 .getResultList().isEmpty()) {
             return null;
         } else {
-            return (Notes) (em.createQuery("SELECT c FROM Notes c WHERE c.title = :title AND c.sharedWith.id = :userId")
+            return (Notes) (em.createQuery("SELECT c FROM Notes c WHERE c.title LIKE :title AND c.sharedWith.id = :userId")
                     .setParameter("title", title)
                     .setParameter("userId", userId)
                     .getSingleResult());
+        }
+    }
+    
+    public List<Notes> findAllSharedNotes(int userId, String title) {
+        
+        if (em.createQuery("SELECT c FROM Notes c WHERE c.title LIKE :title AND (c.userId.id = :userId AND c.sharedWith.id != null)")
+                .setParameter("title", title)
+                .setParameter("userId", userId)
+                .getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (em.createQuery("SELECT c FROM Notes c WHERE c.title LIKE :title AND (c.userId.id = :userId AND c.sharedWith.id != null)")
+                    .setParameter("title", title)
+                    .setParameter("userId", userId)
+                    .getResultList());
         }
     }
     

@@ -7,8 +7,9 @@ Copyright © 2017 Osman Balci. All rights reserved.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      
     <ui:composition>
 
         <!--
@@ -16,41 +17,52 @@ Copyright © 2017 Osman Balci. All rights reserved.
         Dialog pop-up window to VIEW (READ) a note
         *********************************************
         -->
-        <p:dialog id="NoteViewDlg" widgetVar="NoteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewNoteTitle}">
+        <p:dialog id="NoteViewDlg" showEffect="slide" hideEffect="explode" widgetVar="NoteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewNotesTitle}">
 
             <h:form id="NoteViewForm" class="ui-datatable-data">
 
-                <h:panelGroup id="display">
-                    <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
+                <div align="center">
+                    <h:panelGroup id="display">
+                        <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
 
 
-                        <h:outputText value="#{bundle.ViewNoteLabel_title}"/>
-                        <h:outputText value="#{notesController.currentTitle}" title="#{bundle.ViewNoteTitle_title}"/>
+                            <h:outputText value="#{bundle.ViewNotesLabel_title}"/>
+                            <h:outputText value="#{notesController.currentTitle}" title="#{bundle.ViewNotesTitle_title}"/>
 
-                        <h:outputText value="#{bundle.ViewNoteLabel_description}"/>
-                        <h:outputText value="#{notesController.currentDescription}" title="#{bundle.ViewNoteTitle_description}"/>
+                            <h:outputText value="#{bundle.ViewNotesLabel_description}"/>
+                            <h:outputText value="#{notesController.currentDescription}" title="#{bundle.ViewNotesTitle_description}"/>
 
-                        <h:outputText value="#{bundle.ViewNoteLabel_userId}"/>
-                        <h:outputText value="#{notesController.currentUsername}" title="#{bundle.ViewNoteTitle_userId}"/>
-                        
-                        <h:outputText value="#{bundle.ViewNoteLabel_createdTime}"/>
-                        <h:outputText value="#{notesController.currentCreatedTime}" title="#{bundle.ViewNoteTitle_createdTime}"/>
+                            <h:outputText value="#{bundle.ViewNotesLabel_userId}"/>
+                            <h:outputText value="#{notesController.currentUsername}" title="#{bundle.ViewNotesTitle_userId}"/>
 
-                        <h:outputText value="#{bundle.ViewNoteLabel_modifiedTime}"/>
-                        <h:outputText value="#{notesController.currentModifiedTime}" title="#{bundle.ViewNoteTitle_modifiedTime}"/>
+                            <h:outputText value="#{bundle.ViewNotesLabel_createdTime}"/>
+                            <h:outputText value="#{notesController.currentCreatedTime}" title="#{bundle.ViewNotesTitle_createdTime}"/>
 
-                    </p:panelGrid>
-                </h:panelGroup>
+                            <h:outputText value="#{bundle.ViewNotesLabel_modifiedTime}"/>
+                            <h:outputText value="#{notesController.currentModifiedTime}" title="#{bundle.ViewNotesTitle_modifiedTime}"/>
 
-                <h:panelGroup>
-                    <p:spacer height="10"/> 
+                        </p:panelGrid>
+                    </h:panelGroup>
+
+                    &nbsp;
+                    <br/>
+
                     <div align="center">
-                        <!-- CLOSE button -->
-                        <p:commandButton value="#{bundle.Close}" onclick="NoteViewDialog.hide()" 
-                                         styleClass="commandButton" icon="ui-icon-close" />
+                        <p:media value="#{fileDownloadManager.pdf}" width="600" height="600" player="pdf"/>
                     </div>
-                </h:panelGroup>
+                    
+                    
+                    &nbsp;
 
+                    <h:panelGroup>
+                        <p:spacer height="10"/> 
+                        <div align="center">
+                            <!-- CLOSE button -->
+                            <p:commandButton value="#{bundle.Close}" onclick="PF('NoteViewDialog').hide()" 
+                                             styleClass="commandButton" icon="ui-icon-close" />
+                        </div>
+                    </h:panelGroup>
+                </div>
             </h:form>
 
         </p:dialog>
