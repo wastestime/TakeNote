@@ -57,9 +57,12 @@ Copyright © 2017 Guoxin Sun. All rights reserved.
                     <td align="right" valign="middle">
 
                         <!-- Clicking "Home" displays the index.xhtml file -->
-                        <h:link outcome="/index" styleClass="arialTen">
-                            <i class="fa fa-home">&nbsp;</i>Home
-                        </h:link>&nbsp;&nbsp;
+                        <c:if test="#{accountManager.isLoggedIn() == false}">
+                            <h:link outcome="/index" styleClass="arialTen">
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h:link>&nbsp;&nbsp;
+                        </c:if>
+                        
                         
                         <!-- "Sign Out" and "My Account" if a user is signed in -->
                         <c:if test="#{accountManager.isLoggedIn() == true}">

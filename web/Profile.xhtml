@@ -152,7 +152,8 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                                 <li class="verticalMenuItem">
                                     <p:commandLink oncomplete="PF('contactsDialog').show()"
-                                                   update="contactsForm">
+                                                   update="contactsForm"
+                                                   >
                                         <label style="font-size: 10pt;">
                                             <i class="fa fa-address-book">&nbsp;</i>My Contacts
                                         </label>
@@ -173,7 +174,7 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                                 <li class="verticalMenuItem">
                                     <p:commandLink 
-                                                   actionListener="#{notesController.prepareCreate}" 
+                                                 actionListener="#{notesController.prepareCreate}" 
                                                  update="NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()">
                                         <label style="font-size: 10pt;">
                                             <i class="fa fa-pencil">&nbsp;</i>Take Note
@@ -197,7 +198,6 @@ Copyright © 2017 Osman Balci. All rights reserved.
                 <p:timeline id="timelineFirst" value="#{userController.fetchEvents()}" var="activity" 
                             height="250px" widgetVar="activityWdgt">  
                     <p:ajax event="rangechange" oncomplete="onrangechange1()"/>  
-                    <p:ajax event="select" listener="#{activityManager.onSelect}"/>  
 
                     <h:panelGroup layout="block" rendered="true" style="padding-bottom:5px">  
                         <h:outputText value="#{activity.title}"/>  
@@ -210,17 +210,14 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
 
             </h:form>
+            
             <script type="text/javascript">
                 function onrangechange1() {
-                    var range = PF('timelineFirstWdgt').getVisibleRange();
-                    PF('timelineSecondWdgt').setVisibleRange(range.start, range.end);
-                }
-
-                function onrangechange2() {
-                    var range = PF('timelineSecondWdgt').getVisibleRange();
-                    PF('timelineFirstWdgt').setVisibleRange(range.start, range.end);
+//                    var range = PF('timelineFirstWdgt').getVisibleRange();
+//                    PF('timelineSecondWdgt').setVisibleRange(range.start, range.end);
                 }
             </script>
+            
             <ui:include src="DeleteAccountDialog.xhtml"/>
             <ui:include src="CreateNote.xhtml"/>
             <!-- 
@@ -247,7 +244,7 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                         <p:commandButton value="Add" id="searchButton"  ajax="false" 
                                          styleClass="commandButton" icon="ui-icon-plus"
-                                         action="#{userController.addFriend()}" />
+                                         actionListener="#{userController.addFriend()}" />
                         &nbsp;&nbsp;
 
                         <!-- CANCEL button -->
