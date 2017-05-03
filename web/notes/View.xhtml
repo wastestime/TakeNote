@@ -36,14 +36,11 @@ Copyright © 2017 Osman Balci. All rights reserved.
                             <h:outputText value="#{notesController.currentUsername}" title="#{bundle.ViewNotesTitle_userId}"/>
 
                             <h:outputText value="#{bundle.ViewNotesLabel_createdTime}"/>
-                            
-                            <h:outputText value="#{notesController.currentCreatedTime}">
-                               <f:convertDateTime pattern="MMMMM dd yyyy  hh:mm aaa" />
-                            </h:outputText>
+                            <h:outputText value="#{notesController.currentCreatedTime}" title="#{bundle.ViewNotesTitle_createdTime}"/>
 
                             <h:outputText value="#{bundle.ViewNotesLabel_modifiedTime}"/>
                
-                            <h:outputText value="#{notesController.currentModifiedTime}" >
+                            <h:outputText value="#{notesController.currentModifiedTime}" title="#{bundle.ViewNotesTitle_modifiedTime}">
                                 <f:convertDateTime pattern="MMMMM dd yyyy  hh:mm aaa" />
                             </h:outputText>
                         </p:panelGrid>
