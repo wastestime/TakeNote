@@ -2,6 +2,7 @@
  * Created by Osman Balci on 2017.01.28  * 
  * Copyright © 2017 Osman Balci. All rights reserved. * 
  */
+package com.team6.managers;
 
 import com.team6.entityclasses.User;
 import com.team6.entityclasses.UserPhoto;
