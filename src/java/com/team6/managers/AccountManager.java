@@ -335,7 +335,6 @@ public class AccountManager implements Serializable {
                 newUser.setPassword(password);
                 
                 getUserFacade().create(newUser);
-                userController.addActivity("Create Account");
 
             } catch (EJBException e) {
                 username = "";
@@ -344,7 +343,9 @@ public class AccountManager implements Serializable {
             }
             // Initialize the session map for the newly created User object
             initializeSessionMap();
-
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+            userController.addActivity("Create Account");
+           
             /*
             The Profile page cannot be shown since the new User has not signed in yet.
             Therefore, we show the Sign In page for the new User to sign in first.
@@ -418,10 +419,10 @@ public class AccountManager implements Serializable {
 
             try {
                 // Delete all of the photo files associated with the signed-in user whose primary key is user_id
-                deleteAllUserPhotos(user_id);
+                //deleteAllUserPhotos(user_id);
 
                 // Delete all of the user files associated with the signed-in user whose primary key is user_id
-                deleteAllUserFiles(user_id);
+                //deleteAllUserFiles(user_id);
 
                 // Delete the User entity, whose primary key is user_id, from the CloudDriveDB database
                 getUserFacade().deleteUser(user_id);

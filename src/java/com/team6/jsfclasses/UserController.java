@@ -5,6 +5,7 @@ import com.team6.entityclasses.ContactConnections;
 import com.team6.entityclasses.User;
 import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
+import com.team6.managers.AccountManager;
 import com.team6.sessionbeans.ActivityFacade;
 import com.team6.sessionbeans.ContactConnectionsFacade;
 import com.team6.sessionbeans.UserFacade;
@@ -25,6 +26,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 import org.primefaces.model.timeline.TimelineEvent;
 import org.primefaces.model.timeline.TimelineModel;
 
@@ -43,7 +45,8 @@ public class UserController implements Serializable {
     @EJB
     private ActivityFacade activityFacade;
 
-  
+    @Inject
+    private AccountManager accountManager;
     
     @EJB
     private com.team6.sessionbeans.UserFacade ejbFacade;
@@ -323,20 +326,29 @@ public class UserController implements Serializable {
         System.out.println("wwwwwwwww in =========addddActivity");
         // prepare the activity
         a.setTitle(title);
-        
-        String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        //String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        String user_name = accountManager.getSelected().getUsername();
+        /*
+        while(user_name == null) {
+            System.out.printf("====nulllnulnNULLNULLL===user created??? yet ?? %s\n",user_name);
+
+            user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        }*/
         User currUser = getUserFacade().findByUsername(user_name);
+        if(title.equals("Create Account")) {
+            System.out.printf("=======user created??? yet ?? %s\n",user_name);
+        }
         a.setUserId(currUser);
-        
         a.setTimeCreated(new Date());
         
         if(title.toLowerCase().contains("edit")) {
             a.setImagePath("/resources/images/activityImages/edit.png");
             getActivityFacade().create(a);
         }
-        else if (title.toLowerCase().contains("create account")) {
+        else if (title.toLowerCase().contains("account")) {
             a.setImagePath("/resources/images/activityImages/create_account.png");
             getActivityFacade().create(a);
+
         }
         else if (title.toLowerCase().contains("create")) {
             a.setImagePath("/resources/images/activityImages/create.png");
