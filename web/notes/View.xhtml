@@ -9,7 +9,7 @@ Copyright © 2017 Osman Balci. All rights reserved.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-      
+
     <ui:composition>
 
         <!--
@@ -39,9 +39,9 @@ Copyright © 2017 Osman Balci. All rights reserved.
                             <h:outputText value="#{notesController.currentCreatedTime}" title="#{bundle.ViewNotesTitle_createdTime}"/>
 
                             <h:outputText value="#{bundle.ViewNotesLabel_modifiedTime}"/>
-               
+
                             <h:outputText value="#{notesController.currentModifiedTime}" title="#{bundle.ViewNotesTitle_modifiedTime}">
-<!--                                <f:convertDateTime pattern="MMMMM dd yyyy  hh:mm aaa" />-->
+                                <!--                                <f:convertDateTime pattern="MMMMM dd yyyy  hh:mm aaa" />-->
                             </h:outputText>
                         </p:panelGrid>
                     </h:panelGroup>
@@ -50,10 +50,34 @@ Copyright © 2017 Osman Balci. All rights reserved.
                     <br/>
 
                     <div align="center">
-                        <p:media value="#{fileDownloadManager.pdf}" width="600" height="600" player="pdf"/>
+                        <p:media value="#{fileDownloadManager.pdf}" width="600" height="300" player="pdf"/>
                     </div>
-                    
-                    
+                    <div>&nbsp;</div>
+                    <div style="width:100%">
+                        <p:dataTable  id="viewAttachment" style="width: 500px"   value="#{userFileController.getItems()}" var="item"
+                                      selectionMode="single" selection="#{userFileController.selected}"
+                                      rowKey="#{item.id}"
+                                      >
+
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListUserFileTitle_filename}"/>
+                                </f:facet>
+                                <div align="left">
+                                    <h:outputText value="#{item.filename}"/>
+                                </div>
+                                <div align="right">
+                                    <p:commandButton  ajax="false" 
+                                                      icon="ui-icon-arrowthick-1-s"  value="Download" process="@this"   >
+                                        <p:fileDownload value="#{fileDownloadManager.getFile(item)}" />
+                                    </p:commandButton>
+                                </div>
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+
+
                     &nbsp;
 
                     <h:panelGroup>
