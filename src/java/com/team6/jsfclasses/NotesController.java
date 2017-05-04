@@ -288,7 +288,7 @@ public class NotesController implements Serializable {
         userController.addActivity("Share Activity");
         String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
         User currUser = getUserFacade().findByUsername(user_name);
-        notificationManager.sendNotificationToUser(this.toShareWith.getEmail(), "Someone shared you a note", currUser.getUsername() + " shared you a note \" " + selected.getTitle() + "\" on "
+        notificationManager.sendNotificationToUser(this.toShareWith.getEmail(), "Someone shared you a note", currUser.getUsername() + " shared you a note \" " + selected.getTitle() + " \" on "
                 + "jupiter.cs.vt.edu/TakeNote" + " !"
         );
         Notes exists = getNotesFacade().findSharedByUserIdAndTitle(toShareWith.getId(), selected.getTitle());
