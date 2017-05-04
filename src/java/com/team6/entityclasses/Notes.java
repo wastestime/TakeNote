@@ -4,9 +4,17 @@
  */
 package com.team6.entityclasses;
 
+import com.team6.jsfclasses.NotesController;
+import com.team6.jsfclasses.UserFileController;
+import com.team6.sessionbeans.NotesFacade;
+import com.team6.sessionbeans.UserFacade;
+import com.team6.sessionbeans.UserFileFacade;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -75,7 +83,7 @@ public class Notes implements Serializable {
     private String content;
     @OneToMany(mappedBy = "noteId")
     private Collection<UserFile> userFileCollection;
-  
+
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
     private User userId;
@@ -94,14 +102,12 @@ public class Notes implements Serializable {
         this.title = title;
         this.content = content;
     }
-    
-        public Notes(String title,String description, String content) {
+
+    public Notes(String title, String description, String content) {
         this.title = title;
         this.description = description;
         this.content = content;
     }
-
-  
 
     public Notes(Integer id, String title, String description, Date createdTime, Date modifiedTime) {
         this.id = id;
@@ -184,12 +190,17 @@ public class Notes implements Serializable {
     public void setSharedWith(User sharedWith) {
         this.sharedWith = sharedWith;
     }
-    
-    public int getNumAttatchments()
-    {
-        return userFileCollection.size();
+
+    public int getNumAttatchments() {
+        //return 5;
+       return this.userFileCollection.size();
     }
-    
+
+    public boolean belongToOthers() {
+        System.out.println("belongToOther="+(this.sharedWith != null));
+        return this.sharedWith != null;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

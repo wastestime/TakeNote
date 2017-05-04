@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -137,9 +138,9 @@ public class UserFileController implements Serializable {
     public void setCleanedFileNameHashMap(HashMap<Integer, String> cleanedFileNameHashMap) {
         this.cleanedFileNameHashMap = cleanedFileNameHashMap;
     }
-    
-    public void downloadAttachment(UserFile currItem){
-        System.out.println("download Attachment"+currItem.getFilename());
+
+    public void downloadAttachment(UserFile currItem) {
+        System.out.println("download Attachment" + currItem.getFilename());
     }
 
     public List<UserFile> getItems() {
@@ -151,50 +152,116 @@ public class UserFileController implements Serializable {
 //        }
 //        if (items == null) {
 
-            // Obtain the signed-in user's username
-            String usernameOfSignedInUser = (String) FacesContext.getCurrentInstance()
-                    .getExternalContext().getSessionMap().get("username");
+        // Obtain the signed-in user's username
+        String usernameOfSignedInUser = (String) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("username");
 
-            // Obtain the object reference of the signed-in user
-            User signedInUser = getUserFacade().findByUsername(usernameOfSignedInUser);
+        // Obtain the object reference of the signed-in user
+        User signedInUser = getUserFacade().findByUsername(usernameOfSignedInUser);
 //            String noteTitle = (String) FacesContext.getCurrentInstance()
 //                        .getExternalContext().getSessionMap().get("title");
-              String noteTitle= notesController.getEditorSelected().getTitle();
-            
-            Notes note = getNotesFacade().findByUserIdAndTitle(signedInUser.getId(), noteTitle);
+        if (notesController.getEditorSelected() == null) {
+            return null;
+        }
+        String noteTitle = notesController.getEditorSelected().getTitle();
 
-            if (note == null) {
-                return null;
-            }
-            // Obtain the id (primary key in the database) of the signedInUser object
-            Integer userId = signedInUser.getId();
-            Integer noteId = note.getId();
-            // Obtain only those files from the database that belong to the signed-in user
-            items = getUserFileFacade().findUserFilesByNoteId(noteId);
+        Notes note = getNotesFacade().findByUserIdAndTitle(signedInUser.getId(), noteTitle);
 
-            // Instantiate a new hash map object
-            cleanedFileNameHashMap = new HashMap<>();
+        if (note == null) {
+            return null;
+        }
+        // Obtain the id (primary key in the database) of the signedInUser object
+        Integer userId = signedInUser.getId();
+        Integer noteId = note.getId();
+        // Obtain only those files from the database that belong to the signed-in user
+        items = getUserFileFacade().findUserFilesByNoteId(noteId);
 
-            /*
+        // Instantiate a new hash map object
+        cleanedFileNameHashMap = new HashMap<>();
+
+        /*
             cleanedFileNameHashMap<KEY, VALUE>
                 KEY   = Integer fileId
                 VALUE = String cleanedFileNameForSelected
-             */
-            for (int i = 0; i < items.size(); i++) {
+         */
+        for (int i = 0; i < items.size(); i++) {
 
-                // Obtain the filename stored in CloudStorage/FileStorage as 'userId_filename'
-                String storedFileName = items.get(i).getFilename();
+            // Obtain the filename stored in CloudStorage/FileStorage as 'userId_filename'
+            String storedFileName = items.get(i).getFilename();
 
-                // Remove the "userId_" (e.g., "4_") prefix in the stored filename
-                String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
+            // Remove the "userId_" (e.g., "4_") prefix in the stored filename
+            String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
 
-                // Obtain the file id
-                Integer fileId = items.get(i).getId();
+            // Obtain the file id
+            Integer fileId = items.get(i).getId();
 
-                // Create an entry in the hash map as a key-value pair
-                cleanedFileNameHashMap.put(fileId, cleanedFileName);
-            }
+            // Create an entry in the hash map as a key-value pair
+            cleanedFileNameHashMap.put(fileId, cleanedFileName);
+        }
 //        }
+
+        return items;
+    }
+
+    public Collection<UserFile> getSharedItems() {
+        System.out.println("get Items In User File Controller");
+        items = null;
+//        if (!getNotesController().isIsInitialized()) {
+//            System.out.println("Get attachment before editor initialize");
+//            return items;
+//        }
+//        if (items == null) {
+        if (notesController.getSelected() == null) {
+            return null;
+        }
+        // Obtain the signed-in user's username
+        String username = (String) notesController.getSelected().getUserId().getUsername();
+//
+//        // Obtain the object reference of the signed-in user
+//        User signedInUser = getUserFacade().getUser();
+
+        String noteTitle = notesController.getSelected().getTitle();
+//        String noteTitle = notesController.getEditorSelected().getTitle();
+//
+        Notes note = getNotesFacade().findByUserIdAndTitle(notesController.getSelected().getUserId().getId(), noteTitle);
+
+        //    return notesController.getSelected().getUserFileCollection();
+//        for (UserFile aFile : notesController.getSelected().getUserFileCollection()) {
+//            items.add(aFile);
+//        }
+//        if (note == null) {
+//            return null;
+//        }
+//        // Obtain the id (primary key in the database) of the signedInUser object
+        Integer userId = note.getUserId().getId();
+        Integer noteId = note.getId();
+//
+//        System.out.println("share note id" + note.getId() + "share note user=======================" + note.getUserId().getUsername());
+//        // Obtain only those files from the database that belong to the signed-in user
+        items = getUserFileFacade().findUserFilesByNoteId(noteId);
+//
+//        // Instantiate a new hash map object
+        cleanedFileNameHashMap = new HashMap<>();
+
+        /*
+            cleanedFileNameHashMap<KEY, VALUE>
+                KEY   = Integer fileId
+                VALUE = String cleanedFileNameForSelected
+         */
+        for (int i = 0; i < items.size(); i++) {
+
+            // Obtain the filename stored in CloudStorage/FileStorage as 'userId_filename'
+            String storedFileName = items.get(i).getFilename();
+
+            // Remove the "userId_" (e.g., "4_") prefix in the stored filename
+            String cleanedFileName = storedFileName.substring(storedFileName.indexOf("_") + 1);
+
+            // Obtain the file id
+            Integer fileId = items.get(i).getId();
+
+            // Create an entry in the hash map as a key-value pair
+            cleanedFileNameHashMap.put(fileId, cleanedFileName);
+        }
 
         return items;
     }
@@ -352,7 +419,7 @@ public class UserFileController implements Serializable {
         }
 
         FacesContext.getCurrentInstance().addMessage(null, resultMsg);
-        
+
         Notes selected = notesController.getEditorSelected();
         Collection<UserFile> attachments = selected.getUserFileCollection();
         attachments.remove(item);

@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
 
@@ -89,7 +90,15 @@
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_userFileCollection}" styleClass="facetHeader"/>
                                 </f:facet>
-                                <h:outputText styleClass="dataFields" value="#{item.numAttatchments}"/>
+                                <h:outputText styleClass="dataFields" value="#{notesController.getNumAttatchments(item)}"/>
+<!--                                <c:if test="#{item.belongToOthers() == true}">
+                                    <h:outputText styleClass="dataFields" value="#{notesController.getNumAttatchments()}"/>
+                                </c:if>
+                                <c:if test="#{item.belongToOthers() == false}">
+                                    <h:outputText styleClass="dataFields" value="#{item.getNumAttatchments()}"/>
+                                </c:if>-->
+                                
+                                
                             </p:column>
 
                             <!--
@@ -130,7 +139,7 @@
                                 -->
                                 <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
                                                  styleClass="commandButton" actionListener="#{notesController.destroy}" 
-                                                 update=":growl,notes" disabled="#{empty notesController.selected or notesController.checkSameUser() eq false}">
+                                                 update=":growl,notes" disabled="#{empty notesController.selected }">
 
                                     <p:confirm header="Confirmation" 
                                                message="Are you sure you want to permanently delete the note from the database?" 
@@ -173,16 +182,20 @@
                     </p:panel>
                 </h:form>
 
+<<<<<<< HEAD
                 <ui:include src="notes/Create.xhtml"/>
+=======
+                <ui:include src="Create.xhtml"/>
+>>>>>>> origin/master
                 <!-- Clicking the View button displays the included View.xhtml file in a dialog window on top of this page. -->
-                <ui:include src="notes/View.xhtml"/>
+                <ui:include src="View.xhtml"/>
 
                 <!-- Clicking the Search button displays the included Search.xhtml file in a dialog window on top of this page. -->
-                <ui:include src="notes/Search.xhtml"/>
+                <ui:include src="Search.xhtml"/>
 
-                <ui:include src="notes/Share.xhtml"/>
+                <ui:include src="Share.xhtml"/>
 
-                <ui:include src="notes/Edit.xhtml"/>
+                <ui:include src="Edit.xhtml"/>
 
             </div>
         </ui:define>

@@ -336,7 +336,7 @@ public class FileUploadManager implements Serializable {
 
     static private String convertTextFileToString(UploadedFile file) throws IOException {
         byte[] encoded = file.getContents();
-        return new String(encoded, StandardCharsets.UTF_8).substring(1);
+        return new String(encoded, StandardCharsets.UTF_8).substring(0);
     }
 
     /**

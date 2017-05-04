@@ -9,7 +9,7 @@ html, body {
     from examples below or select your own. See more HTML colors at 
     http://www.w3schools.com/colors/colors_names.asp
     -------------------------------------------------------------*/
-    /* background-color: #F0F8FF;   /* AliceBlue */
+    /*background-color: #F0F8FF;   /* AliceBlue */
     /* background-color: #F0FFFF;   /* Azure */
     /* background-color: #F5F5DC;   /* Beige */
     /*     background-color: #DCDCDC;    Gainsboro */
@@ -456,6 +456,8 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
     width: 100%;
 }
 
+
+
 /* Override PrimeFaces style definitions for the Data Table component */
 .ui-datatable-data, .facetHeader, .ui-panel-titlebar, .ui-paginator, .ui-dialog-content, .ui-confirm-dialog-message, .ui-widget-content {
     font-family: Arial, Helvetica, sans-serif;
@@ -475,14 +477,19 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
     text-decoration: none;
     background-color: #DCDCDC;   /* OldLace */
 }
-.attach, .datalist{
-    width :50% !important;
+
+
+.attach{
+    width :100% !important;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10pt;
     font-style: normal;
     font-weight: normal;
 
 }
+
+
+
 /* Override PrimeFaces style definitions for the Panel component */
 .ui-panel, .ui-panel-content {
     font-family: Arial, Helvetica, sans-serif;

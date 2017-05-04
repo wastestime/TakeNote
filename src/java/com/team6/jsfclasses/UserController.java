@@ -280,9 +280,9 @@ public class UserController implements Serializable {
                 // above to retrieve all the users' contacts again
                 //this.friends = null;
                 addActivity("Add Friend");
-                notificationManager.sendNotificationToUser(user.getEmail(),"Someone added you as a friend", currUser.getUsername()+"added you as a friend on " + 
+                notificationManager.sendNotificationToUser(user.getEmail(),"Someone added you as a friend", currUser.getUsername()+" added you as a friend on " + 
                         "jupiter.cs.vt.edu/TakeNote" + " !"
-                );
+                );            
                 statusMessage = "You added a new friend!";
                 FacesMessage message = new FacesMessage(statusMessage);
                 FacesContext.getCurrentInstance().addMessage(null, message);

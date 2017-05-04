@@ -731,7 +731,7 @@ public class AccountManager implements Serializable {
         
         Thus, JSF knows that 'CloudStorage/' is the document root directory.
         */
-        
+        System.out.println("=======" +thumbnailFileName);
         String relativePhotoFilePath = Constants.PHOTOS_RELATIVE_PATH + thumbnailFileName;
         
         return relativePhotoFilePath;
