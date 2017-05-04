@@ -1,9 +1,11 @@
 package com.team6.jsfclasses;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.html.simpleparser.HTMLWorker;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.team6.entityclasses.Notes;
 import com.team6.entityclasses.User;
+import com.team6.entityclasses.UserFile;
 import com.team6.jsfclasses.util.JsfUtil;
 import com.team6.jsfclasses.util.JsfUtil.PersistAction;
 import com.team6.managers.Constants;
@@ -46,26 +48,25 @@ public class NotesController implements Serializable {
         import com.mycompany.jsfclasses.UserFileController;
         import javax.inject.Inject;
      */
-
     @EJB
     private UserFacade userFacade;
 
     @EJB
     private UserFileFacade userFileFacade;
-    
+
     @EJB
     private com.team6.sessionbeans.NotesFacade notesFacade;
-    
-    @Inject 
+
+    @Inject
     private UserController userController;
-    
-    @Inject 
+
+    @Inject
     private NotificationManager notificationManager;
-    
+
     public UserController getUserController() {
         return userController;
     }
-    
+
     private List<Notes> items = null;
     private List<Notes> searchItems = null;
     private Notes selected;
@@ -75,7 +76,6 @@ public class NotesController implements Serializable {
     private User toShareWith;
     private String pdfPath;
 
-    
     private boolean isInitialized = false;
 
     public NotesController() {
@@ -98,23 +98,20 @@ public class NotesController implements Serializable {
 //                }
 //            }
 //        }
-
         if (selected != null) {
             pdfPath = Constants.FILES_ABSOLUTE_PATH + selected.getTitle() + ".pdf";
 
             try {
-                
+
 //                PdfDocument pdf = new PdfDocument(new PdfWriter(pdfPath));
 //                Document document = new Document(pdf);
 //                document.add(new Paragraph("Hello World"));
 //                document.close();
-                
 //                PdfWriter writer = new PdfWriter(pdfPath, new FileOutputStream(pdfPath));
 //                PdfDocument pdf = new PdfDocument(writer);
 //                Document document = new Document(pdf);
 //                document.add(new Paragraph(selected.getContent()));                
 //                document.close();
-                
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
                 document.open();
@@ -129,7 +126,7 @@ public class NotesController implements Serializable {
                 HTMLWorker worker = new HTMLWorker(document);
                 worker.parse(new StringReader(selected.getContent()));
                 document.close();
-                  
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -142,7 +139,7 @@ public class NotesController implements Serializable {
 
     public void setSelected(Notes selected) {
         this.selected = selected;
-        
+
         getPDF();
     }
 
@@ -161,12 +158,11 @@ public class NotesController implements Serializable {
         initializeEmbeddableKey();
         System.out.println("prepare create !!!!!!!!!!!=========");
 
-
         return editorSelected;
     }
-    
+
     public Notes prepareEdit() {
-        
+
         editorSelected = getNotesFacade().findById(selected.getId());
         userController.addActivity("Edit Activity");
 
@@ -266,7 +262,7 @@ public class NotesController implements Serializable {
         editorSelected = selected;
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NotesDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-            
+
             editorSelected = null;
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -276,35 +272,34 @@ public class NotesController implements Serializable {
     public List<Notes> getItems() {
 
         String user_name = (String) FacesContext.getCurrentInstance()
-            .getExternalContext().getSessionMap().get("username");
+                .getExternalContext().getSessionMap().get("username");
 
         User user = getUserFacade().findByUsername(user_name);
-        if (user != null)
-        {
+        if (user != null) {
             int user_id = user.getId();
             items = getFacade().findNotesByUserId(user_id);
             return items;
         }
-        
+
         return new LinkedList<Notes>();
     }
-    
+
     public void shareNote() {
         userController.addActivity("Share Activity");
         String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
         User currUser = getUserFacade().findByUsername(user_name);
-        notificationManager.sendNotificationToUser(this.toShareWith.getEmail(),"Someone shared you a note", currUser.getUsername()+" shared you a note \" " + selected.getTitle() + "\" on " + 
-                        "jupiter.cs.vt.edu/TakeNote" + " !"
-                );
+        notificationManager.sendNotificationToUser(this.toShareWith.getEmail(), "Someone shared you a note", currUser.getUsername() + " shared you a note \" " + selected.getTitle() + "\" on "
+                + "jupiter.cs.vt.edu/TakeNote" + " !"
+        );
         Notes exists = getNotesFacade().findSharedByUserIdAndTitle(toShareWith.getId(), selected.getTitle());
-        
-        if (exists == null)
-        {
+
+        if (exists == null) {
             Notes newNote = new Notes();
             newNote.setTitle(selected.getTitle());
             newNote.setDescription(selected.getDescription());
             newNote.setCreatedTime(selected.getCreatedTime());
             newNote.setModifiedTime(selected.getModifiedTime());
+
             newNote.setUserFileCollection(selected.getUserFileCollection());
             newNote.setContent(selected.getContent());
             newNote.setUserId(selected.getUserId());
@@ -313,15 +308,12 @@ public class NotesController implements Serializable {
             editorSelected = newNote;
 
             create();
-        }
-        else
-        {
+        } else {
             exists.setContent(selected.getContent());
             editorSelected = exists;
             update();
         }
-        
-        
+
     }
 
     public UserFileFacade getUserFileFacade() {
@@ -350,21 +342,20 @@ public class NotesController implements Serializable {
         Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
         if (existNote != null) {
             System.out.println("Same name");
-            System.out.println("existNote.getContent()="+existNote.getContent());
+            System.out.println("existNote.getContent()=" + existNote.getContent());
             editorSelected = existNote;
         } else {
             User user = getUserFacade().findByUsername(user_name);
             editorSelected.setUserId(user);
-            if(editorSelected.getContent() == null)
-            {
+            if (editorSelected.getContent() == null) {
                 editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-                    .get("content"));
+                        .get("content"));
             }
             Date currDate = new Date();
             editorSelected.setCreatedTime(currDate);
             editorSelected.setModifiedTime(currDate);
             userController.addActivity("Create Note");
-            
+
             notesFacade.create(editorSelected);
             isInitialized = true;
         }
@@ -377,6 +368,54 @@ public class NotesController implements Serializable {
 
     public void setEditorSelected(Notes editorSelected) {
         this.editorSelected = editorSelected;
+    }
+
+    
+
+    public int getNumAttatchments(Notes currNote) {
+
+        if(currNote.getSharedWith()==null){
+            return currNote.getNumAttatchments();
+        }
+        
+        List<UserFile> items = null;
+//        if (!getNotesController().isIsInitialized()) {
+//            System.out.println("Get attachment before editor initialize");
+//            return items;
+//        }
+//        if (items == null) {
+        if (currNote == null) {
+            return 0;
+        }
+
+        // Obtain the signed-in user's username
+        String username = (String) currNote.getUserId().getUsername();
+//
+//        // Obtain the object reference of the signed-in user
+//        User signedInUser = getUserFacade().getUser();
+
+        String noteTitle = currNote.getTitle();
+//        String noteTitle = notesController.getEditorSelected().getTitle();
+//
+        Notes note = getNotesFacade().findByUserIdAndTitle(currNote.getUserId().getId(), noteTitle);
+
+        //    return notesController.getSelected().getUserFileCollection();
+//        for (UserFile aFile : notesController.getSelected().getUserFileCollection()) {
+//            items.add(aFile);
+//        }
+//        if (note == null) {
+//            return null;
+//        }
+//        // Obtain the id (primary key in the database) of the signedInUser object
+        Integer userId = note.getUserId().getId();
+        Integer noteId = note.getId();
+//
+//        System.out.println("share note id" + note.getId() + "share note user=======================" + note.getUserId().getUsername());
+//        // Obtain only those files from the database that belong to the signed-in user
+        items = getUserFileFacade().findUserFilesByNoteId(noteId);
+        // return userFileController.getSharedItems().size();
+//        return userFileCollection.size();
+        return items.size();
     }
 
     public void save() {
@@ -392,7 +431,6 @@ public class NotesController implements Serializable {
 //        selected.setUserId(user);
 //        String user_name = (String) FacesContext.getCurrentInstance()
 //                .getExternalContext().getSessionMap().get("username");
-
         int user_id = (int) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap().get("user_id");
         Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
@@ -403,22 +441,20 @@ public class NotesController implements Serializable {
         editorSelected.setModifiedTime(currDate);
         editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
                 .get("content"));
-        
+
         update();
-        
-        System.out.println("existNote"+existNote.getUserId());
+
+        System.out.println("existNote" + existNote.getUserId());
         List<Notes> shared = getNotesFacade().findAllSharedNotes(existNote.getUserId().getId(), editorSelected.getTitle());
-        
-        if (shared != null)
-        {
-            for (Notes thisNote : shared)
-            {
+
+        if (shared != null) {
+            for (Notes thisNote : shared) {
                 thisNote.setContent(existNote.getContent());
-                
+
                 editorSelected = thisNote;
-                
+
                 update();
-            }                       
+            }
         }
         //System.out.print(content);
     }
@@ -466,7 +502,7 @@ public class NotesController implements Serializable {
 
         int user_id = (int) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap().get("user_id");
-        
+
         Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
 
         // Put the User's object reference into session map variable user
@@ -477,7 +513,6 @@ public class NotesController implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().
                 getSessionMap().put("note_id", existNote.getId());
     }
-    
 
     public Notes getNotes(java.lang.Integer id) {
         return getFacade().find(id);
@@ -492,12 +527,12 @@ public class NotesController implements Serializable {
     }
 
     public List<Notes> getSearchItems() {
-        
+
         int user_id = (int) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap().get("user_id");
-        
+
         searchItems = getNotesFacade().findNotesByUserId(user_id);
-        
+
         switch (searchField) {
             case "title":
 
@@ -515,7 +550,7 @@ public class NotesController implements Serializable {
 
                 searchItems = getNotesFacade().findNotesByUserId(user_id);
         }
-        
+
         return searchItems;
     }
 
@@ -595,19 +630,18 @@ public class NotesController implements Serializable {
     public void setToShareWith(User toShareWith) {
         this.toShareWith = toShareWith;
     }
-    
-    public String getPDFPath()
-    {
+
+    public String getPDFPath() {
         return pdfPath;
     }
 
     public boolean checkSameUser() {
-        
+
         String user_name = (String) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap().get("username");
-        
+
         User user = getUserFacade().findByUsername(user_name);
-        
+
         return (selected != null) && (user != null) && selected.getUserId().equals(user);
     }
 }

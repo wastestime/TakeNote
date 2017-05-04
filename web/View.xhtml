@@ -54,7 +54,7 @@ Copyright © 2017 Osman Balci. All rights reserved.
                     </div>
                     <div>&nbsp;</div>
                     <div style="width:100%">
-                        <p:dataTable  id="viewAttachment" style="width: 500px"   value="#{userFileController.getItems()}" var="item"
+                        <p:dataTable  id="viewAttachment" style="width: 500px"   value="#{userFileController.getSharedItems()}" var="item"
                                       selectionMode="single" selection="#{userFileController.selected}"
                                       rowKey="#{item.id}"
                                       >
