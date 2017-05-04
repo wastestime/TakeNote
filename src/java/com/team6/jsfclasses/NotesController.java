@@ -406,7 +406,8 @@ public class NotesController implements Serializable {
         
         update();
         
-        List<Notes> shared = getNotesFacade().findAllSharedNotes(existNote.getUserId().getId(), selected.getTitle());
+        System.out.println("existNote"+existNote.getUserId());
+        List<Notes> shared = getNotesFacade().findAllSharedNotes(existNote.getUserId().getId(), editorSelected.getTitle());
         
         if (shared != null)
         {
