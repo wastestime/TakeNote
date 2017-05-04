@@ -48,7 +48,7 @@ public class NotificationManager implements Serializable {
             System.err.print("Error occured when sending email notification to signed in user: " + e);
             return false;
         }
-
+        System.out.println("Sent an Email!");
         return true;
     }
     
