@@ -170,7 +170,7 @@ public class UserPhoto implements Serializable {
     Since the user can have only one photo, this makes sense.
      */
     public String getPhotoFilename() {
-        return getUserId() + "." + getExtension();
+        return getUserId().getId() + "." + getExtension();
     }
 
     /*
@@ -186,7 +186,7 @@ public class UserPhoto implements Serializable {
     e.g., 5_thumbnail.jpg for user with id 5.
      */
     public String getThumbnailFileName() {
-        return getUserId() + "_thumbnail." + getExtension();
+        return getUserId().getId() + "_thumbnail." + getExtension();
     }
 
     public String getPhotoFilePath() {
