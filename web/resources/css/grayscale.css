@@ -4,16 +4,16 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-grayscale/blob/master/LICENSE)
  */
 body {
-  width: 100%;
-  height: 100%;
-  font-family: "Lora", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: white;
-  background-color: black;
-  position: relative; }
+    width: 100%;
+    height: 100%;
+    font-family: "Lora", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: white;
+    background-color: black;
+    position: relative; }
 
 html {
-  width: 100%;
-  height: 100%; }
+    width: 100%;
+    height: 100%; }
 
 h1,
 h2,
@@ -21,204 +21,206 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0 0 35px;
-  text-transform: uppercase;
-  font-family: "Cabin", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 700;
-  letter-spacing: 1px; }
+    margin: 0 0 35px;
+    text-transform: uppercase;
+    font-family: "Cabin", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px; 
+    color: #FFFFFF;
+}
 
 p {
-  margin: 0 0 25px;
-  font-size: 16px;
-  line-height: 1.5; }
-  @media (min-width: 768px) {
+    margin: 0 0 25px;
+    font-size: 16px;
+    line-height: 1.5; }
+@media (min-width: 768px) {
     p {
-      margin: 0 0 35px;
-      font-size: 18px;
-      line-height: 1.6; } }
+        margin: 0 0 35px;
+        font-size: 18px;
+        line-height: 1.6; } }
 
 a {
-  color: #42DCA3;
-  -webkit-transition: all .2s ease-in-out;
-  -moz-transition: all .2s ease-in-out;
-  transition: all .2s ease-in-out; }
-  a:hover, a:focus {
+    color: #42DCA3;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out; }
+a:hover, a:focus {
     text-decoration: none;
     color: #1d9b6c; }
 
 #mainNav {
-  margin-bottom: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-  text-transform: uppercase;
-  font-family: "Cabin", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #DCDCDC; }
-  #mainNav .navbar-toggler {
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    font-family: "Cabin", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #DCDCDC; }
+#mainNav .navbar-toggler {
     color: white;
     font-size: 14px;
     border: 1px solid white;
     padding: 11px; }
-  #mainNav .navbar-brand {
+#mainNav .navbar-brand {
     font-weight: 700; }
-  #mainNav a {
+#mainNav a {
     color: white; }
-  #mainNav .navbar-nav .nav-item {
+#mainNav .navbar-nav .nav-item {
     -webkit-transition: background .3s ease-in-out;
     -moz-transition: background .3s ease-in-out;
     transition: background .3s ease-in-out; }
-    #mainNav .navbar-nav .nav-item:hover {
-      color: fade(white, 80%);
-      outline: none;
-      background-color: transparent; }
-    #mainNav .navbar-nav .nav-item:focus, #mainNav .navbar-nav .nav-item:active {
-      outline: none;
-      background-color: transparent; }
-  @media (min-width: 768px) {
+#mainNav .navbar-nav .nav-item:hover {
+    color: fade(white, 80%);
+    outline: none;
+    background-color: transparent; }
+#mainNav .navbar-nav .nav-item:focus, #mainNav .navbar-nav .nav-item:active {
+    outline: none;
+    background-color: transparent; }
+@media (min-width: 768px) {
     #mainNav {
-      padding: 20px 0;
-      border-bottom: none;
-      letter-spacing: 1px;
-      background: transparent;
-      -webkit-transition: background .25s ease-in-out, padding .25s ease-in-out;
-      -moz-transition: background .25s ease-in-out, padding .25s ease-in-out;
-      transition: background .25s ease-in-out, padding .25s ease-in-out; }
-      #mainNav.navbar-shrink {
+        padding: 20px 0;
+        border-bottom: none;
+        letter-spacing: 1px;
+        background: transparent;
+        -webkit-transition: background .25s ease-in-out, padding .25s ease-in-out;
+        -moz-transition: background .25s ease-in-out, padding .25s ease-in-out;
+        transition: background .25s ease-in-out, padding .25s ease-in-out; }
+    #mainNav.navbar-shrink {
         padding: 10px 0;
         background: black;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
-      #mainNav .nav-link.active {
+    #mainNav .nav-link.active {
         outline: none;
         background-color: #DCDCDC; }
-        #mainNav .nav-link.active:hover {
-          color: white; } }
+    #mainNav .nav-link.active:hover {
+        color: white; } }
 
 .masthead {
-  display: table;
-  width: 100%;
-  height: auto;
-  padding: 100px 0;
-  text-align: center;
-  color: white;
-  background: url(../images/1.jpg) no-repeat bottom center scroll;
-  background-color: #DCDCDC;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover; }
-  .masthead .intro-body {
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 100px 0;
+    text-align: center;
+    color: white;
+    background: url(../images/1.jpg) no-repeat bottom center scroll;
+    background-color: #DCDCDC;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover; }
+.masthead .intro-body {
     display: table-cell;
     vertical-align: middle; }
-    .masthead .intro-body .brand-heading {
-      font-size: 40px; }
-    .masthead .intro-body .intro-text {
-      font-size: 18px; }
-  @media (min-width: 768px) {
+.masthead .intro-body .brand-heading {
+    font-size: 40px; }
+.masthead .intro-body .intro-text {
+    font-size: 18px; }
+@media (min-width: 768px) {
     .masthead {
-      height: 100%;
-      padding: 0; }
-      .masthead .intro-body .brand-heading {
+        height: 100%;
+        padding: 0; }
+    .masthead .intro-body .brand-heading {
         font-size: 100px; }
-      .masthead .intro-body .intro-text {
+    .masthead .intro-body .intro-text {
         font-size: 22px; } }
 
 .btn-circle {
-  width: 50px;
-  height: 50px;
-  margin-top: 15px;
-  padding: 7px 0;
-  border: 2px solid white;
-  border-radius: 100% !important;
-  font-size: 26px;
-  color: white;
-  background: transparent;
-  -webkit-transition: background .3s ease-in-out;
-  -moz-transition: background .3s ease-in-out;
-  transition: background .3s ease-in-out; }
-  .btn-circle:hover, .btn-circle:focus {
+    width: 50px;
+    height: 50px;
+    margin-top: 15px;
+    padding: 7px 0;
+    border: 2px solid white;
+    border-radius: 100% !important;
+    font-size: 26px;
+    color: white;
+    background: transparent;
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out; }
+.btn-circle:hover, .btn-circle:focus {
     outline: none;
     color: white;
     background: rgba(255, 255, 255, 0.1); }
 
 .content-section {
-  padding-top: 100px; }
+    padding-top: 100px; }
 
 .download-section {
-  width: 100%;
-  padding: 50px 0;
-  color: white;
-  background: url(../images/d_bg.jpg) no-repeat center center scroll;
-  background-color: black;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover; }
+    width: 100%;
+    padding: 50px 0;
+    color: white;
+    background: url(../images/d_bg.jpg) no-repeat center center scroll;
+    background-color: black;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover; }
 
 #map {
-  width: 100%;
-  height: 200px;
-  margin-top: 100px; }
+    width: 100%;
+    height: 200px;
+    margin-top: 100px; }
 
 @media (min-width: 767px) {
-  .content-section {
-    padding-top: 250px; }
-  .download-section {
-    padding: 100px 0; }
-  #map {
-    height: 350px;
-    margin-top: 250px; } }
+    .content-section {
+        padding-top: 250px; }
+    .download-section {
+        padding: 100px 0; }
+    #map {
+        height: 350px;
+        margin-top: 250px; } }
 
 .btn {
-  text-transform: uppercase;
-  font-family: "Cabin", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  -webkit-transition: all .3s ease-in-out;
-  -moz-transition: all .3s ease-in-out;
-  transition: all .3s ease-in-out;
-  border-radius: 0; }
+    text-transform: uppercase;
+    font-family: "Cabin", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+    border-radius: 0; }
 
 .btn-default {
-  border: 1px solid #42DCA3;
-  color: #42DCA3;
-  background-color: transparent; }
-  .btn-default:hover, .btn-default:focus {
+    border: 1px solid #42DCA3;
+    color: #42DCA3;
+    background-color: transparent; }
+.btn-default:hover, .btn-default:focus {
     border: 1px solid #42DCA3;
     outline: none;
     color: black;
     background-color: #42DCA3; }
 
 ul.banner-social-buttons {
-  margin-top: 0; }
-  @media (max-width: 1199px) {
+    margin-top: 0; }
+@media (max-width: 1199px) {
     ul.banner-social-buttons {
-      margin-top: 15px; } }
-  @media (max-width: 767px) {
+        margin-top: 15px; } }
+@media (max-width: 767px) {
     ul.banner-social-buttons li {
-      display: block;
-      margin-bottom: 20px;
-      padding: 0; }
-      ul.banner-social-buttons li:last-child {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0; }
+    ul.banner-social-buttons li:last-child {
         margin-bottom: 0; } }
 
 footer {
-  padding: 50px 0; }
-  footer p {
+    padding: 50px 0; }
+footer p {
     font-size: 14px;
     margin: 0; }
 
 ::-moz-selection {
-  text-shadow: none;
-  background: #fcfcfc;
-  background: rgba(255, 255, 255, 0.2); }
+    text-shadow: none;
+    background: #fcfcfc;
+    background: rgba(255, 255, 255, 0.2); }
 
 ::selection {
-  text-shadow: none;
-  background: #fcfcfc;
-  background: rgba(255, 255, 255, 0.2); }
+    text-shadow: none;
+    background: #fcfcfc;
+    background: rgba(255, 255, 255, 0.2); }
 
 img::selection {
-  background: transparent; }
+    background: transparent; }
 
 img::-moz-selection {
-  background: transparent; }
+    background: transparent; }
 
 body {
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2); }
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2); }
