@@ -52,8 +52,8 @@ Windows OS Users should use the following:
     public static final String DEFAULT_PHOTO_RELATIVE_PATH = "TakeNote/PhotoStorage/defaultUserPhoto.png";
 
 //    public static final String FILES_RELATIVE_PATH = "TakeNote\\FileStorage\\";
-  //  public static final String PHOTOS_RELATIVE_PATH = "TakeNote\\PhotoStorage\\";
-    //public static final String DEFAULT_PHOTO_RELATIVE_PATH = "TakeNote\\PhotoStorage\\defaultUserPhoto.png";
+//    public static final String PHOTOS_RELATIVE_PATH = "TakeNote\\PhotoStorage\\";
+//    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "TakeNote\\PhotoStorage\\defaultUserPhoto.png";
 
 //    public static final String FILES_RELATIVE_PATH = "CloudStorage/FileStorage/";
 //    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
