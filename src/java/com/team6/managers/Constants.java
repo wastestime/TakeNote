@@ -30,8 +30,8 @@ public final class Constants {
 //    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\Users\\Lance\\TakeNote\\PhotoStorage\\";
 //    public static final String FILES_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/FileStorage/";
 //    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/PhotoStorage/";
-//    public static final String FILES_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\FileStorage\\";
-//    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\PhotoStorage\\";
+//    public static final String FILES_ABSOLUTE_PATH = "C:\\users\\kehan\\TakeNote\\FileStorage\\";
+//    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\users\\kehan\\TakeNote\\PhotoStorage\\";
 
     /*
 Windows OS Users should use the following: 

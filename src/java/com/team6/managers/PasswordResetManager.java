@@ -94,7 +94,7 @@ public class PasswordResetManager implements Serializable {
             message = "Entered username does not exist!";
 
             // Redirect to show the EnterUsername page
-            return "EnterUsername?faces-redirect=true";
+            return "RecoverPassword?faces-redirect=true";
         } else {
             // Entered username exists
             message = "";

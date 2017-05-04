@@ -10,67 +10,167 @@ Copyright © 2016 Osman Balci. All rights reserved.
       xmlns:p="http://primefaces.org/ui">
 
     <!-- Do not enter tags before the composition line since they are ignored by JSF -->
+    <h:head>
+        <!-- 
+        The <title> element (a) defines a title in the browser's toolbar,
+        (b) provides a title for the page when it is added to favorites, and
+        (c) displays a title for the page in search-engine results.
+        [http://www.w3schools.com/tags/tag_title.asp]
+        If you want to change it for a page, use:
+            <ui:define name="title">
+                <h:outputText value="enter page title here"></h:outputText>
+            </ui:define>
+        -->
+        <title><ui:insert name="title">Take Note</ui:insert></title>
+
+        <!-- 
+        Instruct the web browser on how to control the page's dimensions
+        and scaling on mobile devices. 
+        -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <!-- Bootstrap core CSS -->
+        <link href="resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+        <!-- Custom fonts for this template -->
+        <link href="resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+        <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'/>
+
+        <!-- Custom styles for this template -->
+        <link href="resources/css/grayscale.min.css" rel="stylesheet"/>
+
+        <!-- Temporary navbar container fix -->
+        <style>
+            .navbar-toggler {
+                z-index: 1;
+            }
+            @media (max-width: 576px) {
+                nav > .container {
+                    width: 100%;
+                }
+            }
+        </style>
+
+        <!-- 
+        The siteStyles CSS file is linked for use by the entire site. 
+        -->
+        <h:outputStylesheet library="css" name="siteStyles.css" />
+
+        <!-- 
+        The following CSS and JavaScript files are required for the
+        Image Slider, created by http://www.menucool.com, to work.
+        -->
+        <h:outputStylesheet library="css" name="js-image-slider.css" />
+        <script src="resources/js/js-image-slider.js" type="text/javascript"></script>
+
+        <!--
+        The icons and the font-awesome.min.css styles provided by http://fontawesome.io/
+        are linked for use by the entire site.
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        As a result of this link, a folder named Remote Files is automatically
+        created in the NetBeans Projects pane containing the font-awesome.min.css file.
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" />
+
+        <!-- 
+        If you need to link an additional CSS file for a particular page, 
+        you can redefine "css" in that page by using <ui:define name="css"> 
+        -->
+        <ui:insert name="css"/>
+
+        <!-- 
+        A favicon (short for favorite icon), also known as a shortcut icon, website icon, tab icon, 
+        URL icon or bookmark icon, is a file named favicon.ico [https://en.wikipedia.org/wiki/Favicon]
+        The icon is displayed to the left of the page title on a tab in the Chrome web browser.
+        The link below in this template enables all pages in your site to display the favorite icon.
+        
+        Use absolute path for the image file since it will be referenced by all pages in the site.
+        -->
+        <link rel="shortcut icon" href="resources/images/favicon.ico" type="image/x-icon" />
+
+    </h:head>
 
     <!-- This page is constructed based on the siteTemplate -->
-    <ui:composition template="template/siteTemplate.xhtml">
+    <body id="page-top">
         <ui:define name="title">
             <!-- Set the page title -->
-            <h:outputText value="Sign In"></h:outputText>
+            <h:outputText value="#{bundle.HomePageTitle}"></h:outputText>
         </ui:define>
+        <nav id="mainNav" class="navbar fixed-top navbar-toggleable-md navbar-light">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarExample" aria-controls="navbarExample" aria-expanded="false" aria-label="Toggle navigation">
+                Menu <i class="fa fa-bars"></i>
+            </button>
+            <div class="container">
+                <a class="navbar-brand" href="index.xhtml">Take Note</a>
+                <div class="collapse navbar-collapse" id="navbarExample">
 
-        <!-- Create the content for this page below -->
-        <ui:define name="editableContent">
-            <div align="center" style="width:70%; margin:0 auto;">
-
-                <h2>Sign In</h2>
-
-                <!-- Error messages will be shown here if any -->
-                <div align="center">
-                    <p:messages showIcon="false"/>
-                    <h:outputLabel id="form-error-message" class="errorMessages" 
-                                   value="#{loginManager.errorMessage}"/>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="SignIn.xhtml">Sign-In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="CreateAccount.xhtml">Register</a>
+                        </li>
+                    </ul>
                 </div>
-                <br />
-                <h:form>
-                    <p:panelGrid columns="2" columnClasses="accountColumn1, accountColumn2">
-
-                        <h:outputLabel value="Username:" for="username" />
-                        <p:inputText id="username" value="#{loginManager.username}" required="true" 
-                                     requiredMessage="#{bundle.CreateUserRequiredMessage_username}" label="Username">
-                        </p:inputText>
-
-                        <h:outputLabel value="Password:" for="password" />
-                        <p:password id="password" value="#{loginManager.password}" feedback="false">
-                        </p:password>
-
-                    </p:panelGrid>
-                    <br/>
-                     <div>
-                        &nbsp;
-                    </div>
-                    <p:commandButton class="commandButton" id="login" value="Sign In" action="#{loginManager.loginUser()}" ajax="false" icon="ui-icon-arrowthick-1-e" />
-                    &nbsp;
-                    
-                    <p:button class="commandButton" id="create" value="Create an Account" outcome="/CreateAccount" icon="ui-icon-plus" />
-                    &nbsp;
-                    <p:commandButton class="commandButton"  id="retrieve" value="Forgot Password" action="#{loginManager.resetPassword()}" ajax="false" icon="ui-icon-refresh" />
-                    &nbsp;
-                    <p:button class="commandButton" outcome="index" value="Cancel" icon="ui-icon-cancel"></p:button>
-                    <div>
-                    &nbsp;
-                </div>
-                <div>
-                    &nbsp;
-                </div>
-                <div>
-                    &nbsp;
-                </div>
-                </h:form>
-               
-                
             </div>
-        </ui:define>
-    </ui:composition>
+        </nav>
+        <header class="masthead">
+            <div class="intro-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <h1 class="brand-heading">Sign In</h1>
+                            <!-- Error messages will be shown here if any -->
+                            <div align="center">
+                                <p:messages showIcon="false"/>
+                                <h:outputLabel id="form-error-message" class="errorMessages" 
+                                               value="#{loginManager.errorMessage}"/>
+
+                                <br />
+                                <h:form>
+                                    <p:panelGrid columns="2" columnClasses="accountColumn1, accountColumn2">
+
+                                        <h:outputLabel value="Username:" for="username" />
+                                        <p:inputText id="username" value="#{loginManager.username}" required="true" 
+                                                     requiredMessage="#{bundle.CreateUserRequiredMessage_username}" label="Username">
+                                        </p:inputText>
+
+                                        <h:outputLabel value="Password:" for="password" />
+                                        <p:password id="password" value="#{loginManager.password}" feedback="false">
+                                        </p:password>
+
+                                    </p:panelGrid>
+                                    <br/>
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                    <p:commandButton class="commandButton" id="login" value="Sign In" action="#{loginManager.loginUser()}" ajax="false" icon="ui-icon-arrowthick-1-e" />
+                                    &nbsp;
+
+                                    <p:button class="commandButton" id="create" value="Create an Account" outcome="/CreateAccount" icon="ui-icon-plus" />
+                                    &nbsp;
+                                    <p:commandButton class="commandButton"  id="retrieve" value="Forgot Password" action="#{loginManager.resetPassword()}" ajax="false" icon="ui-icon-refresh" />
+                                    &nbsp;
+                                    <p:button class="commandButton" outcome="index" value="Cancel" icon="ui-icon-cancel"></p:button>
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                    <div>
+                                        &nbsp;
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </body>
     <!-- Do not enter tags after the composition line since they are ignored by JSF -->
 
 </html>

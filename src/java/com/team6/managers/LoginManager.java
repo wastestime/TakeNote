@@ -87,7 +87,7 @@ public class LoginManager implements Serializable {
     public String resetPassword() {
 
         // Redirect to show the EnterUsername page
-        return "EnterUsername.xhtml?faces-redirect=true";
+        return "RecoverPassword.xhtml?faces-redirect=true";
     }
 
     /*

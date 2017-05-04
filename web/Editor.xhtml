@@ -115,32 +115,34 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
 
 
             <h:form id="UserFileListForm">
-                <h2>Attachments</h2>
-                <p:dataTable id="attach" style="width: 50%"  value="#{userFileController.getItems()}" var="item"
-                             selectionMode="single" selection="#{userFileController.selected}"
-                             rowKey="#{item.id}"
-                             >
+                <div align="center">
+                    <h2>Attachments</h2>
+                    <p:dataTable id="attach" style="width: 50%"  value="#{userFileController.getItems()}" var="item"
+                                 selectionMode="single" selection="#{userFileController.selected}"
+                                 rowKey="#{item.id}"
+                                 >
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="#{bundle.ListUserFileTitle_filename}"/>
-                        </f:facet>
-                        <div align="left">
-                            <h:outputText value="#{item.filename}"/>
-                        </div>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListUserFileTitle_filename}"/>
+                            </f:facet>
+                            <div align="left">
+                                <h:outputText value="#{item.filename}"/>
+                            </div>
 
-                        <div align="right">
-                            <p:commandButton  ajax="false" 
-                                              icon="ui-icon-arrowthick-1-s"  value="Download" process="@this"   >
-                                <p:fileDownload value="#{fileDownloadManager.getFile(item)}" />
-                            </p:commandButton>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Delete File" 
-                                             actionListener="#{userFileController.deleteSelectedUserFile(item)}" 
-                                             update="UserFileListForm" ajax="true"  />
-                        </div>
-                    </p:column>
+                            <div align="right">
+                                <p:commandButton  ajax="false" 
+                                                  icon="ui-icon-arrowthick-1-s"  value="Download" process="@this"   >
+                                    <p:fileDownload value="#{fileDownloadManager.getFile(item)}" />
+                                </p:commandButton>
+                                <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Delete File" 
+                                                 actionListener="#{userFileController.deleteSelectedUserFile(item)}" 
+                                                 update="UserFileListForm" ajax="true"  />
+                            </div>
+                        </p:column>
 
-                </p:dataTable>
+                    </p:dataTable>
+                </div>
             </h:form>
 
             <h:form enctype="multipart/form-data">

@@ -18,7 +18,7 @@
         <!-- Create the content for this page below -->
         <ui:define name="editableContent">
 
-            <div align="center" style="width:97%">
+            <div align="center" style="width:100%">
                 <!--
                 PrimeFaces Growl displays messages in an overlay. Place p:growl anywhere on your JSF page. 
                 The location of growl in a JSF page does not matter since the messages are displayed
@@ -45,7 +45,9 @@
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_title}" styleClass="facetHeader"/>
                                 </f:facet>
-                                <h:outputText styleClass="dataFields" value="#{item.title}"/>
+                                <div align="center">
+                                    <h:outputText styleClass="dataFields" value="#{item.title}"/>
+                                </div>
                             </p:column>
 
 
@@ -68,7 +70,7 @@
                                     <h:outputText value="#{bundle.ListNotesTitle_createdTime}" styleClass="facetHeader"/>
                                 </f:facet>
                                 <h:outputText styleClass="dataFields" value="#{item.createdTime}">
-<!--                                    <f:convertDateTime timeZone="EDT" pattern="MMMM dd YYYY | EEE HH:mm:ss zzz"/>-->
+                                    <!--                                    <f:convertDateTime timeZone="EDT" pattern="MMMM dd YYYY | EEE HH:mm:ss zzz"/>-->
                                 </h:outputText>
                             </p:column>
 
@@ -78,7 +80,7 @@
                                     <h:outputText value="#{bundle.ListNotesTitle_modifiedTime}" styleClass="facetHeader"/>
                                 </f:facet>
                                 <h:outputText styleClass="dataFields" value="#{item.modifiedTime}">
-<!--                                    <f:convertDateTime  timeZone="EDT" pattern="MMMM dd YYYY | EEE HH:mm:ss zzz" />-->
+                                    <!--                                    <f:convertDateTime  timeZone="EDT" pattern="MMMM dd YYYY | EEE HH:mm:ss zzz" />-->
                                 </h:outputText>
                             </p:column>
 
@@ -96,18 +98,18 @@
                             -->
 
                             <f:facet name="footer">
-                              
+
                                 <p:commandButton id="createButton" icon="ui-icon-plus"  styleClass="commandButton"
                                                  value="#{bundle.Create}" 
-                                                 
-                                                 actionListener="#{notesController.prepareCreate}"
-                                                
-                                                 update=":NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()"/> 
-                                    
 
-                               
-                            
-                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{notesController.prepareEdit}" 
+                                                 actionListener="#{notesController.prepareCreate}"
+
+                                                 update=":NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()"/> 
+
+
+
+
+                                <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{notesController.prepareEdit}" 
                                                  styleClass="commandButton" update=":NoteEditForm" oncomplete="PF('NoteEditDialog').show()" 
                                                  disabled="#{empty notesController.selected or notesController.checkSameUser() eq false}"/>
 
@@ -171,7 +173,7 @@
                     </p:panel>
                 </h:form>
 
-                 <ui:include src="notes/Create.xhtml"/>
+                <ui:include src="notes/Create.xhtml"/>
                 <!-- Clicking the View button displays the included View.xhtml file in a dialog window on top of this page. -->
                 <ui:include src="notes/View.xhtml"/>
 

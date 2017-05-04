@@ -60,7 +60,7 @@ h1 {
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    color: #006400; /* Dark Green */
+    color: #000000; /* Dark Green */
 }
 
 /* Style the text used under the standard HTML tag "h2" for header 2 */
@@ -148,7 +148,7 @@ Style the div component whose unique id is "header" per reference
 <div id="header"> in siteTemplate.xhtml
 */
 #header {
-    background-color: #F0FFFF;   /* Azure */
+    background-color: #DCDCDC;   /* Azure */
     width: 100%;
     height: 84px;
     position: absolute;
@@ -193,7 +193,7 @@ Vertical Navigation Menu
     margin: 0;
     padding: 0;
     width: 180px;
-    background-color: #F0FFFF; /* Azure */
+    background-color: #dadada; 
     border: 1px solid #555;
 
 }
@@ -297,14 +297,14 @@ Other Style Definitions
 /* Used in CreateAccount, EditAccount, SignIn, and Profile */
 .accountColumn1, .signInColumn1, .profileColumn1 {
     text-align: right;
-    background-color: #FFE4C4;   /* Bisque */
+    background-color: #cccccc;   /* Bisque */
     white-space: nowrap;  /* Disallow line break */
 }
 
 /* Used in CreateAccount and EditAccount */
 .accountColumn2, .signInColumn2, .profileColumn2 {
     text-align: left;
-    background-color: #FFEBCD;   /* Blanched Almond  */
+    background-color: #cccccc;   /* Blanched Almond  */
     white-space: nowrap;  /* Disallow line break */
 }
 
@@ -473,7 +473,7 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    background-color: #FDF5E6;   /* OldLace */
+    background-color: #DCDCDC;   /* OldLace */
 }
 .attach, .datalist{
     width :50% !important;
@@ -490,12 +490,12 @@ reference <p:confirmDialog id="confirmDialogBox" ...> in Profile.xhtml
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    background-color: #FDF5E6;   /* OldLace */
+    background-color: #DCDCDC;   
 }
 
 /* Override PrimeFaces style definitions for the Dialog component */
 .ui-dialog, .ui-dialog-content, .ui-dialog-buttonpane {
-    background-color: #FDF5E6;   /* OldLace */
+    background-color: #DCDCDC;   
 }
 
 /* Override PrimeFaces style definition for the fileUpload component */
