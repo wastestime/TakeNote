@@ -192,7 +192,6 @@ public class Notes implements Serializable {
     }
 
     public int getNumAttatchments() {
-        //return 5;
        return this.userFileCollection.size();
     }
 

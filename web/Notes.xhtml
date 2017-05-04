@@ -176,6 +176,9 @@
                                 <p:commandButton id="searchButton" icon="ui-icon-search" value="#{bundle.Search}" 
                                                  styleClass="commandButton" update=":NoteSearchForm" 
                                                  oncomplete="PF('NoteSearchDialog').show()"/>
+                                
+                                <p:commandButton id="refreshButton" icon="fa fa-refresh" value="#{bundle.Refresh}" 
+                                                 styleClass="commandButton" actionListener="#{notesController.refresh()}"/>
 
                             </f:facet>
                         </p:dataTable>

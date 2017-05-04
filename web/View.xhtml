@@ -17,40 +17,17 @@ Copyright © 2017 Osman Balci. All rights reserved.
         Dialog pop-up window to VIEW (READ) a note
         *********************************************
         -->
-        <p:dialog id="NoteViewDlg" showEffect="slide" hideEffect="explode" widgetVar="NoteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewNotesTitle}">
+        <p:dialog id="NoteViewDlg" showEffect="slide" hideEffect="explode" widgetVar="NoteViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewNotesTitle}" position="center-center">
 
-            <h:form id="NoteViewForm" class="ui-datatable-data">
+            <h:form id="NoteViewForm" class="ui-datatable-data" style="max-height: 500px; min-width: 500px; max-width: 800px" >
 
                 <div align="center">
-                    <h:panelGroup id="display">
-                        <p:panelGrid columns="2" columnClasses="columnOne, columnTwo">
-
-
-                            <h:outputText value="#{bundle.ViewNotesLabel_title}"/>
-                            <h:outputText value="#{notesController.currentTitle}" title="#{bundle.ViewNotesTitle_title}"/>
-
-                            <h:outputText value="#{bundle.ViewNotesLabel_description}"/>
-                            <h:outputText value="#{notesController.currentDescription}" title="#{bundle.ViewNotesTitle_description}"/>
-
-                            <h:outputText value="#{bundle.ViewNotesLabel_userId}"/>
-                            <h:outputText value="#{notesController.currentUsername}" title="#{bundle.ViewNotesTitle_userId}"/>
-
-                            <h:outputText value="#{bundle.ViewNotesLabel_createdTime}"/>
-                            <h:outputText value="#{notesController.currentCreatedTime}" title="#{bundle.ViewNotesTitle_createdTime}"/>
-
-                            <h:outputText value="#{bundle.ViewNotesLabel_modifiedTime}"/>
-
-                            <h:outputText value="#{notesController.currentModifiedTime}" title="#{bundle.ViewNotesTitle_modifiedTime}">
-                                <!--                                <f:convertDateTime pattern="MMMMM dd yyyy  hh:mm aaa" />-->
-                            </h:outputText>
-                        </p:panelGrid>
-                    </h:panelGroup>
-
-                    &nbsp;
                     <br/>
-
+                    <h:outputText value="#{notesController.selected.title}" style='font: bold; font-size: large'/>
                     <div align="center">
-                        <p:media value="#{fileDownloadManager.pdf}" width="600" height="300" player="pdf"/>
+                        <p:panelGrid columns="1" style="color: white; width: 500px">
+                            <h:outputText value="#{notesController.selected.content}" escape="false" />
+                        </p:panelGrid>
                     </div>
                     <div>&nbsp;</div>
                     <div style="width:100%">

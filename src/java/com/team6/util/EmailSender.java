@@ -145,7 +145,7 @@ public class EmailSender {
             For the Gmail's SMTP server to accept the unsecure connection, the
             Cloud.Software.Email@gmail.com account's "Allow less secure apps" option is set to ON.
              */
-            transport.connect("smtp.gmail.com", "Cloud.Software.Email@gmail.com", "csd@VT-1872");
+            transport.connect("smtp.gmail.com", "takenote.team6@gmail.com", "TakeNoteTeam6");
 
             // Send the htmlEmailMessage created to the specified list of addresses (recipients)
             transport.sendMessage(htmlEmailMessage, htmlEmailMessage.getAllRecipients());

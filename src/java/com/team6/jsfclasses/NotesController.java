@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
@@ -78,40 +79,18 @@ public class NotesController implements Serializable {
 
     private boolean isInitialized = false;
 
-    public NotesController() {
-        items = new LinkedList<>();
+    public NotesController() {}
+    
+    @PostConstruct
+    public void init() {
+        items = null;
     }
 
     public void getPDF() {
-
-//        File folder = new File(Constants.FILES_ABSOLUTE_PATH);
-//        File[] files = folder.listFiles();
-//
-//        if (files != null) {
-//            for (File f : files) {
-//                
-//                String fileName = f.getName();
-//                
-//                if (fileName.substring(fileName.length() - 5).equals(".pdf"))
-//                {
-//                    f.delete();
-//                }
-//            }
-//        }
         if (selected != null) {
             pdfPath = Constants.FILES_ABSOLUTE_PATH + selected.getTitle() + ".pdf";
 
             try {
-
-//                PdfDocument pdf = new PdfDocument(new PdfWriter(pdfPath));
-//                Document document = new Document(pdf);
-//                document.add(new Paragraph("Hello World"));
-//                document.close();
-//                PdfWriter writer = new PdfWriter(pdfPath, new FileOutputStream(pdfPath));
-//                PdfDocument pdf = new PdfDocument(writer);
-//                Document document = new Document(pdf);
-//                document.add(new Paragraph(selected.getContent()));                
-//                document.close();
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
                 document.open();
@@ -275,13 +254,13 @@ public class NotesController implements Serializable {
                 .getExternalContext().getSessionMap().get("username");
 
         User user = getUserFacade().findByUsername(user_name);
-        if (user != null) {
+        if (user != null && items == null) {
             int user_id = user.getId();
             items = getFacade().findNotesByUserId(user_id);
             return items;
         }
 
-        return new LinkedList<Notes>();
+        return items;
     }
 
     public void shareNote() {
@@ -330,7 +309,7 @@ public class NotesController implements Serializable {
 
     public void initialize() throws IOException {
         System.out.println("initialize editor");
-
+        items = null;
         //prepareCreate();
         String user_name = (String) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap().get("username");
@@ -643,5 +622,10 @@ public class NotesController implements Serializable {
         User user = getUserFacade().findByUsername(user_name);
 
         return (selected != null) && (user != null) && selected.getUserId().equals(user);
+    }
+    
+    public void refresh() {
+        items = null;
+        System.out.print("REFRESH ACTIVATED");
     }
 }
