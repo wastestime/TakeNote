@@ -29,8 +29,7 @@ Copyright © 2017 Thomas Nguyen. All rights reserved.
 
     <property name="alternatedocroot_1" value="from=/TakeNote/* dir=C:\\users\\kehan" />
 
- <!-- Windows OS Users should use the following:
-    <property name="alternatedocroot_1" value="from=/CloudStorage/* dir=C:\\users\\username" />
--->
+  <!--Windows OS Users should use the following:-->
+    <!--<property name="alternatedocroot_1" value="from=/CloudStorage/* dir=C:\\users\\kehan" />-->
 
 </glassfish-web-app>
