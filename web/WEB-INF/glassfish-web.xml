@@ -25,7 +25,9 @@ Copyright © 2017 Thomas Nguyen. All rights reserved.
     See page C-46 in [https://glassfish.java.net/docs/4.0/application-deployment-guide.pdf]
   -->
   <!-- TODO directory paths to e fixed at another time -->
-  <property name="alternatedocroot_1" value="from=/TakeNote/* dir=/home/cloudsd/Nguyen/" />
+<!--  <property name="alternatedocroot_1" value="from=/TakeNote/* dir=/home/cloudsd/Nguyen/" />-->
+
+    <property name="alternatedocroot_1" value="from=/TakeNote/* dir=C:\\users\\kehan" />
 
   <!--Windows OS Users should use the following:-->
     <!--<property name="alternatedocroot_1" value="from=/TakeNote/* dir=C:\\users\\kehan" />-->
