@@ -28,10 +28,10 @@ public final class Constants {
 //    public static final String PHOTOS_ABSOLUTE_PATH = "/home/cloudsd/Nguyen/TakeNote/PhotoStorage/";
 //    public static final String FILES_ABSOLUTE_PATH = "C:\\Users\\Lance\\TakeNote\\FileStorage\\";
 //    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\Users\\Lance\\TakeNote\\PhotoStorage\\";
-//    public static final String FILES_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/FileStorage/";
-//    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/PhotoStorage/";
-    public static final String FILES_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\FileStorage\\";
-    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\PhotoStorage\\";
+    public static final String FILES_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/FileStorage/";
+    public static final String PHOTOS_ABSOLUTE_PATH = "/Users/think7z/CloudStorage/PhotoStorage/";
+//    public static final String FILES_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\FileStorage\\";
+//    public static final String PHOTOS_ABSOLUTE_PATH = "C:\\users\\kehan\\CloudStorage\\PhotoStorage\\";
 
     /*
 Windows OS Users should use the following: 
@@ -50,13 +50,13 @@ Windows OS Users should use the following:
 //    public static final String FILES_RELATIVE_PATH = "TakeNote/FileStorage/";
 //    public static final String PHOTOS_RELATIVE_PATH = "TakeNote/PhotoStorage/";
 //    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "TakeNote/PhotoStorage/defaultUserPhoto.png";
-    public static final String FILES_RELATIVE_PATH = "TakeNote\\FileStorage\\";
-    public static final String PHOTOS_RELATIVE_PATH = "TakeNote\\PhotoStorage\\";
-    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "TakeNote\\PhotoStorage\\defaultUserPhoto.png";
+//    public static final String FILES_RELATIVE_PATH = "TakeNote\\FileStorage\\";
+//    public static final String PHOTOS_RELATIVE_PATH = "TakeNote\\PhotoStorage\\";
+//    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "TakeNote\\PhotoStorage\\defaultUserPhoto.png";
 
-//    public static final String FILES_RELATIVE_PATH = "CloudStorage/FileStorage/";
-//    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
-//    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage/PhotoStorage/defaultUserPhoto.png";
+    public static final String FILES_RELATIVE_PATH = "CloudStorage/FileStorage/";
+    public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
+    public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage/PhotoStorage/defaultUserPhoto.png";
     //public static final String FILES_RELATIVE_PATH = "CloudStorage\\FileStorage\\";
     //public static final String PHOTOS_RELATIVE_PATH = "CloudStorage\\PhotoStorage\\";
     //public static final String DEFAULT_PHOTO_RELATIVE_PATH = "CloudStorage\\PhotoStorage\\defaultUserPhoto.png";
