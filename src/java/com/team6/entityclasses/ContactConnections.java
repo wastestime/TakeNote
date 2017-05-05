@@ -1,5 +1,5 @@
 /*
- * Created by Guoxin Sun on 2017.01.24  * 
+ * Created by Guoxin Sun on 2017.05.05  * 
  * Copyright © 2017 Guoxin Sun. All rights reserved. * 
  */
 package com.team6.entityclasses;
@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "ContactConnections")
 @XmlRootElement
+// queries that will be used
 @NamedQueries({
     @NamedQuery(name = "ContactConnections.findContactsByUserID", query = "SELECT c FROM ContactConnections c WHERE c.userId.id = :userID")
     , @NamedQuery(name = "ContactConnections.findAll", query = "SELECT c FROM ContactConnections c")
@@ -43,7 +44,7 @@ public class ContactConnections implements Serializable {
     @JoinColumn(name = "contact_uid", referencedColumnName = "id")
     @ManyToOne
     private User contactUid;
-
+    // Constructors
     public ContactConnections() {
     }
     
@@ -55,7 +56,7 @@ public class ContactConnections implements Serializable {
     public ContactConnections(Integer id) {
         this.id = id;
     }
-
+    // Getters and Setters
     public Integer getId() {
         return id;
     }

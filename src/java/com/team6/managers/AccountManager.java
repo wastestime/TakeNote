@@ -4,7 +4,6 @@
  */
 package com.team6.managers;
 
-import com.team6.entityclasses.Notes;
 import com.team6.entityclasses.User;
 import com.team6.entityclasses.UserFile;
 import com.team6.entityclasses.UserPhoto;
@@ -418,6 +417,7 @@ public class AccountManager implements Serializable {
             int user_id = (int) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user_id");
 
             try {
+                // other things will be deleted since we used cascade in  the sql
                 // Delete all of the photo files associated with the signed-in user whose primary key is user_id
                 //deleteAllUserPhotos(user_id);
 

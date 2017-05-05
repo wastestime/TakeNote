@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Created by Osman Balci on 2017.01.28
-Copyright © 2017 Osman Balci. All rights reserved.
+Created by Guoxin Sun on 2017.05.05
+Copyright © 2017 Guoxin Sun. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -43,7 +43,7 @@ Copyright © 2017 Osman Balci. All rights reserved.
                     <tr>
                         <!-- The first <td> contains the VERTICAL NAVIGATION MENU -->
 
-                        <td width="180" align="left" valign="middle" nowrap="nowrap">
+                        <td width="25%" align="left" valign="middle" nowrap="nowrap">
                             <ul class="verticalMenu">
 
 
@@ -107,14 +107,12 @@ Copyright © 2017 Osman Balci. All rights reserved.
                                     <!-- ****************** Delete Account End **************************** -->
                                 </li>
 
-
-
                             </ul>
 
                         </td>
 
                         <!-- The second <td> contains the USER PROFILE DATA -->
-                        <td align="center" valign="top">
+                        <td width="30%" align="center" valign="top">
 
                             <h2> #{accountManager.selected.firstName} #{accountManager.selected.lastName}'s Account Profile </h2>
 
@@ -145,11 +143,11 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                         </td>
 
-                        <!-- The third <td> contains the USER PROFILE DATA -->
+                        <!-- The third <td> contains the key features of our application -->
 
-                        <td width="180" align="center" valign="middle" nowrap="nowrap">
+                        <td width="25%" align="right" valign="middle" nowrap="nowrap">
                             <ul class="verticalMenu">
-
+                                <!--This link shows the contact list of the user-->
                                 <li class="verticalMenuItem">
                                     <p:commandLink oncomplete="PF('contactsDialog').show()"
                                                    update="contactsForm"
@@ -158,10 +156,8 @@ Copyright © 2017 Osman Balci. All rights reserved.
                                             <i class="fa fa-address-book">&nbsp;</i>My Contacts
                                         </label>
                                     </p:commandLink>
-
-
                                 </li>
-
+                                <!--This link provides the user the ability to add a friend-->
                                 <li class="verticalMenuItem">
                                     <p:commandLink actionListener="#{userController.update}" 
                                                    oncomplete="PF('UserSearchDialog').show()" 
@@ -171,19 +167,19 @@ Copyright © 2017 Osman Balci. All rights reserved.
                                         </label>
                                     </p:commandLink>
                                 </li>
-
+                                <!--This link leads the user to the editor page-->
                                 <li class="verticalMenuItem">
                                     <p:commandLink 
-                                                 actionListener="#{notesController.prepareCreate}" 
-                                                 update="NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()">
+                                        actionListener="#{notesController.prepareCreate}" 
+                                        update="NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()">
                                         <label style="font-size: 10pt;">
                                             <i class="fa fa-pencil">&nbsp;</i>Take Note
                                         </label>
                                     </p:commandLink>
                                 </li>
-
+                                <!--This link leads the user to the note list page-->
                                 <li class="verticalMenuItem">
-                                    <!-- Clicking "My Notes" displays the List.xhtml file  -->
+                                    <!-- Clicking "My Notes" displays the Notes.xhtml file-->
                                     <h:link outcome="Notes" styleClass="arialTen">
                                         <i class="fa fa-files-o">&nbsp;</i>My Notes
                                     </h:link>
@@ -194,11 +190,14 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
                     </tr>
                 </table>
+
+                <!--The following section shows the activities the user has done using primefaces' timeline-->
                 <h3 style="margin-top: 0">Activities</h3>
+                <!--get all the events from the database-->
                 <p:timeline id="timelineFirst" value="#{userController.fetchEvents()}" var="activity" 
                             height="250px" widgetVar="activityWdgt">  
                     <p:ajax event="rangechange" oncomplete="onrangechange1()"/>  
-
+                    <!--creating an instance in the time line-->
                     <h:panelGroup layout="block" rendered="true" style="padding-bottom:5px">  
                         <h:outputText value="#{activity.title}"/>  
                     </h:panelGroup>  
@@ -211,19 +210,21 @@ Copyright © 2017 Osman Balci. All rights reserved.
 
             </h:form>
             
+            <!--This part could be modified to make the time line more fancy-->
             <script type="text/javascript">
                 function onrangechange1() {
 //                    var range = PF('timelineFirstWdgt').getVisibleRange();
 //                    PF('timelineSecondWdgt').setVisibleRange(range.start, range.end);
                 }
             </script>
-            
+            <!--include the pages that will be used in this page-->
             <ui:include src="DeleteAccountDialog.xhtml"/>
             <ui:include src="CreateNote.xhtml"/>
+            
             <!-- 
             ====================================================================
-            |  Clicking the MOVIE SEARCH link displays this Dialog window for  |
-            |  the user to enter a search query and click the Search button.   |
+            |  Clicking the Add Contact link displays this Dialog window for   |
+            |  the user to enter a search query and click the Add button.      |
             ====================================================================
             -->
             <p:dialog position="center center" id="UserSearchDlg" widgetVar="UserSearchDialog" showEffect="slide" hideEffect="explode"
@@ -234,14 +235,12 @@ Copyright © 2017 Osman Balci. All rights reserved.
                         <br />
                         <h:outputLabel for="searchQueryField" value="Enter a username as your contact " />
                         <br /><br />
-
-
+                        <!--The friend you want to add is stored in the userController's searchQuery-->
                         <h:inputText id="searchQueryField" style="width:200px"
                                      value="#{userController.searchQuery}" >
                         </h:inputText>  
                         <br /><br /><br />
-
-
+                        <!--Add button-->
                         <p:commandButton value="Add" id="searchButton"  ajax="false" 
                                          styleClass="commandButton" icon="ui-icon-plus"
                                          actionListener="#{userController.addFriend()}" />
@@ -255,10 +254,9 @@ Copyright © 2017 Osman Balci. All rights reserved.
                 </h:form>  
 
             </p:dialog>
+            <!--include the Contacts.xhtml for My Conacts link-->
             <ui:include src="Contacts.xhtml"/>
         </ui:define>
-
-
 
 
     </ui:composition>

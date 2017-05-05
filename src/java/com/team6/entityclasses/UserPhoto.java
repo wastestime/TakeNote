@@ -1,6 +1,6 @@
 /*
- * Created by Thomas Nguyen on 2017.04.18  * 
- * Copyright © 2017 Thomas Nguyen. All rights reserved. * 
+ * Created by Guoxin Sun on 2017.05.05  * 
+ * Copyright © 2017 Guoxin Sun. All rights reserved. * 
  */
 package com.team6.entityclasses;
 
@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Balci
+ * @author think7z
  */
 // The @Entity annotation designates this class as a JPA Entity POJO class representing the Photo table in the PizzaHutDB database.
 @Entity
@@ -170,6 +170,8 @@ public class UserPhoto implements Serializable {
     Since the user can have only one photo, this makes sense.
      */
     public String getPhotoFilename() {
+        // using getUserId().getId() avoiding 
+        // can't update user's phot after mutiple times of photo upload
         return getUserId().getId() + "." + getExtension();
     }
 
