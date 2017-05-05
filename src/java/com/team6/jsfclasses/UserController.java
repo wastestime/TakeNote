@@ -290,7 +290,7 @@ public class UserController implements Serializable {
                 // above to retrieve all the users' contacts again
                
                 // add the Activity
-                addActivity("Add Friend");
+                addActivity("Add Contact");
                 // send an email to the one that has been added as contact
                 notificationManager.sendNotificationToUser(user.getEmail(), "Someone added you as a friend", currUser.getUsername() + " added you as a friend on "
                         + "jupiter.cs.vt.edu/TakeNote" + " !"
@@ -320,7 +320,7 @@ public class UserController implements Serializable {
                 // remove connection from database
                 getContactConnectionsFacade().remove(c);
                 // add the activity
-                addActivity("Remove Friend");
+                addActivity("Remove Contact");
                 break;
             }
         }
@@ -380,10 +380,10 @@ public class UserController implements Serializable {
         } else if (title.toLowerCase().contains("share")) {
             a.setImagePath("/resources/images/activityImages/share.png");
             getActivityFacade().create(a);
-        } else if (title.toLowerCase().contains("add friend")) {
+        } else if (title.toLowerCase().contains("add contact")) {
             a.setImagePath("/resources/images/activityImages/friend.png");
             getActivityFacade().create(a);
-        } else if (title.toLowerCase().contains("remove friend")) {
+        } else if (title.toLowerCase().contains("remove contact")) {
             a.setImagePath("/resources/images/activityImages/unfriend.png");
             getActivityFacade().create(a);
         } else if (title.toLowerCase().contains("change photo")) {
