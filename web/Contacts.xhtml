@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-Created by Osman Balci on 2016.04.23 
-Copyright © 2016 Osman Balci. All rights reserved.
+Created by Guoxin Sun  on 2017.05.05 
+Copyright © 2016 Guoxin Sun. All rights reserved.
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -12,10 +12,10 @@ Copyright © 2016 Osman Balci. All rights reserved.
 
     <ui:composition>
         <!-- 
-         ==========================================================
-         |  Clicking the INFO button displays this Dialog window  |
-         |  to show the Details of the Selected Searched Recipe.   |
-         ==========================================================
+         ================================================================
+         |  Clicking the My Contacts button displays this Dialog window  |
+         |  to show the list of your contacts.                           |
+         ================================================================ 
         -->
         <p:dialog  position="center center" id="contactsDialog" widgetVar="contactsDialog" 
                    modal="true" resizable="false" appendTo="@(body)" header="My Contacts" 
@@ -30,8 +30,6 @@ Copyright © 2016 Osman Balci. All rights reserved.
 
             <h:form id="contactsForm" >
 
-
-
                 <h:panelGroup id="display" style="text-align:center; border:none; height: 100%" >   
 
                     <h:panelGrid  
@@ -39,6 +37,7 @@ Copyright © 2016 Osman Balci. All rights reserved.
 
                         &nbsp;
                         <h:form id="UserFriendsList">
+                            <!--fetch the contacts from the database-->
                             <p:dataTable id="contactDatalist" value="#{userController.fetchContacts()}" var="item"
                                          selectionMode="single" selection="#{userController.selected}"
                                          rowKey="#{item.id}">
@@ -51,39 +50,43 @@ Copyright © 2016 Osman Balci. All rights reserved.
                                     </f:facet>
                                     <h:outputText value="#{item.lastName}, #{item.firstName}"/>
                                 </p:column>
-
+                                <!--username of the contact-->
                                 <p:column sortBy="#{item.username}">
                                     <f:facet name="header">
                                         <h:outputText value="Username"/>
                                     </f:facet>
                                     <h:outputText value="#{item.username}"/>
                                 </p:column>
-
+                                <!--state info of the contact-->
                                 <p:column sortBy="#{item.state}">
                                     <f:facet name="header">
                                         <h:outputText value="Location"/>
                                     </f:facet>
                                     <h:outputText value="#{item.state}"/>
                                 </p:column>
+
+
                                 <f:facet name="footer">
                                     <!-- CLOSE button -->   
                                     <p:commandButton value="#{bundle.Close}" 
                                                      onclick="PF('contactsDialog').hide()"  oncomplete="#{userController.refreshList()}" 
                                                      styleClass="commandButton" icon="ui-icon-close"/>
-
+                                    <!--DELETE button, deleting a contact-->
                                     <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" 
                                                      styleClass="commandButton" actionListener="#{userController.removeConnection()}"
                                                      update="contactsForm"
                                                      oncomplete="#{userController.refreshList()}"
-                                                 
+
                                                      action ="Profile?faces-redirect=true;"
                                                      disabled="#{empty userController.selected}">
-
+                                        <!--in case the user did it accidently-->
                                         <p:confirm header="Confirmation" 
                                                    message="Are you sure you want to permanently delete the selected contact?" 
                                                    icon="ui-icon-alert" />
                                     </p:commandButton>
-
+                                    <!-- **********************************************
+                                    Beginning of Display of the DELETE Confirmation dialog 
+                                    *********************************************** -->
                                     <p:confirmDialog id="confirmDialogBox" global="true" showEffect="fade" hideEffect="fade">
                                         <div align="center">
                                             <!-- The value of the first button listed below will be shown as 
@@ -104,11 +107,6 @@ Copyright © 2016 Osman Balci. All rights reserved.
                     </h:panelGrid>
 
                 </h:panelGroup>
-
-
-
-
-
 
             </h:form>
         </p:dialog>

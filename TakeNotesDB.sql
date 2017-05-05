@@ -60,7 +60,7 @@ CREATE TABLE Notes
     FOREIGN KEY (sharedWith) REFERENCES User(id) ON DELETE CASCADE
 	
 );
-/* Table that stores user activities when a note is created, edited, or deleted*/
+/* Table that stores user's activities*/
 CREATE TABLE Activity
 (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,

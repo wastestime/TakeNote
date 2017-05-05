@@ -297,14 +297,14 @@ Other Style Definitions
 /* Used in CreateAccount, EditAccount, SignIn, and Profile */
 .accountColumn1, .signInColumn1, .profileColumn1 {
     text-align: right;
-    background-color: #cccccc;   /* Bisque */
+    background-color: #cccccc;   /* Iron */
     white-space: nowrap;  /* Disallow line break */
 }
 
 /* Used in CreateAccount and EditAccount */
 .accountColumn2, .signInColumn2, .profileColumn2 {
     text-align: left;
-    background-color: #cccccc;   /* Blanched Almond  */
+    background-color: #cccccc;   /* Iron */
     white-space: nowrap;  /* Disallow line break */
 }
 
@@ -644,3 +644,12 @@ if content overflows an element's box.
 .noBorders tr, .noBorders td {
     border: none !important;
 }
+/*change the background of the timeline*/ 
+.timeline-content {
+    background-color: #cccccc !important;
+}
+
+.timeline-frame{
+      background-color: #cccccc !important;
+}
+

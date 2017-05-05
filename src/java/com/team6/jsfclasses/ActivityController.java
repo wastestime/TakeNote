@@ -1,3 +1,7 @@
+/*
+ * Created by Guoxin Sun on 2017.05.05  * 
+ * Copyright © 2017 Guoxin Sun. All rights reserved. * 
+ */
 package com.team6.jsfclasses;
 
 import com.team6.entityclasses.Activity;
@@ -18,7 +22,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-
+/**
+ *
+ * @author think7z
+ */
 @Named("activityController")
 @SessionScoped
 public class ActivityController implements Serializable {

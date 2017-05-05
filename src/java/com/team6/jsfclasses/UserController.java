@@ -1,3 +1,7 @@
+/*
+ * Created by Guoxin Sun on 2017.05.05  * 
+ * Copyright © 2017 Guoxin Sun. All rights reserved. * 
+ */
 package com.team6.jsfclasses;
 
 import com.team6.entityclasses.Activity;
@@ -34,37 +38,34 @@ import org.primefaces.model.timeline.TimelineModel;
 @Named("userController")
 @SessionScoped
 public class UserController implements Serializable {
-
+    // EJB makes the usercontroller being able to using other facades
     @EJB
     private UserFacade userFacade;
-
-    public ContactConnectionsFacade getContactConnectionsFacade() {
-        return contactConnectionsFacade;
-    }
     @EJB
     private ContactConnectionsFacade contactConnectionsFacade;
     @EJB
     private ActivityFacade activityFacade;
-
-    @Inject
-    private AccountManager accountManager;
-    @Inject 
-    private NotificationManager notificationManager;
-    
     @EJB
     private com.team6.sessionbeans.UserFacade ejbFacade;
+    // Inject makes the usercontroller being able to using other managers
+    @Inject
+    private AccountManager accountManager;
+    @Inject
+    private NotificationManager notificationManager;
+
+
     private List<User> items = null;
     private User selected;
+    // stores the username of the one user want to be friend with
     private String searchQuery;
     private String statusMessage;
-    //private String activityTitle;
 
-    
     private List<User> friends; // DONT FORGET TO ADD THSI INTO DATABASE
     private List<Activity> activities;
 
+    // Constructors
     public UserController() {
-        this.searchQuery=null;
+        this.searchQuery = null;
         //this.activityTitle = null;
         this.friends = new ArrayList();
         this.activities = new ArrayList();
@@ -72,6 +73,7 @@ public class UserController implements Serializable {
 
     }
 
+    // Getters and Setters
     public UserFacade getEjbFacade() {
         return ejbFacade;
     }
@@ -95,14 +97,11 @@ public class UserController implements Serializable {
     public void setActivityFacade(ActivityFacade activityFacade) {
         this.activityFacade = activityFacade;
     }
-    /*public String getActivityTitle() {
-        return activityTitle;
+
+    public ContactConnectionsFacade getContactConnectionsFacade() {
+        return contactConnectionsFacade;
     }
 
-    public void setActivityTitle(String activityTitle) {
-        this.activityTitle = activityTitle;
-    }
-    */
     protected void setEmbeddableKeys() {
     }
 
@@ -111,6 +110,26 @@ public class UserController implements Serializable {
 
     private UserFacade getFacade() {
         return ejbFacade;
+    }
+
+    public User getUser(java.lang.Integer id) {
+        return getFacade().find(id);
+    }
+
+    public List<User> getItemsAvailableSelectMany() {
+        return getFacade().findAll();
+    }
+
+    public List<User> getItemsAvailableSelectOne() {
+        return getFacade().findAll();
+    }
+    
+    public void setSearchQuery(String searchQuery) {
+        this.searchQuery = searchQuery;
+    }
+
+    public String getSearchQuery() {
+        return this.searchQuery;
     }
 
     public User prepareCreate() {
@@ -173,18 +192,6 @@ public class UserController implements Serializable {
         }
     }
 
-    public User getUser(java.lang.Integer id) {
-        return getFacade().find(id);
-    }
-
-    public List<User> getItemsAvailableSelectMany() {
-        return getFacade().findAll();
-    }
-
-    public List<User> getItemsAvailableSelectOne() {
-        return getFacade().findAll();
-    }
-
     @FacesConverter(forClass = User.class)
     public static class UserControllerConverter implements Converter {
 
@@ -226,198 +233,183 @@ public class UserController implements Serializable {
 
     }
 
-    public void setSearchQuery(String searchQuery) {
-        this.searchQuery = searchQuery;
-    }
-
-    public String getSearchQuery() {
-        return this.searchQuery;
-    }
     
+//    This function checks whether a user has alread in the current user's Contact list
     public boolean contains(User user) {
+        // get the current user
         String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
         User currUser = getUserFacade().findByUsername(user_name);
+        // get the user's contact connections
         List<ContactConnections> contacts = getContactConnectionsFacade().findUserContacts(currUser.getId());
         boolean flag = false;
-        System.out.printf("!!!!!! user id to add = %d\n", user.getId());
+        System.out.printf("user id to add = %d\n", user.getId());
+        // loop through and check
         for (ContactConnections c : contacts) {
-            System.out.printf("********* user_id = %d, contact = %d\n", c.getUserId().getId(), c.getContactUid().getId());
+            System.out.printf("user_id = %d, contact = %d\n", c.getUserId().getId(), c.getContactUid().getId());
             if (c.getContactUid().getId().equals(user.getId())) {
                 flag = true;
-                System.out.printf("==duplicate addding is not allowed!\n");
+                System.out.printf("duplicate addding is not allowed!\n");
                 break;
             }
         }
         return flag;
     }
-
+//  this function add the user in searchQuery to the current user's contact list
+//  will show coresponding error in the growl 
     public void addFriend() {
         if (this.searchQuery != null) {
-            //System.out.printf("=======%s  ========\n", this.searchQuery);
             User user = getUserFacade().findByUsername(this.searchQuery);
+            // if the user doesn't exist in the system
             if (user == null) {
                 statusMessage = "Invalid username as input!";
                 FacesMessage message = new FacesMessage(statusMessage);
                 FacesContext.getCurrentInstance().addMessage(null, message);
                 return;
             }
+            // try to add
             if (!contains(user)) {
-                
+                // get the current user
                 String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
                 User currUser = getUserFacade().findByUsername(user_name);
+                // can't add yourself as friends
                 if (user.getId().equals(currUser.getId())) {
                     statusMessage = "You can't as yourself as friend!";
                     FacesMessage message = new FacesMessage(statusMessage);
                     FacesContext.getCurrentInstance().addMessage(null, message);
                     return;
                 }
-                //this.friends.add(user);
-                System.out.printf("+++++the selected user is : %s...", currUser.getUsername());
+                System.out.printf("the selected user is : %s...", currUser.getUsername());
                 ContactConnections cc = new ContactConnections(currUser, user);
+                // create connection in database
                 getContactConnectionsFacade().create(cc);
-                System.out.printf("After add size =%d  ========\n", this.friends.size());
+                
+                // we did not add the conact to the firends list
                 // by setting friends to null, we foce the get friends method 
                 // above to retrieve all the users' contacts again
-                //this.friends = null;
+               
+                // add the Activity
                 addActivity("Add Friend");
-                notificationManager.sendNotificationToUser(user.getEmail(),"Someone added you as a friend", currUser.getUsername()+" added you as a friend on " + 
-                        "jupiter.cs.vt.edu/TakeNote" + " !"
-                );            
+                // send an email to the one that has been added as contact
+                notificationManager.sendNotificationToUser(user.getEmail(), "Someone added you as a friend", currUser.getUsername() + " added you as a friend on "
+                        + "jupiter.cs.vt.edu/TakeNote" + " !"
+                );
+                // show promt
                 statusMessage = "You added a new friend!";
                 FacesMessage message = new FacesMessage(statusMessage);
                 FacesContext.getCurrentInstance().addMessage(null, message);
-            } else {
+            } else { // can't add a user to contact list multiple times
                 statusMessage = "You were already friends!";
                 FacesMessage message = new FacesMessage(statusMessage);
                 FacesContext.getCurrentInstance().addMessage(null, message);
             }
-            searchQuery=null;
-
+            // clear the searchQuery used to store the contact that want to add
+            searchQuery = null;
         }
     }
+    // this function is used to remove a contact from the contact list
     public void removeConnection() {
+        // get the current user
         String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
         User currUser = getUserFacade().findByUsername(user_name);
         List<ContactConnections> contacts = getContactConnectionsFacade().findUserContacts(currUser.getId());
+        // loop through to find the contact to remove
         for (ContactConnections c : contacts) {
             if (c.getContactUid().getId().equals(this.selected.getId())) {
+                // remove connection from database
                 getContactConnectionsFacade().remove(c);
+                // add the activity
                 addActivity("Remove Friend");
                 break;
             }
         }
     }
     
+    // this function force the jsf to clean the cache so that friend will be 
+    // fecthed freshly every time
     public void refreshList() {
         this.friends.clear();
     }
+    
+    // fecth all the contact of the currently login user
     public List<User> fetchContacts() {
+        // we force jsf to fectch every time from database instead of using cache
+        // so that the contact list can be shown correctly each time
         if (this.friends.isEmpty()) {
             //read from data base
             String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
             User currUser = getUserFacade().findByUsername(user_name);
-            
-            if (currUser != null)
-            {
+
+            if (currUser != null) {
                 List<ContactConnections> contacts = getContactConnectionsFacade().findUserContacts(currUser.getId());
                 contacts.forEach((c) -> {
-                this.friends.add(getUserFacade().findByUsername(c.getContactUid().getUsername()));
-            });
+                    this.friends.add(getUserFacade().findByUsername(c.getContactUid().getUsername()));
+                });
             }
-            
-            
+
         }
         return this.friends;
     }
     
+    // add ac activity into database
     public void addActivity(String title) {
-        // came in should be "edit" "create" "delete"
         Activity a = new Activity();
-        System.out.println("wwwwwwwww in =========addddActivity");
+        System.out.println("in add Activity");
         // prepare the activity
         a.setTitle(title);
-        //String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
         String user_name = accountManager.getSelected().getUsername();
-        /*
-        while(user_name == null) {
-            System.out.printf("====nulllnulnNULLNULLL===user created??? yet ?? %s\n",user_name);
-
-            user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
-        }*/
         User currUser = getUserFacade().findByUsername(user_name);
-        if(title.equals("Create Account")) {
-            System.out.printf("=======user created??? yet ?? %s\n",user_name);
-        }
         a.setUserId(currUser);
-        a.setTimeCreated(new Date());
-        
-        if(title.toLowerCase().contains("edit")) {
+        a.setTimeCreated(new Date());        
+        // switching from 10 types of activities
+        // setting the image path corresponsingdly 
+        // store the activities into database
+        if (title.toLowerCase().contains("edit")) {
             a.setImagePath("/resources/images/activityImages/edit.png");
             getActivityFacade().create(a);
-        }
-        else if (title.toLowerCase().contains("account")) {
+        } else if (title.toLowerCase().contains("account")) {
             a.setImagePath("/resources/images/activityImages/create_account.png");
             getActivityFacade().create(a);
-
-        }
-        else if (title.toLowerCase().contains("create")) {
+        } else if (title.toLowerCase().contains("create")) {
             a.setImagePath("/resources/images/activityImages/create.png");
             getActivityFacade().create(a);
-        }
-        else if (title.toLowerCase().contains("delete")){
+        } else if (title.toLowerCase().contains("delete")) {
             a.setImagePath("/resources/images/activityImages/delete.png");
             getActivityFacade().create(a);
-        }
-        else if (title.toLowerCase().contains("share")){
-            
+        } else if (title.toLowerCase().contains("share")) {
             a.setImagePath("/resources/images/activityImages/share.png");
             getActivityFacade().create(a);
-        }
-        else if (title.toLowerCase().contains("add friend")){
-            
+        } else if (title.toLowerCase().contains("add friend")) {
             a.setImagePath("/resources/images/activityImages/friend.png");
             getActivityFacade().create(a);
-        }
-        else if (title.toLowerCase().contains("remove friend")){
+        } else if (title.toLowerCase().contains("remove friend")) {
             a.setImagePath("/resources/images/activityImages/unfriend.png");
             getActivityFacade().create(a);
-        }
-        else if (title.toLowerCase().contains("change photo")){
+        } else if (title.toLowerCase().contains("change photo")) {
             a.setImagePath("/resources/images/activityImages/photo.png");
             getActivityFacade().create(a);
-        }
-        else if (title.toLowerCase().contains("password")){
+        } else if (title.toLowerCase().contains("password")) {
             a.setImagePath("/resources/images/activityImages/password.png");
             getActivityFacade().create(a);
-        }
-        else if (title.toLowerCase().contains("upload textfile")){
+        } else if (title.toLowerCase().contains("upload textfile")) {
             a.setImagePath("/resources/images/activityImages/upload.png");
             getActivityFacade().create(a);
         }
-        
-        
-        // create in the database
-        
     }
-    
+    // get all the events belong to the logined user
     public TimelineModel fetchEvents() {
-        //this.activities.clear();
-        TimelineModel events = new TimelineModel();
-        //if (this.activities.isEmpty()) {
-            //read from data base
-            String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
-            User currUser = getUserFacade().findByUsername(user_name);
-            
-            List<Activity> temps = getActivityFacade().findUserActivities(currUser.getId());
-            
-            temps.forEach((a) -> {
-                events.add(new TimelineEvent(a, a.getTimeCreated()));
-            });
+        //read from data base
+        // get the logined user
+        String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
+        User currUser = getUserFacade().findByUsername(user_name);
 
-        //}
+        List<Activity> temps = getActivityFacade().findUserActivities(currUser.getId());
+        // the PrimeFaces using TimelineModel object
+        TimelineModel events = new TimelineModel();
+        // loop through and creating TimelineModel object using events
+        temps.forEach((a) -> {
+            events.add(new TimelineEvent(a, a.getTimeCreated()));
+        });
         return events;
-    
     }
-    
-    
+
 }

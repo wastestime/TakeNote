@@ -5,7 +5,6 @@
 package com.team6.sessionbeans;
 
 import com.team6.entityclasses.ContactConnections;
-import com.team6.entityclasses.User;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
