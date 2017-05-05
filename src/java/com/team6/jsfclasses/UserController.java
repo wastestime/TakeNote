@@ -401,7 +401,6 @@ public class UserController implements Serializable {
         // get the logined user
         String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
         User currUser = getUserFacade().findByUsername(user_name);
-
         List<Activity> temps = getActivityFacade().findUserActivities(currUser.getId());
         // the PrimeFaces using TimelineModel object
         TimelineModel events = new TimelineModel();
