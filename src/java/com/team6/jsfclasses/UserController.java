@@ -38,6 +38,7 @@ import org.primefaces.model.timeline.TimelineModel;
 @Named("userController")
 @SessionScoped
 public class UserController implements Serializable {
+    
     // EJB makes the usercontroller being able to using other facades
     @EJB
     private UserFacade userFacade;
@@ -47,6 +48,7 @@ public class UserController implements Serializable {
     private ActivityFacade activityFacade;
     @EJB
     private com.team6.sessionbeans.UserFacade ejbFacade;
+    
     // Inject makes the usercontroller being able to using other managers
     @Inject
     private AccountManager accountManager;
