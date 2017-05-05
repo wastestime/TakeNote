@@ -22,12 +22,21 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                 <h1>
                     <title>Edit Note</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    <!--Include TinyMCE script-->
+
+                    <!--This is the code of the editor part. To use tinymce script, you need to import the package to /resourse/js/ directory.
+                    You can download from https://www.tinymce.com/download/.-->
                     <script src='resources/js/tinymce/tinymce.min.js'></script>
                     <script>
-
                         tinymce.init({
                             selector: 'textarea', // note the comma at the end of the line!
                             toolbar: 'example',
+
+                            // These are basic parameters that define the UI of the editor. 
+                            // “Plugins” defines what plugins will be supported in editor. 
+                            // The toolbar defines what plugins show in the toolbar. 
+                            // The customized plugins also defined here. (Save,submit)
+                            // (These plugins are included in tinymce packages. /resource/js/tinymce/plugins. One can add more when needed)
                             width: '95%',
                             height: '400',
                             autoresize_min_height: '400',
@@ -45,10 +54,14 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                                 '//www.tinymce.com/css/codepen.min.css'
                             ],
+                            //make a embedded template to the editor.
                             templates: [
-                                {title: 'Some title 2', description: 'Some desc 2', url: 'EditorTemplate.html'}
+                                {title: 'example1', description: 'cs3984template', url: 'EditorTemplate.html'}
                             ],
 
+                            //This part controls the Save button. 
+                            //The “save_enablewhendirty:” makes sure that the save button is disabled when no change is made in the textarea.
+                            //The “save_onsavecallback:” defines what to run when save button is clicked or Crtl+S is fired. 
                             save_enablewhendirty: true,
                             save_onsavecallback: function saveContent() {
                                 var cont = this.getContent();
@@ -60,11 +73,16 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                                 ]);
                             }
                             ,
+                            // Create the submit button for the editor from scratch.  
+                            // I parse the content to the note controller and redirect to the Notes.xhtml.
                             setup: function (editor) {
                                 editor.addButton('submit', {
                                     text: 'Submit',
                                     icon: false,
                                     onclick: function () {
+                                        //  This part controls the logic of communicating with NoteController. 
+                                        //  It is a little different  to use JavaScript to parse data to NoteController. 
+                                        //  I choose to parse Json object to the controller.
                                         var cont = editor.getContent();
                                         passToJSFManagedBean([
                                             {
@@ -80,7 +98,9 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                         }
                         );
                     </script>
-
+                    <!--This is my approach of initialize the editor when the Editor.xhtml loaded.
+                    Since there is no such tag in primeface that automatically run whenever the page is loaded. 
+                    So i fake a click to a hidden link that is able to run whenever the page is loaded.-->
                     <script>
                         window.onload = function () {
                             document.getElementById('hidden:link').onclick();
@@ -88,6 +108,10 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                     </script>
                 </h1>
 
+                <!--<p:inputTextarea> is catched by the embedded JavaScript and converted to TinyMCE editor. 
+                From the document of tinymce, it only support html tag <textarea>, 
+                but I find out that the XML tag <p:inputTextarea> is also supported.  
+                Notice, although it supports XML tag, the parameter of selector is still textarea.-->
                 <h:form id="editorPart">
                     <div align ="left">
                         <h:outputLabel class="editorTitle" value="#{notesController.getEditorTitle()}" />
@@ -95,11 +119,12 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                     <form method="post">
                         <p:inputTextarea id = "mytextarea2" value ="#{notesController.getEditorNote()}" queryDelay="0" minQueryLength="0" />
                     </form>
+                    <!--The RequestParameter map will catch the Json object generated by Javascript and  parsed by <p:remoteCommand>.-->
                     <p:remoteCommand name="passToJSFManagedBean" id="passToJSFManagedBean2"
                                      action="#{notesController.save}"
                                      process="@this" autoRun="true" />
-
                 </h:form>
+
                 <h:form id="hidden" style="display:none">
                     <h:commandLink id="link">
                         <f:ajax event="click" listener="#{notesController.initialize()}" />
@@ -109,7 +134,8 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
 
 
 
-
+            <!--embedded the attachments in the Editor.xhtml. 
+            Users can free to upload, download and delete the attachments.-->  
             <h:form id="UserFileListForm">
                 <div  style=" padding-left:35px">
                     <h2>Attachments</h2>
@@ -134,8 +160,6 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                                 <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Delete File" 
                                                  actionListener="#{userFileController.deleteSelectedUserFile(item)}" 
                                                  update="UserFileListForm" ajax="true"  />
-
-
                             </div>
                         </p:column>
 
@@ -148,22 +172,6 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                     </h:form>
                 </div>
             </h:form>
-
-
-            <!--
-            <p:commandButton   ajax="true" oncomplete="PF('uplosadDialog1').show();"/>
-            <p:dialog  header="???" widgetVar="uploadDialog1"  >
-                <h:form enctype="multipart/form-data">
-                    <p:fileUpload  fileUploadListener="#{fileUploadManager.handleFileUpload}"
-                                   mode="advanced"  update="messages,UserFileListForm"   id="atttachment" styleClass="att"/>                                <br/>
-                    <p:growl id="messages" showDetail="true" />
-                    <br/>
-                </h:form>
-            </p:dialog>
-            -->
-
-
-
 
         </ui:define>
     </ui:composition >

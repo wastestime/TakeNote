@@ -79,8 +79,9 @@ public class NotesController implements Serializable {
 
     private boolean isInitialized = false;
 
-    public NotesController() {}
-    
+    public NotesController() {
+    }
+
     @PostConstruct
     public void init() {
         items = null;
@@ -135,22 +136,16 @@ public class NotesController implements Serializable {
     public Notes prepareCreate() {
         editorSelected = new Notes();
         initializeEmbeddableKey();
-        System.out.println("prepare create !!!!!!!!!!!=========");
-
         return editorSelected;
     }
 
     public Notes prepareEdit() {
-
         editorSelected = getNotesFacade().findById(selected.getId());
         userController.addActivity("Edit Activity");
-
         return editorSelected;
     }
 
     public void create() {
-        System.out.println("createInNoteController");
-
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("NotesCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
@@ -241,7 +236,6 @@ public class NotesController implements Serializable {
         editorSelected = selected;
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NotesDeleted"));
         if (!JsfUtil.isValidationFailed()) {
-
             editorSelected = null;
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -307,10 +301,14 @@ public class NotesController implements Serializable {
         return userFacade;
     }
 
+    /**
+     * We create a new note and set up all the parameters for editorselected
+     * when the editor does not open a existed note.
+     *
+     * @throws IOException
+     */
     public void initialize() throws IOException {
-        System.out.println("initialize editor");
         items = null;
-        //prepareCreate();
         String user_name = (String) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap().get("username");
 
@@ -320,8 +318,6 @@ public class NotesController implements Serializable {
 
         Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
         if (existNote != null) {
-            System.out.println("Same name");
-            System.out.println("existNote.getContent()=" + existNote.getContent());
             editorSelected = existNote;
         } else {
             User user = getUserFacade().findByUsername(user_name);
@@ -349,93 +345,54 @@ public class NotesController implements Serializable {
         this.editorSelected = editorSelected;
     }
 
-    
-
     public int getNumAttatchments(Notes currNote) {
 
-        if(currNote.getSharedWith()==null){
+        if (currNote.getSharedWith() == null) {
             return currNote.getNumAttatchments();
         }
-        
+
         List<UserFile> items = null;
-//        if (!getNotesController().isIsInitialized()) {
-//            System.out.println("Get attachment before editor initialize");
-//            return items;
-//        }
-//        if (items == null) {
+
         if (currNote == null) {
             return 0;
         }
 
         // Obtain the signed-in user's username
         String username = (String) currNote.getUserId().getUsername();
-//
-//        // Obtain the object reference of the signed-in user
-//        User signedInUser = getUserFacade().getUser();
-
         String noteTitle = currNote.getTitle();
-//        String noteTitle = notesController.getEditorSelected().getTitle();
-//
         Notes note = getNotesFacade().findByUserIdAndTitle(currNote.getUserId().getId(), noteTitle);
-
-        //    return notesController.getSelected().getUserFileCollection();
-//        for (UserFile aFile : notesController.getSelected().getUserFileCollection()) {
-//            items.add(aFile);
-//        }
-//        if (note == null) {
-//            return null;
-//        }
-//        // Obtain the id (primary key in the database) of the signedInUser object
+        // Obtain the id (primary key in the database) of the signedInUser object
         Integer userId = note.getUserId().getId();
         Integer noteId = note.getId();
-//
-//        System.out.println("share note id" + note.getId() + "share note user=======================" + note.getUserId().getUsername());
-//        // Obtain only those files from the database that belong to the signed-in user
         items = getUserFileFacade().findUserFilesByNoteId(noteId);
-        // return userFileController.getSharedItems().size();
-//        return userFileCollection.size();
+
         return items.size();
     }
 
+    /**
+     * Update the note in the database and update the shared copy.
+     *
+     */
     public void save() {
-        System.out.println("save In Notes Controller");
-
-//        String id = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-//                .get("id");
-//        selected.setId(Integer.parseInt(id));
-//        int note_id = (Integer) FacesContext.getCurrentInstance()
-//                .getExternalContext().getSessionMap().get("note_id");
-//        User user = getUserFacade().find(user_id);
-        //editorSelected.setTitle("test");
-//        selected.setUserId(user);
-//        String user_name = (String) FacesContext.getCurrentInstance()
-//                .getExternalContext().getSessionMap().get("username");
         int user_id = (int) FacesContext.getCurrentInstance()
                 .getExternalContext().getSessionMap().get("user_id");
         Notes existNote = getNotesFacade().findByUserIdAndTitle(user_id, editorSelected.getTitle());
         editorSelected = existNote;
         Date currDate = new Date();
-//        currDate.getTime();
-//        selected.setCreatedTime(currDate);
         editorSelected.setModifiedTime(currDate);
+
+//        The RequestParameter map will catch the Json object generated by Javascript and  parsed by <p:remoteCommand>.
         editorSelected.setContent(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
                 .get("content"));
-
         update();
-
-        System.out.println("existNote" + existNote.getUserId());
         List<Notes> shared = getNotesFacade().findAllSharedNotes(existNote.getUserId().getId(), editorSelected.getTitle());
-
         if (shared != null) {
             for (Notes thisNote : shared) {
                 thisNote.setContent(existNote.getContent());
-
                 editorSelected = thisNote;
-
                 update();
             }
         }
-        //System.out.print(content);
     }
 
     public boolean isIsInitialized() {
@@ -623,7 +580,7 @@ public class NotesController implements Serializable {
 
         return (selected != null) && (user != null) && selected.getUserId().equals(user);
     }
-    
+
     public void refresh() {
         items = null;
         System.out.print("REFRESH ACTIVATED");
