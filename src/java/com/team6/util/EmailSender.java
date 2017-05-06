@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
 
 /**
  *
- * @author Balci
+ * @author Take Note
  */
 @Named(value = "emailSender")
 @RequestScoped

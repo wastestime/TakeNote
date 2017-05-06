@@ -15,7 +15,7 @@ import javax.inject.Named;
 @SessionScoped
 /**
  *
- * @author Balci
+ * @author Take Note
  */
 public class LoginManager implements Serializable {
 

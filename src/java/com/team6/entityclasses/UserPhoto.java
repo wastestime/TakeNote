@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 // The @Entity annotation designates this class as a JPA Entity POJO class representing the Photo table in the PizzaHutDB database.
 @Entity
 
-// Name of the CloudDriveDB database table represented
+// Name of the TakeNotesDB database table represented
 @Table(name = "UserPhoto")
 
 @XmlRootElement
@@ -45,7 +45,7 @@ public class UserPhoto implements Serializable {
     /*
     ========================================================
     Instance variables representing the attributes (columns)
-    of the UserPhoto table in the CloudDriveDB database.
+    of the UserPhoto table in the TakeNotesDB database.
     ========================================================
      */
     private static final long serialVersionUID = 1L;
@@ -68,7 +68,7 @@ public class UserPhoto implements Serializable {
     /*
     ====================================================================
     Class constructors for instantiating a UserPhoto entity object to
-    represent a row in the UserPhoto table in the CloudDriveDB database.
+    represent a row in the UserPhoto table in the TakeNotesDB database.
     ====================================================================
      */
     public UserPhoto() {
@@ -92,7 +92,7 @@ public class UserPhoto implements Serializable {
     /*
     ======================================================
     Getter and Setter methods for the attributes (columns)
-    of the UserPhoto table in the CloudDriveDB database.
+    of the UserPhoto table in the TakeNotesDB database.
     ======================================================
      */
     public Integer getId() {

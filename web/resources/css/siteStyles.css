@@ -1,6 +1,8 @@
 /*********************************************
 Cascading Style Sheets (CSS) Style Definitions
 Composed by Osman Balci on December 4, 2016.
+**********************************************
+Edited by Take Note
 *********************************************/
 
 html, body {
@@ -19,7 +21,7 @@ html, body {
     /* background-color: #FFEFD5;   /* PapayaWhip */
     /* background-color: #F5DEB3;   /* Wheat */
     /* background-color: #B0E0E6;   /* PowderBlue */
-    background-color: #7c7c7c;
+    background-color: #7c7c7c; 
     /* Stretch the background image to cover the entire screen. 
     This is used only if you choose to display a background image. */
     -webkit-background-size: cover; /* For WebKit */

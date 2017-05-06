@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Balci
+ * @author Take Note
  */
 @Entity
 @Table(name = "UserFile")
@@ -41,7 +41,7 @@ public class UserFile implements Serializable {
     /*
     ========================================================
     Instance variables representing the attributes (columns)
-    of the UserFile table in the CloudDriveDB database.
+    of the UserFile table in the TakeNotesDB database.
     ========================================================
      */
     private static final long serialVersionUID = 1L;
@@ -62,7 +62,7 @@ public class UserFile implements Serializable {
     /*
     ===================================================================
     Class constructors for instantiating a UserFile entity object to
-    represent a row in the UserFile table in the CloudDriveDB database.
+    represent a row in the UserFile table in the TakeNotesDB database.
     ===================================================================
      */
     public UserFile() {
@@ -80,7 +80,7 @@ public class UserFile implements Serializable {
     /*
     ======================================================
     Getter and Setter methods for the attributes (columns)
-    of the UserFile table in the CloudDriveDB database.
+    of the UserFile table in the TakeNotesDB database.
     ======================================================
      */
     public Integer getId() {

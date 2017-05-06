@@ -68,7 +68,7 @@ public class UserFacade extends AbstractFacade<User> {
 
     /**
      * Deletes the User entity whose primary key is id
-     * @param id is the Primary Key of the User entity in a table row in the CloudDriveDB database.
+     * @param id is the Primary Key of the User entity in a table row in the TakeNotesDB database.
      */
     public void deleteUser(int id) {
         

@@ -403,7 +403,7 @@ public class UserFileController implements Serializable {
                 // Delete the file from CloudStorage/FileStorage
                 Files.deleteIfExists(Paths.get(userFileToDelete.getFilePath()));
 
-                // Delete the user file record from the CloudDriveDB database
+                // Delete the user file record from the TakeNotesDB database
                 getUserFileFacade().remove(userFileToDelete);
                 // UserFileFacade inherits the remove() method from AbstractFacade
 
@@ -459,7 +459,7 @@ public class UserFileController implements Serializable {
         // Obtain the object reference of the UserFile whose primary key = fileId
         UserFile userFile = getUserFileFacade().getUserFile(fileId);
 
-        // Obtain the userFile's filename as it is stored in the CloudDrive DB database
+        // Obtain the userFile's filename as it is stored in the TakeNotes DB database
         String userFileName = userFile.getFilename();
 
         // Extract the file extension from the filename

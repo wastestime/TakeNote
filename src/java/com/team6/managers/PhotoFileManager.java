@@ -1,6 +1,6 @@
 /*
- * Created by Osman Balci on 2017.01.28  * 
- * Copyright © 2017 Osman Balci. All rights reserved. * 
+ * Created by Thomas Nguyen on 2017.01.28  * 
+ * Copyright © 2017 Take Note. All rights reserved. * 
  */
 package com.team6.managers;
 
@@ -418,7 +418,7 @@ public class PhotoFileManager implements Serializable {
                 // Delete the temporary file from CloudStorage/PhotoStorage
                 Files.deleteIfExists(Paths.get(photo.getTemporaryFilePath()));
 
-                // Delete the photo file record from the CloudDriveDB database
+                // Delete the photo file record from the TakeNotesDB database
                 getUserPhotoFacade().remove(photo);
                 // UserPhotoFacade inherits the remove() method from AbstractFacade
 

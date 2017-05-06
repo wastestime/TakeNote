@@ -55,7 +55,7 @@ as long as the user's established HTTP session is alive.
 
 /**
  *
- * @author Balci
+ * @author Take Note
  */
 
 /*
@@ -390,7 +390,7 @@ public class AccountManager implements Serializable {
                     // Password was first validated by invoking the validatePasswordChange method below.
                 }
 
-                // Store the changes in the CloudDriveDB database
+                // Store the changes in the TakeNotesDB database
                 getUserFacade().edit(editUser);
                 userController.addActivity("Edit Profile");
 
@@ -424,7 +424,7 @@ public class AccountManager implements Serializable {
                 // Delete all of the user files associated with the signed-in user whose primary key is user_id
                 //deleteAllUserFiles(user_id);
 
-                // Delete the User entity, whose primary key is user_id, from the CloudDriveDB database
+                // Delete the User entity, whose primary key is user_id, from the TakeNotesDB database
                 getUserFacade().deleteUser(user_id);
 
                 statusMessage = "Your account is successfully deleted!";
@@ -723,11 +723,11 @@ public class AccountManager implements Serializable {
         In glassfish-web.xml file, we designated the '/CloudStorage/' directory as the
         Alternate Document Root with the following statement:
         
-        <property name="alternatedocroot_1" value="from=/CloudStorage/* dir=/Users/Balci" />
+        <property name="alternatedocroot_1" value="from=/TakeNote/* dir=/home/cloudsd/FileStorageLocation-Team6" />
         
         in Constants.java file, we defined the relative photo file path as
         
-        public static final String PHOTOS_RELATIVE_PATH = "CloudStorage/PhotoStorage/";
+        public static final String PHOTOS_RELATIVE_PATH = "TakeNote/PhotoStorage/";
         
         Thus, JSF knows that 'CloudStorage/' is the document root directory.
         */
@@ -769,7 +769,7 @@ public class AccountManager implements Serializable {
                 // Delete the temporary file if it exists
                 Files.deleteIfExists(Paths.get(Constants.PHOTOS_ABSOLUTE_PATH + "tmp_file"));
 
-                // Remove the user's photo's record from the CloudDriveDB database
+                // Remove the user's photo's record from the TakeNoteDB database
                 getUserPhotoFacade().remove(photo);
 
             } catch (IOException e) {
@@ -801,7 +801,7 @@ public class AccountManager implements Serializable {
                      */
                     Files.deleteIfExists(Paths.get(userFile.getFilePath()));
 
-                    // Remove the user's file record from the CloudDriveDB database
+                    // Remove the user's file record from the TakeNotesDB database
                     getUserFileFacade().remove(userFile);
 
                 } catch (IOException e) {

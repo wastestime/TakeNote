@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Balci
+ * @author Take Note
  */
 @Stateless
 public class UserPhotoFacade extends AbstractFacade<UserPhoto> {
@@ -37,7 +37,7 @@ public class UserPhotoFacade extends AbstractFacade<UserPhoto> {
     
     // The following method is added to the generated code.
     /**
-     * @param userID is the Primary Key of the User entity in a table row in the CloudDriveDB database.
+     * @param userID is the Primary Key of the User entity in a table row in the TakeNotesDB database.
      * @return a list of photos associated with the User whose primary key is userID
      */
     public List<UserPhoto> findUserPhotosByUserID(Integer userID) {

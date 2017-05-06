@@ -36,14 +36,11 @@ import java.util.Collection;
 
 /**
  *
- * @author Balci
+ * @author Take Note
  */
 @Named(value = "fileUploadManager")
 @SessionScoped
-/**
- *
- * @author Balci
- */
+
 public class FileUploadManager implements Serializable {
 
     /*
@@ -198,7 +195,7 @@ public class FileUploadManager implements Serializable {
 
             //---------------------------------------------------------------
             //
-            // Create the new UserFile entity (row) in the CloudDriveDB
+            // Create the new UserFile entity (row) in the TakeNotesDB
             getUserFileFacade().create(newUserFile);
 
             // This sets the necessary flag to ensure the messages are preserved.
