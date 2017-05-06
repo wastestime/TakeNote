@@ -223,11 +223,13 @@ public class FileUploadManager implements Serializable {
 
     }
 
+    // Accept file from upload page to convert into note and redirect to editor page
     public void handleNoteUpload(FileUploadEvent event) throws IOException {
         String contents = "";
         String title = "";
         String description = "Uploaded File";
 
+        // convert file to note
         try {
             contents = convertTextFileToString(event.getFile());
             title = event.getFile().getFileName();
@@ -236,7 +238,6 @@ public class FileUploadManager implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, resultMsg);
         }
         notesController.setEditorSelected(new Notes(title, description, contents));
-        System.out.println("===========================sfdsfadsfup loaddddd");
         userController.addActivity("Upload Textfile");
         FacesContext.getCurrentInstance().getExternalContext().redirect("Editor.xhtml");
     }
@@ -331,9 +332,10 @@ public class FileUploadManager implements Serializable {
         return targetFile;
     }
 
+    // convert a utf_8 encoded text file to a string
     static private String convertTextFileToString(UploadedFile file) throws IOException {
         byte[] encoded = file.getContents();
-        return new String(encoded, StandardCharsets.UTF_8).substring(0);
+        return new String(encoded, StandardCharsets.UTF_8);
     }
 
     /**

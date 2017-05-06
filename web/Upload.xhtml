@@ -36,13 +36,13 @@ Copyright © 2016 Take Note. All rights reserved.
                         Click Choose to select a text file or drag and drop on the white area.
                     </div>
                     <br/>
-
+                    <!--Single file uploader-->
                     <p:fileUpload id="upload"
                                   fileUploadListener="#{fileUploadManager.handleNoteUpload}" multiple="false" 
                                   mode="advanced" sizeLimit="10000000" fileLimit="1"
                                   dragDropSupport="true" update="messages" allowTypes="/(\.|\/)(txt)$/" />
                     <br/>
-                    <!-- Allow maximum 10MB file size and no more than 5 files to upload at the same time -->
+                    <!-- Allow maximum 10MB file size and no more than 1 file to uploade -->
                     <br/><br/>
 
                     <p:growl id="messages" showDetail="true" />
