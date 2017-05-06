@@ -141,7 +141,8 @@ public class NotesController implements Serializable {
 
     public Notes prepareEdit() {
         editorSelected = getNotesFacade().findById(selected.getId());
-        userController.addActivity("Edit Activity");
+        userController.addActivity("Edit Note");
+
         return editorSelected;
     }
 
@@ -232,7 +233,7 @@ public class NotesController implements Serializable {
     }
 
     public void destroy() {
-        userController.addActivity("Delete Activity");
+        userController.addActivity("Delete Note");
         editorSelected = selected;
         persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("NotesDeleted"));
         if (!JsfUtil.isValidationFailed()) {
@@ -258,7 +259,7 @@ public class NotesController implements Serializable {
     }
 
     public void shareNote() {
-        userController.addActivity("Share Activity");
+        userController.addActivity("Share Note");
         String user_name = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username");
         User currUser = getUserFacade().findByUsername(user_name);
         notificationManager.sendNotificationToUser(this.toShareWith.getEmail(), "Someone shared you a note", currUser.getUsername() + " shared you a note \" " + selected.getTitle() + " \" on "

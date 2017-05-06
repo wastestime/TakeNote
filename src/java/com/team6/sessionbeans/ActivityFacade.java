@@ -28,7 +28,7 @@ public class ActivityFacade extends AbstractFacade<Activity> {
     public ActivityFacade() {
         super(Activity.class);
     }
-    
+    // find a user's all activities
     public List<Activity> findUserActivities(Integer userID) {
         List<Activity> activities = em.createNamedQuery("Activity.findActivitiesByUserID")
                 .setParameter("userID", userID)
