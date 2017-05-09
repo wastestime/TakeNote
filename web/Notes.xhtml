@@ -42,6 +42,8 @@
                             <p:ajax event="rowSelect" update="createButton viewButton editButton deleteButton shareButton exportButton"/>
                             <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton shareButton exportButton"/>
 
+                            
+                            <!-- Title Column -->
                             <p:column sortBy="#{item.title}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_title}" styleClass="facetHeader"/>
@@ -51,7 +53,7 @@
                                 </div>
                             </p:column>
 
-
+                            <!-- Description Column -->
                             <p:column sortBy="#{item.description}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_description}" styleClass="facetHeader"/>
@@ -59,6 +61,7 @@
                                 <h:outputText styleClass="dataFields" value="#{item.description}"/>
                             </p:column>
 
+                            <!-- Owner Column -->
                             <p:column sortBy="#{item.userId.username}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_owner}" styleClass="facetHeader"/>
@@ -66,6 +69,7 @@
                                 <h:outputText styleClass="dataFields" value="#{item.userId.username}"/>
                             </p:column>
 
+                            <!-- Created Time Column -->
                             <p:column sortBy="#{item.createdTime}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_createdTime}" styleClass="facetHeader"/>
@@ -76,6 +80,7 @@
                             </p:column>
 
 
+                            <!-- Modified Time Column -->
                             <p:column sortBy="#{item.modifiedTime}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_modifiedTime}" styleClass="facetHeader"/>
@@ -86,6 +91,7 @@
                             </p:column>
 
 
+                            <!-- Attachments Column -->
                             <p:column sortBy="#{item.userFileCollection}">
                                 <f:facet name="header">
                                     <h:outputText value="#{bundle.ListNotesTitle_userFileCollection}" styleClass="facetHeader"/>
@@ -108,6 +114,7 @@
 
                             <f:facet name="footer">
 
+                                <!-- The Create button -->
                                 <p:commandButton id="createButton" icon="ui-icon-plus"  styleClass="commandButton"
                                                  value="#{bundle.Create}" 
 
@@ -115,17 +122,17 @@
 
                                                  update=":NotesCreateForm" oncomplete="PF('NotesCreateDialog').show()"/> 
 
-
-
-
+                                <!-- The Edit button -->
                                 <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" actionListener="#{notesController.prepareEdit}" 
                                                  styleClass="commandButton" update=":NoteEditForm" oncomplete="PF('NoteEditDialog').show()" 
                                                  disabled="#{empty notesController.selected or notesController.checkSameUser() eq false}"/>
 
+                                <!-- The View button -->
                                 <p:commandButton id="viewButton"   icon="ui-icon-document" value="#{bundle.View}" 
                                                  styleClass="commandButton" update=":NoteViewForm" oncomplete="PF('NoteViewDialog').show()" 
                                                  disabled="#{empty notesController.selected}" />
 
+                                <!-- The Share button -->
                                 <p:commandButton id="shareButton"   icon="ui-icon-pencil" value="#{bundle.Share}" 
                                                  styleClass="commandButton" update=":NoteShareForm" oncomplete="PF('NoteShareDialog').show()" 
                                                  disabled="#{empty notesController.selected}"/>
@@ -165,6 +172,7 @@
                                 -->
 
 
+                                <!-- The Export button -->
                                 <p:commandButton id="exportButton" value="Export" ajax="false" 
                                                  icon="ui-icon-arrowthick-1-s"
                                                  styleClass="commandButton" disabled="#{empty notesController.selected}" >
@@ -173,6 +181,8 @@
 
                                 </p:commandButton>
 
+                                
+                                <!-- The Search button -->
                                 <p:commandButton id="searchButton" icon="ui-icon-search" value="#{bundle.Search}" 
                                                  styleClass="commandButton" update=":NoteSearchForm" 
                                                  oncomplete="PF('NoteSearchDialog').show()"/>
@@ -194,9 +204,11 @@
                 <!-- Clicking the Search button displays the included Search.xhtml file in a dialog window on top of this page. -->
                 <ui:include src="Search.xhtml"/>
 
+                <!-- Clicking the Share button displays the included Share.xhtml file in a dialog window on top of this page. -->
                 <ui:include src="Share.xhtml"/>
 
 
+                <!-- Clicking the Edit button displays the included Edit.xhtml file in a dialog window on top of this page. -->
                 <ui:include src="Edit.xhtml"/>
 
             </div>

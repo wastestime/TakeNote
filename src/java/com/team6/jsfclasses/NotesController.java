@@ -68,17 +68,36 @@ public class NotesController implements Serializable {
         return userController;
     }
 
+    // The list of items corresponding to the current user.
     private List<Notes> items = null;
+    
+    // The list of items corresponding to the current user that meet the given search parameters.
     private List<Notes> searchItems = null;
+    
+    // The currently selected note.
     private Notes selected;
+    
+    // The note currently being edited by the Editor.
     private Notes editorSelected;
+    
+    // The String that is used to search through the items.
     private String searchString;
+    
+    // The specific field of the Notes class that the searchString correponds to.
     private String searchField;
+    
+    // The User object corresponding to the user that this note was shared with.
     private User toShareWith;
+    
+    // The path to the PDF file corresponding to the currently selected note.
     private String pdfPath;
 
+    // A boolean value that is used to indicate whether or not the current note has been initialized.
     private boolean isInitialized = false;
 
+    /**
+     * The default constructor.
+     */
     public NotesController() {
     }
 
@@ -87,11 +106,20 @@ public class NotesController implements Serializable {
         items = null;
     }
 
+    /**
+     * Generates a PDF file with the contents of the current note.
+     */
     public void getPDF() {
+        
+        // Check if the user has selected a note.
         if (selected != null) {
+            
+            // Get the name and location of the file that we are going to create.
             pdfPath = Constants.FILES_ABSOLUTE_PATH + selected.getTitle() + ".pdf";
 
             try {
+                
+                // Create a new PDF and initialize the parameters to those of the current note.
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(pdfPath));
                 document.open();
@@ -103,6 +131,7 @@ public class NotesController implements Serializable {
                 document.addCreator(selected.getUserId().getFirstName() + " " + selected.getUserId().getLastName());
                 document.addCreationDate();
 
+                // Convert the content of the current note from HTML to PDf.
                 HTMLWorker worker = new HTMLWorker(document);
                 worker.parse(new StringReader(selected.getContent()));
                 document.close();
