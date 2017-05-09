@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
 Created by Luke Mazzu on 2017.04.16
 Copyright © 2017 Luke Mazzu. All rights reserved.
 -->
-<!DOCTYPE html>
+
 <html  xmlns="http://www.w3.org/1999/xhtml"
        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
        xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -116,6 +118,7 @@ Copyright © 2017 Luke Mazzu. All rights reserved.
                     <div align ="left">
                         <h:outputLabel class="editorTitle" value="#{notesController.getEditorTitle()}" />
                     </div>
+                    <div>&nbsp;</div>
                     <form method="post">
                         <p:inputTextarea id = "mytextarea2" value ="#{notesController.getEditorNote()}" queryDelay="0" minQueryLength="0" />
                     </form>
